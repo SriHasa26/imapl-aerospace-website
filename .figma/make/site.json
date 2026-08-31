@@ -1,0 +1,11 @@
+{
+  "title": "IGNITING MINDS prototype -1",
+  "description": "Delivers a premium aerospace manufacturing website UI showcasing engineering excellence, global capabilities, and streamlined RFQ processes for enterprise clients.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

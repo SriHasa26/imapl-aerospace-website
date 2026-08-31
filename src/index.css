@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --color-navy: #070D1C;
+  --color-navy-mid: #0D1629;
+  --color-navy-light: #101D35;
+  --color-blue: #003580;
+  --color-blue-light: #0050B3;
+  --color-blue-dark: #002260;
+  --color-cyan: #00B4D8;
+  --color-cyan-dim: rgba(0, 180, 216, 0.4);
+  --color-steel: #8A9BB5;
+  --color-off: #F2F4F8;
+  --color-off-dark: #E8ECF3;
+  --color-mid: #4B5568;
+  --color-border-dark: #1A2440;
+  --color-border-light: #D4DAE8;
+  --color-surface: #111827;
+
+  --font-display: 'Barlow Condensed', system-ui, sans-serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: #070D1C;
+  color: #FFFFFF;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #070D1C; }
+::-webkit-scrollbar-thumb { background: #1A2440; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #003580; }
+
+/* Blueprint grid overlays */
+.blueprint-grid {
+  background-image:
+    linear-gradient(rgba(0,180,216,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,180,216,0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+.blueprint-grid-fine {
+  background-image:
+    linear-gradient(rgba(0,180,216,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,180,216,0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes scanLine {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+@keyframes pulse-ring {
+  0%   { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(2); opacity: 0; }
+}
+
+.anim-fade-up  { animation: fadeUp 0.7s ease both; }
+.anim-fade-in  { animation: fadeIn 0.5s ease both; }

@@ -1,0 +1,19 @@
+# Local Supabase CLI config. project_id is a local label, not a secret or production domain.
+project_id = "imapl-website"
+
+# Anonymous visitors submit these functions. There is no Auth session in P2.3.
+# JWT verification would reject new-format publishable keys (sb_publishable_…)
+# when no user JWT is present. The publishable key is still required as `apikey`.
+# Protection is origin allowlist, server-side validation, and RLS (no public table access).
+[functions.submit-contact]
+verify_jwt = false
+
+[functions.submit-rfq]
+verify_jwt = false
+
+[functions.complete-rfq-upload]
+verify_jwt = false
+
+# Admins have an Auth session JWT.
+[functions.admin-download-attachment]
+verify_jwt = true

@@ -1,0 +1,18 @@
+node_modules/
+dist/
+build/
+.cache/
+# Local env files (includes .env.local). Never commit publishable or secret keys.
+.env*
+.env.local
+.vite/
+vite.config.*.timestamp-*
+*.tsbuildinfo
+*-debug.log*
+logs/
+*.log
+.claude-replay.*
+.tmp-*
+# Supabase CLI local cache (not schema/migrations)
+supabase/.temp/
+supabase/.branches/
