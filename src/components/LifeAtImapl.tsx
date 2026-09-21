@@ -1,4 +1,4 @@
-import { useEffect, useId, useMemo, useRef, useState, type CSSProperties, type KeyboardEvent as ReactKeyboardEvent } from 'react'
+import { useEffect, useId, useMemo, useRef, useState, type CSSProperties, type KeyboardEvent as ReactKeyboardEvent, type TouchEvent as ReactTouchEvent } from 'react'
 import { photoClass } from '../content/imagePresentation'
 import {
   featuredVideos,
@@ -47,9 +47,16 @@ export default function LifeAtImapl({ visible = false }: Props) {
   const lightboxTitleId = useId()
   const videoTitleId = useId()
   const closeRef = useRef<HTMLButtonElement>(null)
+  const touchStartX = useRef<number | null>(null)
   const [category, setCategory] = useState<GalleryCategory>('All')
   const [lightbox, setLightbox] = useState<number | null>(null)
   const [activeVideo, setActiveVideo] = useState<FeaturedVideo | null>(null)
+
+  const visibleCategories = useMemo(() => {
+    return galleryCategories.filter((item) => (
+      item === 'All' || galleryItems.some((photo) => photo.category === item)
+    ))
+  }, [])
 
   const filtered = useMemo(
     () => (category === 'All' ? galleryItems : galleryItems.filter((item) => item.category === category)),
@@ -92,14 +99,34 @@ export default function LifeAtImapl({ visible = false }: Props) {
     if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return
     event.preventDefault()
     const next = event.key === 'ArrowRight'
-      ? (index + 1) % galleryCategories.length
-      : (index - 1 + galleryCategories.length) % galleryCategories.length
-    setCategory(galleryCategories[next])
+      ? (index + 1) % visibleCategories.length
+      : (index - 1 + visibleCategories.length) % visibleCategories.length
+    setCategory(visibleCategories[next])
   }
 
   const openVideo = (video: FeaturedVideo) => {
-    if (video.kind === 'youtube-channel') return
     setActiveVideo(video)
+  }
+
+  const goPrev = () => {
+    setLightbox((index) => (index === null ? 0 : (index - 1 + filtered.length) % filtered.length))
+  }
+
+  const goNext = () => {
+    setLightbox((index) => (index === null ? 0 : (index + 1) % filtered.length))
+  }
+
+  const onLightboxTouchStart = (event: ReactTouchEvent) => {
+    touchStartX.current = event.changedTouches[0]?.clientX ?? null
+  }
+
+  const onLightboxTouchEnd = (event: ReactTouchEvent) => {
+    if (touchStartX.current === null) return
+    const delta = (event.changedTouches[0]?.clientX ?? touchStartX.current) - touchStartX.current
+    touchStartX.current = null
+    if (Math.abs(delta) < 48) return
+    if (delta > 0) goPrev()
+    else goNext()
   }
 
   return (
@@ -115,14 +142,14 @@ export default function LifeAtImapl({ visible = false }: Props) {
           <span className="font-mono text-xs sm:text-sm text-orange uppercase tracking-[0.16em]">Life at IMAPL</span>
         </div>
         <h2 id={headingId} className="font-display font-bold text-white text-4xl uppercase mb-4">
-          Where People, Precision & Progress Come Together
+          People. Moments. Together.
         </h2>
         <p className="text-steel max-w-2xl leading-relaxed mb-10">
-          Discover the people, activities and culture of Igniting Minds Aerospace Private Limited.
+          Explore the activities, celebrations and experiences that bring the IMAPL team together.
         </p>
 
         <div className="careers-gallery-filters" role="tablist" aria-label="Gallery categories">
-          {galleryCategories.map((item, index) => (
+          {visibleCategories.map((item, index) => (
             <button
               key={item}
               type="button"
@@ -139,107 +166,75 @@ export default function LifeAtImapl({ visible = false }: Props) {
           ))}
         </div>
 
-        {filtered.length > 0 ? (
-          <div className="careers-gallery-mosaic">
-            {filtered.map((item, index) => (
-              <button
-                key={item.id}
-                type="button"
-                onClick={() => openItem(item)}
-                className={`careers-gallery-tile ${item.featured ? 'is-featured' : ''}`}
-                style={{ '--careers-stagger': `${Math.min(index, 8) * 60}ms` } as CSSProperties}
-                aria-label={`${item.title}, ${item.category}. Open larger view`}
-              >
-                <span className="careers-gallery-well">
-                  <img
-                    src={item.image}
-                    alt={item.alt}
-                    loading="lazy"
-                    decoding="async"
-                    className={`${photoClass(item.image, 'decorative')} careers-gallery-img`}
-                  />
-                </span>
-                <span className="careers-gallery-overlay">
-                  <span className="font-mono text-[11px] text-cyan uppercase tracking-widest">{item.category}</span>
-                  <span className="font-display font-bold text-white text-lg uppercase">{item.title}</span>
-                </span>
-              </button>
-            ))}
-          </div>
-        ) : (
-          <p className="text-steel text-sm leading-relaxed border border-border-dark bg-navy-mid px-5 py-8">
-            No confirmed photographs are published in this category.
-          </p>
-        )}
+        <div className="careers-gallery-mosaic">
+          {filtered.map((item, index) => (
+            <button
+              key={item.id}
+              type="button"
+              onClick={() => openItem(item)}
+              className={`careers-gallery-tile ${item.featured ? 'is-featured' : ''}`}
+              style={{ '--careers-stagger': `${Math.min(index, 8) * 60}ms` } as CSSProperties}
+              aria-label={`${item.title}, ${item.category}. Open larger view`}
+            >
+              <span className="careers-gallery-well">
+                <img
+                  src={item.image}
+                  alt={item.alt}
+                  loading="lazy"
+                  decoding="async"
+                  className={`${photoClass(item.image, 'decorative')} careers-gallery-img ${item.id === 'event-lamp' ? 'object-top' : ''}`}
+                />
+              </span>
+              <span className="careers-gallery-overlay">
+                <span className="font-mono text-[11px] text-cyan uppercase tracking-widest">{item.category}</span>
+                <span className="font-display font-bold text-white text-lg uppercase">{item.title}</span>
+              </span>
+            </button>
+          ))}
+        </div>
 
         {featuredVideos.length > 0 && (
         <div className="careers-gallery-videos">
           <div className="careers-eyebrow flex items-center gap-3 mb-3">
             <div className="careers-eyebrow-rule h-px bg-orange" />
-            <span className="font-mono text-xs sm:text-sm text-orange uppercase tracking-[0.16em]">Featured Videos</span>
+            <span className="font-mono text-xs sm:text-sm text-orange uppercase tracking-[0.16em]">IMAPL Moments</span>
           </div>
-          <h3 className="font-display font-bold text-white text-3xl uppercase mb-4">Inside IMAPL</h3>
+          <h3 className="font-display font-bold text-white text-3xl uppercase mb-4">IMAPL Moments</h3>
           <p className="text-steel max-w-2xl leading-relaxed mb-8">
-            Explore the people, team activities and culture of Igniting Minds Aerospace through video.
+            Moments that bring our people together — from celebrations and team activities to shared experiences.
           </p>
           <div className="careers-video-grid">
-            {featuredVideos.map((video, index) => {
-              const poster = video.kind === 'youtube' ? youtubeThumb(video.videoId) : video.poster
-              const isExternal = video.kind === 'youtube-channel'
-              const sharedClass = 'careers-video-card'
-              const style = { '--careers-stagger': `${index * 80}ms` } as CSSProperties
-              const body = (
-                <>
-                  <span className="careers-video-well">
-                    <img
-                      src={poster}
-                      alt=""
-                      loading="lazy"
-                      decoding="async"
-                      className={`${photoClass(poster, 'decorative')} careers-gallery-img`}
-                    />
-                    <span className="careers-video-play" aria-hidden="true">
-                      <PlayIcon />
-                    </span>
+            {featuredVideos.map((video, index) => (
+              <button
+                key={video.id}
+                type="button"
+                className="careers-video-card"
+                style={{ '--careers-stagger': `${index * 80}ms` } as CSSProperties}
+                onClick={() => openVideo(video)}
+                aria-label={`${video.title}. Watch video`}
+              >
+                <span className="careers-video-well">
+                  <img
+                    src={youtubeThumb(video.videoId)}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover object-center careers-gallery-img"
+                  />
+                  <span className="careers-video-play" aria-hidden="true">
+                    <PlayIcon />
                   </span>
-                  <span className="careers-video-body">
-                    <span className="font-mono text-[11px] text-cyan uppercase tracking-widest">{video.category}</span>
-                    <span className="font-display font-bold text-white text-xl uppercase mt-2 mb-2">{video.title}</span>
-                    <span className="text-steel text-sm leading-relaxed">{video.description}</span>
-                    <span className="careers-text-btn mt-4">
-                      {isExternal ? 'Watch on YouTube' : 'Watch Video'} <ArrowIcon dir="next" />
-                    </span>
+                </span>
+                <span className="careers-video-body">
+                  <span className="font-mono text-[11px] text-cyan uppercase tracking-widest">{video.category}</span>
+                  <span className="font-display font-bold text-white text-xl uppercase mt-2 mb-2">{video.title}</span>
+                  <span className="text-steel text-sm leading-relaxed">{video.description}</span>
+                  <span className="careers-text-btn mt-4">
+                    Watch Video <ArrowIcon dir="next" />
                   </span>
-                </>
-              )
-              if (isExternal) {
-                return (
-                  <a
-                    key={video.id}
-                    href={video.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={sharedClass}
-                    style={style}
-                    aria-label={`${video.title}. Watch on YouTube`}
-                  >
-                    {body}
-                  </a>
-                )
-              }
-              return (
-                <button
-                  key={video.id}
-                  type="button"
-                  className={sharedClass}
-                  style={style}
-                  onClick={() => openVideo(video)}
-                  aria-label={`${video.title}. Watch video`}
-                >
-                  {body}
-                </button>
-              )
-            })}
+                </span>
+              </button>
+            ))}
           </div>
         </div>
         )}
@@ -264,7 +259,11 @@ export default function LifeAtImapl({ visible = false }: Props) {
                 <CloseIcon />
               </button>
             </div>
-            <div className="careers-lightbox-stage">
+            <div
+              className="careers-lightbox-stage"
+              onTouchStart={onLightboxTouchStart}
+              onTouchEnd={onLightboxTouchEnd}
+            >
               <img
                 src={activeItem.image}
                 alt={activeItem.alt}
@@ -276,7 +275,7 @@ export default function LifeAtImapl({ visible = false }: Props) {
                 type="button"
                 className="careers-lightbox-nav-btn"
                 aria-label="Previous image"
-                onClick={() => setLightbox((index) => (index === null ? 0 : (index - 1 + filtered.length) % filtered.length))}
+                onClick={goPrev}
               >
                 <ArrowIcon dir="prev" /> Previous
               </button>
@@ -287,7 +286,7 @@ export default function LifeAtImapl({ visible = false }: Props) {
                 type="button"
                 className="careers-lightbox-nav-btn"
                 aria-label="Next image"
-                onClick={() => setLightbox((index) => (index === null ? 0 : (index + 1) % filtered.length))}
+                onClick={goNext}
               >
                 Next <ArrowIcon dir="next" />
               </button>
@@ -296,7 +295,7 @@ export default function LifeAtImapl({ visible = false }: Props) {
         </div>
       )}
 
-      {activeVideo && activeVideo.kind !== 'youtube-channel' && (
+      {activeVideo && (
         <div className="careers-lightbox" role="dialog" aria-modal="true" aria-labelledby={videoTitleId}>
           <button type="button" className="careers-modal-backdrop" aria-label="Close video" onClick={() => setActiveVideo(null)} />
           <div className="careers-lightbox-panel careers-lightbox-panel--video">
@@ -305,15 +304,25 @@ export default function LifeAtImapl({ visible = false }: Props) {
                 <div className="font-mono text-[11px] text-cyan uppercase tracking-widest">{activeVideo.category}</div>
                 <h3 id={videoTitleId} className="font-display font-bold text-white text-xl uppercase truncate">{activeVideo.title}</h3>
               </div>
-              <button
-                ref={closeRef}
-                type="button"
-                className="careers-lightbox-icon-btn"
-                aria-label="Close video"
-                onClick={() => setActiveVideo(null)}
-              >
-                <CloseIcon />
-              </button>
+              <div className="flex items-center gap-3 shrink-0">
+                <a
+                  href={`https://www.youtube.com/watch?v=${activeVideo.videoId}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="careers-text-btn"
+                >
+                  Watch on YouTube
+                </a>
+                <button
+                  ref={closeRef}
+                  type="button"
+                  className="careers-lightbox-icon-btn"
+                  aria-label="Close video"
+                  onClick={() => setActiveVideo(null)}
+                >
+                  <CloseIcon />
+                </button>
+              </div>
             </div>
             <div className="careers-video-embed">
               {activeVideo.kind === 'youtube' && (

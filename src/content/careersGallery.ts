@@ -1,6 +1,3 @@
-import { images } from './assets'
-import { socialLinks } from './contact'
-
 export const galleryCategories = [
   'All',
   'Team Activities',
@@ -23,97 +20,118 @@ export interface GalleryItem {
 
 export const galleryItems: GalleryItem[] = [
   {
-    id: 'team-factory',
-    image: images.overviewTeamFactory,
-    title: 'Group Photograph',
-    category: 'Team Activities',
-    alt: 'IMAPL employees gathered together for a group photograph',
+    id: 'event-lamp',
+    image: '/images/gallery/activities/imapl-event-01.png',
+    title: 'Company Gathering',
+    category: 'Events',
+    alt: 'People lighting a ceremonial lamp at an IMAPL gathering',
+  },
+  {
+    id: 'event-rebrand',
+    image: '/images/gallery/activities/imapl-event-02.png',
+    title: 'Company Gathering',
+    category: 'Events',
+    alt: 'People on stage at an IMAPL company gathering',
+  },
+  {
+    id: 'event-audience',
+    image: '/images/gallery/activities/imapl-event-03.jpg',
+    title: 'Company Gathering',
+    category: 'Events',
+    alt: 'IMAPL employees applauding together at a company gathering',
+  },
+  {
+    id: 'celebration-festival-frame',
+    image: '/images/gallery/activities/imapl-celebration-01.jpg',
+    title: 'Festival Celebration',
+    category: 'Celebrations',
+    alt: 'IMAPL employees posing together during a festival celebration',
     featured: true,
   },
   {
-    id: 'training-session',
-    image: images.careersCultureImage,
-    title: 'Training Session',
-    category: 'Training & Engagement',
-    alt: 'IMAPL employees seated together during a training session',
-    featured: true,
+    id: 'celebration-diwali-sweets',
+    image: '/images/gallery/activities/imapl-celebration-02.jpg',
+    title: 'Festival Celebration',
+    category: 'Celebrations',
+    alt: 'IMAPL employees together during a Diwali celebration',
   },
   {
-    id: 'team-group',
-    image: images.aboutHeritageImage,
-    title: 'Group Photograph',
-    category: 'Team Activities',
-    alt: 'IMAPL employees together in a group photograph',
+    id: 'event-team-visitors',
+    image: '/images/gallery/activities/imapl-event-04.jpg',
+    title: 'Company Gathering',
+    category: 'Events',
+    alt: 'IMAPL employees standing together at a company gathering',
   },
   {
-    id: 'team-seated',
-    image: images.aboutTeamSeatedImage,
-    title: 'Group Photograph',
-    category: 'Team Activities',
-    alt: 'IMAPL employees seated and standing together for a group photograph',
-  },
-  {
-    id: 'team-gathering',
-    image: images.careersGroupImage,
-    title: 'Team Gathering',
-    category: 'Team Activities',
-    alt: 'IMAPL employees gathered together as a group',
-  },
-  {
-    id: 'careers-team',
-    image: images.careersImage,
+    id: 'team-sports',
+    image: '/images/gallery/activities/imapl-team-activity-01.jpg',
     title: 'Team Activity',
     category: 'Team Activities',
-    alt: 'IMAPL employees together in the workplace',
+    alt: 'IMAPL employees together during a sports team activity',
+    featured: true,
   },
-]
-
-export const imaplYoutubeChannel =
-  socialLinks.find((item) => item.value.network === 'YouTube')?.value.url
-  ?? null
-
-/**
- * TODO: Official IMAPL YouTube video IDs for employee activities, events or
- * celebrations are not stored in this repository. Only the channel URL
- * https://www.youtube.com/@ignitingmindsaerospace was found.
- * Do not embed manufacturing or capability videos in this section.
- */
-export const pendingYoutubeVideos: Array<{ videoId: null; note: string }> = [
   {
-    videoId: null,
-    note: 'TODO: provide official IMAPL YouTube video IDs for employee activities, events or celebrations.',
+    id: 'celebration-diwali-group',
+    image: '/images/gallery/activities/imapl-celebration-03.jpg',
+    title: 'Festival Celebration',
+    category: 'Celebrations',
+    alt: 'IMAPL employees celebrating together during Diwali',
+  },
+  {
+    id: 'celebration-festival-offering',
+    image: '/images/gallery/activities/imapl-celebration-04.jpg',
+    title: 'Festival Celebration',
+    category: 'Celebrations',
+    alt: 'IMAPL employees taking part in a festival celebration',
+  },
+  {
+    id: 'team-games',
+    image: '/images/gallery/activities/imapl-team-activity-02.jpg',
+    title: 'Team Activity',
+    category: 'Team Activities',
+    alt: 'IMAPL employees taking part in a group activity',
+  },
+  {
+    id: 'celebration-birthday',
+    image: '/images/gallery/activities/imapl-celebration-05.jpg',
+    title: 'Team Celebration',
+    category: 'Celebrations',
+    alt: 'IMAPL employees celebrating together with a birthday cake',
   },
 ]
 
-export type FeaturedVideo =
-  | {
-      id: string
-      kind: 'youtube-channel'
-      href: string
-      poster: string
-      title: string
-      category: GalleryFilter
-      description: string
-    }
-  | {
-      id: string
-      kind: 'youtube'
-      videoId: string
-      title: string
-      category: GalleryFilter
-      description: string
-    }
+export type FeaturedVideo = {
+  id: string
+  kind: 'youtube'
+  videoId: string
+  title: string
+  category: GalleryFilter
+  description: string
+}
 
 export const featuredVideos: FeaturedVideo[] = [
-  ...(imaplYoutubeChannel
-    ? [{
-        id: 'youtube-channel',
-        kind: 'youtube-channel' as const,
-        href: imaplYoutubeChannel,
-        poster: images.aboutTeamSeatedImage,
-        title: 'IMAPL on YouTube',
-        category: 'Team Activities' as const,
-        description: 'Official Igniting Minds Aerospace YouTube channel.',
-      }]
-    : []),
+  {
+    id: 'annual-sports-day',
+    kind: 'youtube',
+    videoId: 'LwSKB3Wreho',
+    title: 'Annual Day & Sports Day Highlights',
+    category: 'Celebrations',
+    description: 'Team celebration and sports moments from IMAPL Annual Day and Sports Day.',
+  },
+  {
+    id: 'womens-day',
+    kind: 'youtube',
+    videoId: 'RJKj_p_0HDw',
+    title: 'Women’s Day Celebration',
+    category: 'Celebrations',
+    description: 'IMAPL employees together during a Women’s Day celebration.',
+  },
+  {
+    id: 'rebrand-event',
+    kind: 'youtube',
+    videoId: 'qRYyLoIM7nY',
+    title: 'Rebranding Event Highlights',
+    category: 'Events',
+    description: 'Highlights from the IMAPL rebranding event.',
+  },
 ]
