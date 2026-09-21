@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import type { Page } from '../App'
 import { images, type ImageKey } from '../content/assets'
 import { imageFrame, photoClass } from '../content/imagePresentation'
+import LeadershipProfileModal from '../components/LeadershipProfileModal'
 import {
   description,
   foundingYear,
@@ -17,6 +18,7 @@ import {
   workAreaDescriptions,
   workAreaImages,
   yearsOfExperience,
+  type LeadershipPerson,
 } from '../content/company'
 import { isConflicting, type MaybeConflicting, type VerificationStatus } from '../content/types'
 
@@ -114,6 +116,7 @@ function useInView() {
 
 export default function About({ navigate }: Props) {
   const profileReveal = useInView()
+  const [openLeader, setOpenLeader] = useState<LeadershipPerson | null>(null)
   return (
     <div>
       {/* Hero */}
@@ -340,6 +343,13 @@ export default function About({ navigate }: Props) {
                       <h3 className="font-display font-bold text-white text-xl uppercase">{person.name}</h3>
                       <div className="font-mono text-xs text-cyan uppercase tracking-wider mt-1 mb-2">{person.title}</div>
                       <div className="about-leader-summary font-mono text-xs text-steel">{person.summary}</div>
+                      <button
+                        type="button"
+                        className="about-leader-profile-btn"
+                        onClick={() => setOpenLeader(person)}
+                      >
+                        View Profile <ArrowRight />
+                      </button>
                     </div>
                   </article>
                 )
@@ -366,6 +376,12 @@ export default function About({ navigate }: Props) {
           </div>
         </div>
       </section>
+
+      <LeadershipProfileModal
+        person={openLeader}
+        onClose={() => setOpenLeader(null)}
+        portraitFocus={portraitFocus}
+      />
     </div>
   )
 }
