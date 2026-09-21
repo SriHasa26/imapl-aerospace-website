@@ -184,6 +184,8 @@ export default function Footer({ navigate }: Props) {
                 src={images.brandLogo}
                 alt={images.brandLogoAlt}
                 className="h-10 w-auto max-w-[180px] object-contain object-left"
+                loading="lazy"
+                decoding="async"
               />
             </a>
             <p className="text-steel text-sm leading-relaxed max-w-xs mb-8">

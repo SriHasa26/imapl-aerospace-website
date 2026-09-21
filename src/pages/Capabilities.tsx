@@ -243,6 +243,8 @@ export default function Capabilities({ navigate }: Props) {
                           src={images.inspectionCmmCrysta}
                           alt="MITUTOYO CMM CRYSTA-Apex S7106"
                           className="caps-page-figure-img"
+                          loading="lazy"
+                          decoding="async"
                         />
                       </div>
                       <div className="caps-page-figure-pair-cell">
@@ -250,6 +252,8 @@ export default function Capabilities({ navigate }: Props) {
                           src={images.inspectionVpp}
                           alt="ACCURATE Model VPP 2515 MAZ"
                           className="caps-page-figure-img"
+                          loading="lazy"
+                          decoding="async"
                         />
                       </div>
                     </div>
@@ -259,6 +263,8 @@ export default function Capabilities({ navigate }: Props) {
                         src={cap.img}
                         alt={cap.title}
                         className={`${photoClass(cap.img)} caps-page-figure-img`}
+                        loading="lazy"
+                        decoding="async"
                       />
                     )
                   )}

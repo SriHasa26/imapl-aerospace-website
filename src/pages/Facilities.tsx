@@ -176,7 +176,7 @@ export default function Facilities({ navigate }: Props) {
         ref={heroRef}
         className={`facilities-hero relative overflow-hidden ${heroVisible ? 'is-visible' : ''}`}
       >
-        <img src={images.facilityImage} alt="Igniting Minds Aerospace manufacturing facility" className={`absolute inset-0 ${photoClass(images.facilityImage, 'decorative')} opacity-55`} />
+        <img src={images.facilityImage} alt="Igniting Minds Aerospace manufacturing facility" className={`absolute inset-0 ${photoClass(images.facilityImage, 'decorative')} opacity-55`} decoding="async" fetchPriority="high" />
         <div className="absolute inset-0 bg-gradient-to-r from-navy/78 via-navy/45 to-navy/22" />
         <div className="absolute inset-0 bg-gradient-to-t from-navy/70 via-transparent to-navy/22" />
         <div className="facilities-hero-ambient" aria-hidden="true" />

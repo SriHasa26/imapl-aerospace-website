@@ -171,6 +171,8 @@ export default function Careers({ navigate }: Props) {
           src={images.careersImage}
           alt="Igniting Minds Aerospace team"
           className={`absolute inset-0 ${photoClass(images.careersImage, 'decorative')} opacity-[0.5]`}
+          decoding="async"
+          fetchPriority="high"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-navy/78 via-navy/42 to-navy/20" />
         <div className="absolute inset-0 bg-gradient-to-t from-navy/70 via-transparent to-navy/20" />

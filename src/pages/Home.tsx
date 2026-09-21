@@ -1,8 +1,7 @@
-import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react'
 import type { Page } from '../App'
 import HeroBackdrop from '../components/HeroBackdrop'
 import LocationsMap from '../components/LocationsMap'
-import PrismaticBurst from '../components/PrismaticBurst'
 import SitePhoto from '../components/SitePhoto'
 import { images } from '../content/assets'
 import { catalogFillClass, imageFrame, isTechnicalPhoto, photoClass, productFrameStyle, productWellClass } from '../content/imagePresentation'
@@ -69,6 +68,50 @@ function SectionLabel({ text, className = "text-sm" }: { text: string; className
       <span className="mt-[0.55em] w-7 h-px bg-orange shrink-0" aria-hidden="true" />
       <span className="min-w-0 flex-1">{text}</span>
     </p>
+  )
+}
+
+const PrismaticBurst = lazy(() => import('../components/PrismaticBurst'))
+
+function DeferredPrismaticBurst() {
+  const ref = useRef<HTMLDivElement>(null)
+  const [ready, setReady] = useState(false)
+
+  useEffect(() => {
+    const node = ref.current
+    if (!node) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setReady(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: '240px' },
+    )
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [])
+
+  return (
+    <div ref={ref} className="absolute inset-0">
+      {ready && (
+        <Suspense fallback={null}>
+          <PrismaticBurst
+            animationType="rotate3d"
+            intensity={0.7}
+            speed={0.22}
+            distort={0}
+            paused={false}
+            offset={{ x: 0, y: 0 }}
+            hoverDampness={0.2}
+            rayCount={0}
+            mixBlendMode="lighten"
+            colors={['#ffffff', '#7EB6E8', '#003580']}
+          />
+        </Suspense>
+      )}
+    </div>
   )
 }
 
@@ -479,9 +522,8 @@ export default function Home({ navigate }: Props) {
                   width={1920}
                   height={1453}
                   sizes="(min-width: 768px) 50vw, 100vw"
-                  loading="eager"
+                  loading="lazy"
                   decoding="async"
-                  fetchPriority="high"
                   className="home-overview-img home-overview-img--factory"
                 />
                 <div className="home-overview-overlay">
@@ -838,6 +880,8 @@ export default function Home({ navigate }: Props) {
           src={images.facilityImage}
           alt="Igniting Minds Aerospace manufacturing facility"
           className={`absolute inset-0 ${photoClass(images.facilityImage, 'decorative')} opacity-45`}
+          loading="lazy"
+          decoding="async"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-navy/80 via-navy/55 to-navy/20" />
         <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
@@ -1049,18 +1093,7 @@ export default function Home({ navigate }: Props) {
       <section className="home-section isolate overflow-hidden py-24">
         <div className="absolute inset-0 bg-[#0A1426]" />
         <div className="absolute inset-0 opacity-55" aria-hidden="true">
-          <PrismaticBurst
-            animationType="rotate3d"
-            intensity={0.7}
-            speed={0.22}
-            distort={0}
-            paused={false}
-            offset={{ x: 0, y: 0 }}
-            hoverDampness={0.2}
-            rayCount={0}
-            mixBlendMode="lighten"
-            colors={['#ffffff', '#7EB6E8', '#003580']}
-          />
+          <DeferredPrismaticBurst />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-navy/55 via-navy/25 to-navy/60 pointer-events-none" />
         <div className="relative z-10 max-w-[1440px] mx-auto w-full px-6 xl:px-12 text-center">

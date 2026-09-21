@@ -312,6 +312,8 @@ export default function Resources({ navigate }: Props) {
                     src={featured.img}
                     alt={featured.alt}
                     className={`${photoClass(featured.img, isTechnicalPhoto(featured.img) ? 'photo' : 'decorative')} resources-featured-img`}
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
                 <div className="resources-featured-overlay" />

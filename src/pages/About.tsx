@@ -122,7 +122,7 @@ export default function About({ navigate }: Props) {
       {/* Hero */}
       <section className="relative pt-32 pb-20 bg-navy overflow-hidden">
         <div className="absolute inset-0">
-          <img src={images.aboutHeroImage} alt="Engineering discussion on the shop floor" className={`${photoClass(images.aboutHeroImage, 'decorative')} opacity-50`} />
+          <img src={images.aboutHeroImage} alt="Engineering discussion on the shop floor" className={`${photoClass(images.aboutHeroImage, 'decorative')} opacity-50`} decoding="async" fetchPriority="high" />
           <div className="absolute inset-0 bg-gradient-to-r from-navy/78 via-navy/40 to-navy/22" />
           <div className="absolute inset-0 bg-gradient-to-t from-navy/72 via-transparent to-navy/18" />
         </div>
@@ -211,7 +211,7 @@ export default function About({ navigate }: Props) {
             </div>
             <div>
               <div className={`${imageFrame.group} relative bg-navy`}>
-                <img src={images.aboutHeritageImage} alt="Igniting Minds Aerospace team on the manufacturing floor" className={`${photoClass(images.aboutHeritageImage, 'photo', 'group')}`} />
+                <img src={images.aboutHeritageImage} alt="Igniting Minds Aerospace team on the manufacturing floor" className={`${photoClass(images.aboutHeritageImage, 'photo', 'group')}`} loading="lazy" decoding="async" />
               </div>
               <div className="about-story-pair">
                 <div className="about-story-pair-frame">
@@ -328,6 +328,8 @@ export default function About({ navigate }: Props) {
                           alt={person.name}
                           width={400}
                           height={500}
+                          loading="lazy"
+                          decoding="async"
                           style={{ objectPosition: focus }}
                         />
                       </div>

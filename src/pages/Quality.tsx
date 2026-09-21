@@ -148,7 +148,7 @@ export default function Quality({ navigate }: Props) {
         className={`quality-hero relative overflow-hidden ${heroVisible ? 'is-visible' : ''}`}
       >
         <div className="absolute inset-0">
-          <img src={images.qualityHeroImage} alt="Mitutoyo CMM inspection" className={`${photoClass(images.qualityHeroImage, 'decorative')} opacity-[0.55]`} />
+          <img src={images.qualityHeroImage} alt="Mitutoyo CMM inspection" className={`${photoClass(images.qualityHeroImage, 'decorative')} opacity-[0.55]`} decoding="async" fetchPriority="high" />
           <div className="absolute inset-0 bg-gradient-to-r from-navy/72 via-navy/38 to-navy/18" />
           <div className="absolute inset-0 bg-gradient-to-t from-navy/68 via-transparent to-navy/16" />
         </div>

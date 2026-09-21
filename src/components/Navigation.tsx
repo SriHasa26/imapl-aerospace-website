@@ -49,7 +49,10 @@ export default function Navigation({ currentPage, navigate }: Props) {
   }
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 32)
+    const handler = () => {
+      const next = window.scrollY > 32
+      setScrolled((prev) => (prev === next ? prev : next))
+    }
     window.addEventListener('scroll', handler, { passive: true })
     return () => window.removeEventListener('scroll', handler)
   }, [])

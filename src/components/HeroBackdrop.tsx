@@ -68,9 +68,11 @@ export default function HeroBackdrop() {
 
   const warmNext = (index: number) => {
     if (warmedRef.current) return
-    const next = refs[1 - index].current
+    const nextIndex = 1 - index
+    const next = refs[nextIndex].current
     if (!next) return
     warmedRef.current = true
+    if (!next.currentSrc) next.src = playlist[nextIndex]
     next.preload = 'auto'
   }
 
@@ -82,6 +84,7 @@ export default function HeroBackdrop() {
     if (!next) return
 
     switchingRef.current = true
+    if (!next.currentSrc) next.src = playlist[nextIndex]
     next.muted = true
     next.currentTime = 0
     applyPlaybackRate(nextIndex)
@@ -131,7 +134,7 @@ export default function HeroBackdrop() {
     if (node && node.playbackRate !== expected) applyPlaybackRate(index)
     if (index !== activeRef.current) return
     if (!node || !Number.isFinite(node.duration) || node.duration <= 0) return
-    if (node.currentTime >= 3 || node.duration - node.currentTime <= WARM_BEFORE_END_SEC) {
+    if (node.duration - node.currentTime <= WARM_BEFORE_END_SEC) {
       warmNext(index)
     }
   }
@@ -165,13 +168,13 @@ export default function HeroBackdrop() {
           <video
             key={src}
             ref={refs[index]}
-            src={src}
+            src={index === 0 ? src : undefined}
             aria-hidden="true"
             className={`${videoClass} ${videoReady && active === index ? 'opacity-100' : 'opacity-0'}`}
             poster={index === 0 ? images.heroImage : undefined}
             muted
             playsInline
-            preload={index === 0 ? 'auto' : 'metadata'}
+            preload={index === 0 ? 'auto' : 'none'}
             autoPlay={index === 0}
             disablePictureInPicture
             disableRemotePlayback
