@@ -41,6 +41,13 @@ export const galleryItems: GalleryItem[] = [
     alt: 'IMAPL employees applauding together at a company gathering',
   },
   {
+    id: 'team-games',
+    image: '/images/gallery/activities/imapl-team-activity-02.jpg',
+    title: 'Team Activity',
+    category: 'Team Activities',
+    alt: 'IMAPL employees taking part in a group activity',
+  },
+  {
     id: 'celebration-festival-frame',
     image: '/images/gallery/activities/imapl-celebration-01.jpg',
     title: 'Festival Celebration',
@@ -83,20 +90,6 @@ export const galleryItems: GalleryItem[] = [
     title: 'Festival Celebration',
     category: 'Celebrations',
     alt: 'IMAPL employees taking part in a festival celebration',
-  },
-  {
-    id: 'team-games',
-    image: '/images/gallery/activities/imapl-team-activity-02.jpg',
-    title: 'Team Activity',
-    category: 'Team Activities',
-    alt: 'IMAPL employees taking part in a group activity',
-  },
-  {
-    id: 'celebration-birthday',
-    image: '/images/gallery/activities/imapl-celebration-05.jpg',
-    title: 'Team Celebration',
-    category: 'Celebrations',
-    alt: 'IMAPL employees celebrating together with a birthday cake',
   },
 ]
 
