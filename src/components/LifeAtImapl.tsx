@@ -118,7 +118,7 @@ export default function LifeAtImapl({ visible = false }: Props) {
           Where People, Precision & Progress Come Together
         </h2>
         <p className="text-steel max-w-2xl leading-relaxed mb-10">
-          Discover the people, activities and workplace experiences that contribute to the culture of Igniting Minds Aerospace Private Limited.
+          Discover the people, activities and culture of Igniting Minds Aerospace Private Limited.
         </p>
 
         <div className="careers-gallery-filters" role="tablist" aria-label="Gallery categories">
@@ -172,6 +172,7 @@ export default function LifeAtImapl({ visible = false }: Props) {
           </p>
         )}
 
+        {featuredVideos.length > 0 && (
         <div className="careers-gallery-videos">
           <div className="careers-eyebrow flex items-center gap-3 mb-3">
             <div className="careers-eyebrow-rule h-px bg-orange" />
@@ -179,7 +180,7 @@ export default function LifeAtImapl({ visible = false }: Props) {
           </div>
           <h3 className="font-display font-bold text-white text-3xl uppercase mb-4">Inside IMAPL</h3>
           <p className="text-steel max-w-2xl leading-relaxed mb-8">
-            Explore our workplace, people, manufacturing activities and aerospace capabilities through video.
+            Explore the people, team activities and culture of Igniting Minds Aerospace through video.
           </p>
           <div className="careers-video-grid">
             {featuredVideos.map((video, index) => {
@@ -241,6 +242,7 @@ export default function LifeAtImapl({ visible = false }: Props) {
             })}
           </div>
         </div>
+        )}
       </div>
 
       {activeItem && lightbox !== null && (
@@ -314,20 +316,12 @@ export default function LifeAtImapl({ visible = false }: Props) {
               </button>
             </div>
             <div className="careers-video-embed">
-              {activeVideo.kind === 'youtube' ? (
+              {activeVideo.kind === 'youtube' && (
                 <iframe
                   title={activeVideo.title}
                   src={`https://www.youtube.com/embed/${activeVideo.videoId}?autoplay=1`}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
-                />
-              ) : (
-                <video
-                  src={activeVideo.src}
-                  poster={activeVideo.poster}
-                  controls
-                  autoPlay
-                  playsInline
                 />
               )}
             </div>

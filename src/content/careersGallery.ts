@@ -1,13 +1,12 @@
-import { images, videos } from './assets'
+import { images } from './assets'
 import { socialLinks } from './contact'
 
 export const galleryCategories = [
   'All',
   'Team Activities',
-  'Training & Workshops',
-  'Events & Celebrations',
-  'Workplace',
-  'Manufacturing',
+  'Events',
+  'Celebrations',
+  'Training & Engagement',
 ] as const
 
 export type GalleryCategory = (typeof galleryCategories)[number]
@@ -26,144 +25,46 @@ export const galleryItems: GalleryItem[] = [
   {
     id: 'team-factory',
     image: images.overviewTeamFactory,
-    title: 'Team Activity',
+    title: 'Group Photograph',
     category: 'Team Activities',
-    alt: 'IMAPL team gathered on the manufacturing shop floor',
+    alt: 'IMAPL employees gathered together for a group photograph',
     featured: true,
   },
   {
     id: 'training-session',
     image: images.careersCultureImage,
     title: 'Training Session',
-    category: 'Training & Workshops',
-    alt: 'IMAPL employees in a training session',
+    category: 'Training & Engagement',
+    alt: 'IMAPL employees seated together during a training session',
     featured: true,
   },
   {
-    id: 'engineering-discussion',
-    image: images.aboutHeroImage,
-    title: 'Team Activity',
+    id: 'team-group',
+    image: images.aboutHeritageImage,
+    title: 'Group Photograph',
     category: 'Team Activities',
-    alt: 'Engineering discussion on the shop floor at IMAPL',
+    alt: 'IMAPL employees together in a group photograph',
+  },
+  {
+    id: 'team-seated',
+    image: images.aboutTeamSeatedImage,
+    title: 'Group Photograph',
+    category: 'Team Activities',
+    alt: 'IMAPL employees seated and standing together for a group photograph',
+  },
+  {
+    id: 'team-gathering',
+    image: images.careersGroupImage,
+    title: 'Team Gathering',
+    category: 'Team Activities',
+    alt: 'IMAPL employees gathered together as a group',
   },
   {
     id: 'careers-team',
     image: images.careersImage,
     title: 'Team Activity',
     category: 'Team Activities',
-    alt: 'IMAPL team members in the workplace',
-  },
-  {
-    id: 'team-group',
-    image: images.aboutHeritageImage,
-    title: 'Team Activity',
-    category: 'Team Activities',
-    alt: 'IMAPL team group photograph in the manufacturing facility',
-  },
-  {
-    id: 'team-seated',
-    image: images.aboutTeamSeatedImage,
-    title: 'Team Activity',
-    category: 'Team Activities',
-    alt: 'IMAPL team seated together',
-  },
-  {
-    id: 'overview-seated',
-    image: images.overviewTeamSeated,
-    title: 'Team Activity',
-    category: 'Team Activities',
-    alt: 'IMAPL team in a workplace meeting area',
-  },
-  {
-    id: 'careers-group',
-    image: images.careersGroupImage,
-    title: 'Team Activity',
-    category: 'Team Activities',
-    alt: 'Igniting Minds Aerospace team photograph',
-  },
-  {
-    id: 'shop-floor',
-    image: images.manufacturingImage,
-    title: 'Workplace Activity',
-    category: 'Workplace',
-    alt: 'CNC operators at work on the IMAPL shop floor',
-  },
-  {
-    id: 'facility-cnc-bay',
-    image: images.facilityCncBayImage,
-    title: 'Workplace Activity',
-    category: 'Workplace',
-    alt: 'CNC machining bay at IMAPL',
-  },
-  {
-    id: 'facility-gallery',
-    image: images.facilityGalleryImage,
-    title: 'Workplace Activity',
-    category: 'Workplace',
-    alt: 'IMAPL manufacturing facility',
-  },
-  {
-    id: 'workshop',
-    image: images.workshopImage,
-    title: 'Workplace Activity',
-    category: 'Workplace',
-    alt: 'IMAPL manufacturing workshop',
-  },
-  {
-    id: 'mro-tooling-bay',
-    image: images.facilityMroToolingImage,
-    title: 'Workplace Activity',
-    category: 'Workplace',
-    alt: 'MRO tooling workplace at IMAPL',
-  },
-  {
-    id: 'facility-secondary',
-    image: images.facilitySecondaryImage,
-    title: 'Workplace Activity',
-    category: 'Workplace',
-    alt: 'IMAPL facility workplace',
-  },
-  {
-    id: 'cnc-operator',
-    image: images.machiningImage,
-    title: 'Manufacturing Activity',
-    category: 'Manufacturing',
-    alt: 'CNC operator at a machining centre at IMAPL',
-  },
-  {
-    id: 'cnc-gantry',
-    image: images.cncGantryBay,
-    title: 'Manufacturing Activity',
-    category: 'Manufacturing',
-    alt: 'CNC gantry bay at IMAPL',
-  },
-  {
-    id: 'assembly-ring',
-    image: images.assemblyImage,
-    title: 'Manufacturing Activity',
-    category: 'Manufacturing',
-    alt: 'Assembly activity at IMAPL',
-  },
-  {
-    id: 'part-marking',
-    image: images.partMarkingImage,
-    title: 'Manufacturing Activity',
-    category: 'Manufacturing',
-    alt: 'Part marking activity at IMAPL',
-  },
-  {
-    id: 'fixture-assembly',
-    image: images.fixtureAssembly,
-    title: 'Manufacturing Activity',
-    category: 'Manufacturing',
-    alt: 'Fixture assembly at IMAPL',
-  },
-  {
-    id: 'quality-inspection',
-    image: images.qualityHeroImage,
-    title: 'Manufacturing Activity',
-    category: 'Manufacturing',
-    alt: 'Coordinate measuring machine inspection at IMAPL',
+    alt: 'IMAPL employees together in the workplace',
   },
 ]
 
@@ -172,27 +73,19 @@ export const imaplYoutubeChannel =
   ?? null
 
 /**
- * TODO: Official IMAPL YouTube video IDs are not stored in this repository.
- * Only the channel URL https://www.youtube.com/@ignitingmindsaerospace was found.
- * Add confirmed video IDs here before enabling YouTube embeds.
+ * TODO: Official IMAPL YouTube video IDs for employee activities, events or
+ * celebrations are not stored in this repository. Only the channel URL
+ * https://www.youtube.com/@ignitingmindsaerospace was found.
+ * Do not embed manufacturing or capability videos in this section.
  */
 export const pendingYoutubeVideos: Array<{ videoId: null; note: string }> = [
   {
     videoId: null,
-    note: 'TODO: provide official IMAPL YouTube video IDs for Featured Videos embeds.',
+    note: 'TODO: provide official IMAPL YouTube video IDs for employee activities, events or celebrations.',
   },
 ]
 
 export type FeaturedVideo =
-  | {
-      id: string
-      kind: 'local'
-      src: string
-      poster: string
-      title: string
-      category: GalleryFilter
-      description: string
-    }
   | {
       id: string
       kind: 'youtube-channel'
@@ -212,30 +105,12 @@ export type FeaturedVideo =
     }
 
 export const featuredVideos: FeaturedVideo[] = [
-  {
-    id: 'local-manufacturing',
-    kind: 'local',
-    src: videos.hero,
-    poster: images.facilityCncBayImage,
-    title: 'Manufacturing Activity',
-    category: 'Manufacturing',
-    description: 'Workplace manufacturing activity recorded at IMAPL.',
-  },
-  {
-    id: 'local-continuation',
-    kind: 'local',
-    src: videos.heroContinuation,
-    poster: images.manufacturingImage,
-    title: 'Workplace Activity',
-    category: 'Workplace',
-    description: 'Shop-floor activity recorded at IMAPL.',
-  },
   ...(imaplYoutubeChannel
     ? [{
         id: 'youtube-channel',
         kind: 'youtube-channel' as const,
         href: imaplYoutubeChannel,
-        poster: images.overviewTeamFactory,
+        poster: images.aboutTeamSeatedImage,
         title: 'IMAPL on YouTube',
         category: 'Team Activities' as const,
         description: 'Official Igniting Minds Aerospace YouTube channel.',
