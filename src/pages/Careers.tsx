@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import type { NavigateFn } from '../App'
+import LifeAtImapl from '../components/LifeAtImapl'
 import { images } from '../content/assets'
 import { photoClass } from '../content/imagePresentation'
 import {
@@ -119,7 +120,7 @@ export default function Careers({ navigate }: Props) {
 
   useEffect(() => {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const ids = ['car-why', 'car-life', 'car-split', 'car-culture', 'car-cta']
+    const ids = ['car-why', 'car-life', 'car-split', 'car-culture', 'car-gallery', 'car-cta']
     if (reduceMotion || !('IntersectionObserver' in window)) {
       setHeroVisible(true)
       setRevealed(Object.fromEntries(ids.map((id) => [id, true])))
@@ -457,6 +458,8 @@ export default function Careers({ navigate }: Props) {
           </div>
         </section>
       )}
+
+      <LifeAtImapl visible={revealed['car-gallery']} />
 
       <section id="car-cta" className={`careers-cta ${revealed['car-cta'] ? 'is-visible' : ''}`}>
         <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
