@@ -191,7 +191,7 @@ export default function Capabilities({ navigate }: Props) {
         >
           <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
             <div className={`caps-page-panel ${i % 2 === 0 ? 'caps-page-panel--dark' : 'caps-page-panel--light'}`}>
-              <div className={`grid lg:grid-cols-2 gap-12 lg:gap-16 ${cap.id === '06' ? 'items-stretch' : 'items-start'} ${i % 2 !== 0 ? 'lg:[&>*:first-child]:order-2' : ''}`}>
+              <div className={`grid lg:grid-cols-2 gap-12 lg:gap-16 ${cap.id === '06' ? 'caps-page-inspection-grid items-start lg:items-stretch' : 'items-start'} ${i % 2 !== 0 ? 'lg:[&>*:first-child]:order-2' : ''}`}>
               <div>
                 <div className={`font-mono text-xs sm:text-sm uppercase tracking-widest mb-3 flex items-center gap-2 ${i % 2 === 0 ? 'text-cyan' : 'text-blue'}`}>
                   <span className={i % 2 === 0 ? 'text-steel' : 'text-mid'}>{cap.id}</span>
@@ -234,39 +234,16 @@ export default function Capabilities({ navigate }: Props) {
                 </button>
               </div>
 
-              <div className={`caps-page-figure relative${cap.id === '06' ? ' caps-page-figure--pair' : ''}`}>
-                <div className={`${cap.id === '06' ? 'caps-page-figure-frame--pair im-catalog-fill' : `${imageFrame.card} ${cap.img && catalogFillClass(cap.img) ? catalogFillClass(cap.img) : 'bg-navy'}`}`}>
-                  {cap.id === '06' ? (
-                    <div className="caps-page-figure-pair">
-                      <div className="caps-page-figure-pair-cell">
-                        <img
-                          src={images.inspectionCmmCrysta}
-                          alt="MITUTOYO CMM CRYSTA-Apex S7106"
-                          className="caps-page-figure-img"
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      </div>
-                      <div className="caps-page-figure-pair-cell">
-                        <img
-                          src={images.inspectionVpp}
-                          alt="ACCURATE Model VPP 2515 MAZ"
-                          className="caps-page-figure-img"
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      </div>
-                    </div>
-                  ) : (
-                    cap.img && (
-                      <img
-                        src={cap.img}
-                        alt={cap.title}
-                        className={`${photoClass(cap.img)} caps-page-figure-img`}
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    )
+              <div className={`caps-page-figure relative${cap.id === '06' ? ' caps-page-figure--inspection' : ''}`}>
+                <div className={`${cap.id === '06' ? 'caps-page-figure-frame--inspection im-catalog-fill' : `${imageFrame.card} ${cap.img && catalogFillClass(cap.img) ? catalogFillClass(cap.img) : 'bg-navy'}`}`}>
+                  {cap.img && (
+                    <img
+                      src={cap.img}
+                      alt={cap.id === '06' ? 'Inspection CMM and measurement equipment' : cap.title}
+                      className={`${photoClass(cap.img)} caps-page-figure-img`}
+                      loading="lazy"
+                      decoding="async"
+                    />
                   )}
                 </div>
                 {cap.id !== '06' && <div className="caps-page-figure-overlay" />}

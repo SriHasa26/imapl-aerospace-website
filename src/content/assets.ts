@@ -34,6 +34,7 @@ export const images = {
   inspectionCmmCrysta: '/images/quality/inspection-cmm-crysta.png?v=4',
   inspectionContracer: '/images/quality/inspection-contracer.jpg',
   inspectionVpp: '/images/quality/inspection-vpp.png?v=4',
+  inspectionEquipment: '/images/quality/inspection-equipment.jpg',
   loadTestDeadWeight: '/images/quality/load-test-dead-weight.jpg',
   loadTestDigitalScale: '/images/quality/load-test-digital-scale.jpg',
   facilityTeamImage: '/images/about/about-team-seated.jpg',

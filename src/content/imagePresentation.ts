@@ -62,6 +62,7 @@ const technicalPhotos = new Set<string>([
   images.inspectionCmmCrysta,
   images.inspectionContracer,
   images.inspectionVpp,
+  images.inspectionEquipment,
 ])
 
 const groupPhotos = new Set<string>([
@@ -113,7 +114,8 @@ export function isLightCatalogPhoto(src: string): boolean {
     src === images.productLiftingTools ||
     src === images.inspectionCmmCrysta ||
     src === images.inspectionContracer ||
-    src === images.inspectionVpp
+    src === images.inspectionVpp ||
+    src === images.inspectionEquipment
   )
 }
 
