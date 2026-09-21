@@ -1,0 +1,82 @@
+/**
+ * Central image registry. Replace these paths when new company photographs arrive.
+ * Do not hard-wire temporary CDN URLs in page components.
+ */
+
+export const videos = {
+  hero: '/videos/hero-manufacturing.mp4',
+  heroContinuation: '/videos/video_continuation.mp4',
+} as const
+
+export const images = {
+  brandLogo: '/images/brand/imapl-logo.png',
+  brandLogoAlt: 'Igniting Minds Aerospace',
+  favicon: '/images/brand/imapl-favicon.png',
+
+  heroImage: '/images/facilities/facility.png',
+  productsImage: '/images/products/product-ni-plated.png',
+  qualityImage: '/images/quality/quality-cmm-mitutoyo.jpg',
+  facilityImage: '/images/facilities/facility.png',
+  manufacturingImage: '/images/about/about-shop-floor.jpg',
+  overviewTeamFactory: '/images/about/overview-team-factory.jpg',
+  overviewTeamSeated: '/images/about/overview-team-seated.jpg',
+  machiningImage: '/images/capabilities/capability-cnc-operator.jpg',
+  cncTurningImage: '/images/capabilities/machining.png',
+  tigWeldingImage: '/images/capabilities/machining-2.png',
+  careersImage: '/images/careers/careers-team.jpg',
+  careersCultureImage: '/images/careers/careers-training.jpg',
+  aboutHeroImage: '/images/about/about-engineering-discussion.jpg',
+  aboutHeritageImage: '/images/about/about-team-group.jpg',
+  aboutTeamSeatedImage: '/images/about/about-team-seated.jpg',
+  qualityHeroImage: '/images/quality/quality-cmm-mitutoyo.jpg',
+  qualityTeamImage: '/images/facilities/facility-2.jpg',
+  qualityGaugeImage: '/images/quality/quality-inspection.png',
+  inspectionCmmCrysta: '/images/quality/inspection-cmm-crysta.png?v=4',
+  inspectionContracer: '/images/quality/inspection-contracer.jpg',
+  inspectionVpp: '/images/quality/inspection-vpp.png?v=4',
+  loadTestDeadWeight: '/images/quality/load-test-dead-weight.jpg',
+  loadTestDigitalScale: '/images/quality/load-test-digital-scale.jpg',
+  facilityTeamImage: '/images/about/about-team-seated.jpg',
+  facilityGalleryImage: '/images/facilities/facility-3.jpg',
+  facilitySecondaryImage: '/images/facilities/facility-2.jpg',
+  facilityCncBayImage: '/images/facilities/facility-cnc-bay.jpg',
+  facilityMroToolingImage: '/images/facilities/facility-mro-tooling.jpg?v=2',
+  workshopImage: '/images/general/workshop.jpg',
+  workshopSecondaryImage: '/images/general/workshop-2.jpg',
+  careersGroupImage: '/images/careers/careers.jpg',
+  cncMachineImage: '/images/capabilities/cnc-machine.png',
+  cncGantryBay: '/images/capabilities/cnc-gantry-bay.jpg',
+  assemblyImage: '/images/manufacturing/capability-assembly-ring.jpg',
+  partMarkingImage: '/images/capabilities/capability-part-marking.jpg',
+  fixtureAssembly: '/images/tooling/fixture-assembly.jpg',
+  fixtureHeatTreatment: '/images/tooling/fixture-heat-treatment.jpg',
+
+  leadershipChakrapani: '/images/about/leadership-chakrapani.jpg?v=4',
+  leadershipManjunatha: '/images/about/leadership-manjunatha.jpg?v=4',
+  leadershipBeerappa: '/images/about/leadership-beerappa.jpg?v=4',
+
+  precisionComponents: '/images/products/product-ni-plated.png',
+  aeroEngineComponents: '/images/products/product-inconel-component.png',
+  structuralComponent: '/images/products/product-aluminium-housing.png',
+  multiAxisComponents: '/images/products/product-aluminium-5axis.jpg',
+  aeroEngineTooling: '/images/products/product-brackets.jpg',
+  gse: '/images/products/product-gse.png',
+  gseStreamers: '/images/products/product-rbf-streamers.jpg',
+  jigsFixtures: '/images/products/product-jigs-ring.jpg?v=2',
+  mroTooling: '/images/products/product-mro-engine-stand.png',
+  airframeTooling: '/images/products/product-airframe-fixture.jpg',
+  productPedestals: '/images/products/product-pedestals.jpg',
+  productLiftingTools: '/images/products/product-lifting-tools.jpg',
+  productTorquingTools: '/images/products/product-torquing-tools.jpg',
+  productTigWelding: '/images/products/product-tig-welding.jpg',
+  productIndexingTools: '/images/products/product-indexing-tools.jpg',
+  productMovementTrolleys: '/images/products/product-aero-engine-line.jpg',
+  productAeroEngineTooling: '/images/products/product-aero-engine-tooling.jpg',
+  productBrackets: '/images/products/product-load-test-scale.jpg',
+  fixtureCmm: '/images/tooling/fixture-cmm.jpg',
+  fixtureWelding: '/images/tooling/fixture-welding.jpg',
+  fixtureTurning: '/images/tooling/fixture-turning.jpg',
+  aluminiumLongComponent: '/images/products/product-aluminium-long.jpg',
+} as const
+
+export type ImageKey = keyof typeof images
