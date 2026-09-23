@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import { useEffect, useState, type CSSProperties } from 'react'
 import type { Page } from '../App'
 import { images } from '../content/assets'
 import { isPortraitEquipment, isTechnicalPhoto, photoClass } from '../content/imagePresentation'
@@ -102,32 +102,24 @@ const photoTour = publicBays.length > 0
     }))
 
 export default function Facilities({ navigate }: Props) {
-  const heroRef = useRef<HTMLElement>(null)
   const [heroVisible, setHeroVisible] = useState(false)
   const [activeTour, setActiveTour] = useState(photoTour[0]?.num ?? '')
   const [revealed, setRevealed] = useState<Record<string, boolean>>({})
 
   useEffect(() => {
+    // Hero is always the first thing on the page, so reveal it on mount rather than
+    // waiting for a scroll-triggered IntersectionObserver — gating it on scroll
+    // position raced against the navigation scroll-to-top reset and could leave it
+    // permanently hidden.
+    const revealId = window.requestAnimationFrame(() => setHeroVisible(true))
+
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const tourIds = photoTour.map((bay) => `fac-tour-${bay.num}`)
     const extraIds = ['fac-location', 'fac-tour', 'fac-equipment']
     if (reduceMotion || !('IntersectionObserver' in window)) {
-      setHeroVisible(true)
       setRevealed(Object.fromEntries([...tourIds, ...extraIds].map((id) => [id, true])))
-      return
+      return () => window.cancelAnimationFrame(revealId)
     }
-
-    const hero = heroRef.current
-    const heroObserver = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setHeroVisible(true)
-          heroObserver.disconnect()
-        }
-      },
-      { threshold: 0.12 },
-    )
-    if (hero) heroObserver.observe(hero)
 
     const revealObserver = new IntersectionObserver(
       (entries) => {
@@ -163,7 +155,7 @@ export default function Facilities({ navigate }: Props) {
     })
 
     return () => {
-      heroObserver.disconnect()
+      window.cancelAnimationFrame(revealId)
       revealObserver.disconnect()
       spyObserver.disconnect()
     }
@@ -173,7 +165,6 @@ export default function Facilities({ navigate }: Props) {
     <div className="facilities-page">
       {/* Hero */}
       <section
-        ref={heroRef}
         className={`facilities-hero relative overflow-hidden ${heroVisible ? 'is-visible' : ''}`}
       >
         <img src={images.facilityImage} alt="Igniting Minds Aerospace manufacturing facility" className={`absolute inset-0 ${photoClass(images.facilityImage, 'decorative')} opacity-55`} />

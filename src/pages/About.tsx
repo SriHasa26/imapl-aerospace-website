@@ -31,15 +31,14 @@ function SectionLabel({ text }: { text: string }) {
   )
 }
 
-function ArrowRight() {
+function ArrowRight({ className = 'w-3.5 h-3.5' }: { className?: string }) {
   return (
-    <svg viewBox="0 0 16 16" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="1.5">
+    <svg viewBox="0 0 16 16" className={className} fill="none" stroke="currentColor" strokeWidth="1.5">
       <path d="M3 8h10M9 4l4 4-4 4" />
     </svg>
   )
 }
 
-const workAreaTones = ['from-blue/20', 'from-cyan/10'] as const
 const lightWorkPhotos = new Set<ImageKey>([
   'precisionComponents',
   'mroTooling',
@@ -117,21 +116,16 @@ export default function About({ navigate }: Props) {
   return (
     <div>
       {/* Hero */}
-      <section className="relative pt-32 pb-20 bg-navy overflow-hidden">
+      <section className="relative min-h-screen min-h-[100svh] flex flex-col justify-center pt-32 pb-32 bg-navy overflow-hidden">
         <div className="absolute inset-0">
-          <img src={images.aboutHeroImage} alt="Engineering discussion on the shop floor" className={`${photoClass(images.aboutHeroImage, 'decorative')} opacity-50`} />
-          <div className="absolute inset-0 bg-gradient-to-r from-navy/78 via-navy/40 to-navy/22" />
-          <div className="absolute inset-0 bg-gradient-to-t from-navy/72 via-transparent to-navy/18" />
+          <img src={images.aboutHeroImage} alt="Engineering discussion on the shop floor" className={`${photoClass(images.aboutHeroImage, 'decorative')} opacity-70`} />
+          <div className="absolute inset-0 bg-gradient-to-r from-navy/75 via-navy/32 to-navy/15" />
+          <div className="absolute inset-0 bg-gradient-to-t from-navy/55 via-transparent to-navy/15" />
         </div>
         <div className="absolute inset-0 blueprint-grid opacity-20" />
         <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
-          <div className="font-mono text-xs text-steel uppercase tracking-widest mb-6 flex items-center gap-2">
-            <button onClick={() => navigate('home')} className="hover:text-cyan transition-colors">Home</button>
-            <span>/</span>
-            <span className="text-cyan">About</span>
-          </div>
           <SectionLabel text="About Us" />
-          <h1 className="font-display font-black text-white text-5xl lg:text-7xl uppercase leading-none tracking-tight mb-6">
+          <h1 className="font-display font-black text-white text-5xl lg:text-7xl uppercase leading-none tracking-tight mb-6 [text-shadow:0_8px_32px_rgba(10,20,38,0.55)]">
             Engineering<br />Excellence
             {publicFoundingYear ? (
               <>
@@ -145,9 +139,14 @@ export default function About({ navigate }: Props) {
               </>
             )}
           </h1>
-          <p className="text-steel max-w-2xl text-lg leading-relaxed">
+          <p className="text-steel max-w-2xl text-lg leading-relaxed [text-shadow:0_2px_10px_rgba(10,20,38,0.5)]">
             {description.value}
           </p>
+        </div>
+        <div className="absolute bottom-0 left-0 right-0 z-10 pointer-events-none" aria-hidden="true">
+          <svg viewBox="0 0 1440 100" preserveAspectRatio="none" className="w-full h-[64px] sm:h-[92px] lg:h-[116px] block">
+            <path d="M0,52 C420,104 860,58 1440,40 L1440,100 L0,100 Z" fill="#F7F5F1" />
+          </svg>
         </div>
       </section>
 
@@ -262,18 +261,18 @@ export default function About({ navigate }: Props) {
       )}
 
       {/* Work areas with official photographs */}
-      <section className="bg-navy py-16 lg:py-20">
+      <section className="about-work-section py-16 lg:py-20">
         <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
           <SectionLabel text="Our Work" />
-          <h2 className="font-display font-bold text-white text-4xl lg:text-5xl uppercase leading-tight mb-8 lg:mb-10">
+          <h2 className="font-display font-bold text-navy text-4xl lg:text-5xl uppercase leading-tight mb-8 lg:mb-10">
             Engineering &<br />Manufacturing
           </h2>
           <div className="about-work-grid">
-            {publicWorkAreas.map((area, index) => {
+            {publicWorkAreas.map((area) => {
               const imageKey = workAreaImages[area]
               const src = imageKey ? images[imageKey] : undefined
               return (
-                <div key={area} className={`about-work-card bg-gradient-to-b ${workAreaTones[index % 2]} to-navy-mid hover:to-navy-light`}>
+                <div key={area} className="about-work-card">
                   {src && (
                     <div className={[
                       'about-work-photo',
@@ -290,9 +289,9 @@ export default function About({ navigate }: Props) {
                     </div>
                   )}
                   <div className="p-5 lg:p-6">
-                    <h3 className="font-display font-bold text-white text-xl uppercase mb-2">{area}</h3>
+                    <h3 className="font-display font-bold text-navy text-xl uppercase mb-2">{area}</h3>
                     {workAreaDescriptions[area] && (
-                      <p className="text-steel text-sm leading-relaxed">{workAreaDescriptions[area]}</p>
+                      <p className="text-mid text-sm leading-relaxed">{workAreaDescriptions[area]}</p>
                     )}
                   </div>
                 </div>
@@ -307,8 +306,8 @@ export default function About({ navigate }: Props) {
           <div className="about-leaders-inner max-w-[1440px] mx-auto px-6 xl:px-12">
             <div className="about-leaders-heading">
               <SectionLabel text="Leadership Team" />
-              <h2 className="font-display font-bold text-white text-4xl lg:text-5xl uppercase leading-tight">
-                Guided by<br />Industry Veterans
+              <h2 className="font-display font-bold text-white text-4xl lg:text-5xl uppercase leading-tight sm:whitespace-nowrap">
+                Guided by Industry Veterans
               </h2>
             </div>
             <div className="about-leaders-grid">
@@ -351,16 +350,14 @@ export default function About({ navigate }: Props) {
 
       {/* CTA */}
       <section className="bg-orange py-20">
-        <div className="max-w-[1440px] mx-auto px-6 xl:px-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-          <div>
-            <h2 className="font-display font-bold text-white text-4xl uppercase">Ready to Partner?</h2>
-            <p className="text-white/70 mt-2">Discover how we can support your aerospace program.</p>
-          </div>
-          <div className="flex gap-4">
-            <button onClick={() => navigate('quote')} className="bg-white text-orange hover:bg-off font-medium text-sm px-7 py-3.5 flex items-center gap-2 transition-colors">
-              Request a Quote <ArrowRight />
+        <div className="max-w-[1440px] mx-auto px-6 xl:px-12 text-center">
+          <h2 className="font-display font-bold text-white text-4xl lg:text-5xl uppercase mb-4">Ready to Partner?</h2>
+          <p className="text-white/70 max-w-lg mx-auto mb-8">Discover how we can support your aerospace program.</p>
+          <div className="flex items-center justify-center gap-4">
+            <button onClick={() => navigate('quote')} className="btn-chamfer group bg-white text-orange hover:bg-off font-medium text-sm px-7 py-3.5 flex items-center gap-2 transition-all duration-200 hover:-translate-y-0.5">
+              Request a Quote <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
             </button>
-            <button onClick={() => navigate('contact')} className="border border-white/30 text-white hover:bg-white/10 font-medium text-sm px-7 py-3.5 transition-colors">
+            <button onClick={() => navigate('contact')} className="btn-chamfer border border-white/30 text-white hover:bg-white/10 hover:border-white/60 font-medium text-sm px-7 py-3.5 transition-all duration-200 hover:-translate-y-0.5">
               Contact Us
             </button>
           </div>

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import { useEffect, useState, type CSSProperties } from 'react'
 import type { Page } from '../App'
 import { images } from '../content/assets'
 import { photoClass } from '../content/imagePresentation'
@@ -92,30 +92,22 @@ function moduleKey(val: string): string {
 }
 
 export default function Quality({ navigate }: Props) {
-  const heroRef = useRef<HTMLElement>(null)
   const [heroVisible, setHeroVisible] = useState(false)
   const [revealed, setRevealed] = useState<Record<string, boolean>>({})
 
   useEffect(() => {
+    // Hero is always the first thing on the page, so reveal it on mount rather than
+    // waiting for a scroll-triggered IntersectionObserver — gating it on scroll
+    // position raced against the navigation scroll-to-top reset and could leave it
+    // permanently hidden.
+    const revealId = window.requestAnimationFrame(() => setHeroVisible(true))
+
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const ids = ['quality-metrics', 'quality-certs', 'quality-process', 'quality-lab']
     if (reduceMotion || !('IntersectionObserver' in window)) {
-      setHeroVisible(true)
       setRevealed(Object.fromEntries(ids.map((id) => [id, true])))
-      return
+      return () => window.cancelAnimationFrame(revealId)
     }
-
-    const hero = heroRef.current
-    const heroObserver = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setHeroVisible(true)
-          heroObserver.disconnect()
-        }
-      },
-      { threshold: 0.16 },
-    )
-    if (hero) heroObserver.observe(hero)
 
     const sectionObserver = new IntersectionObserver(
       (entries) => {
@@ -135,7 +127,7 @@ export default function Quality({ navigate }: Props) {
     })
 
     return () => {
-      heroObserver.disconnect()
+      window.cancelAnimationFrame(revealId)
       sectionObserver.disconnect()
     }
   }, [])
@@ -144,7 +136,6 @@ export default function Quality({ navigate }: Props) {
     <div className="quality-page">
       {/* Hero */}
       <section
-        ref={heroRef}
         className={`quality-hero relative overflow-hidden ${heroVisible ? 'is-visible' : ''}`}
       >
         <div className="absolute inset-0">

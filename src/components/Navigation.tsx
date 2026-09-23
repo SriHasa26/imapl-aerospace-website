@@ -98,7 +98,7 @@ export default function Navigation({ currentPage, navigate }: Props) {
       href={hrefFor(page)}
       onClick={go(page)}
       aria-current={currentPage === page ? 'page' : undefined}
-      className={`text-sm font-medium tracking-wide transition-colors duration-150 whitespace-nowrap ${linkFocus} ${
+      className={`nav-link text-sm font-medium tracking-wide transition-colors duration-150 whitespace-nowrap ${linkFocus} ${
         currentPage === page ? 'text-orange' : 'text-steel hover:text-white'
       }`}
     >
@@ -128,21 +128,21 @@ export default function Navigation({ currentPage, navigate }: Props) {
         }`}
       >
         <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
-          <div className="flex items-center justify-between h-16 lg:h-20">
+          <div className="grid grid-cols-3 items-center h-16 lg:h-20">
 
             <a
               href={hrefFor('home')}
               onClick={go('home')}
-              className={`flex items-center shrink-0 ${linkFocus}`}
+              className={`justify-self-start flex items-center shrink-0 ${linkFocus}`}
             >
               <img
                 src={images.brandLogo}
                 alt={images.brandLogoAlt}
-                className="h-8 lg:h-10 w-auto max-w-[168px] object-contain object-left"
+                className="h-11 lg:h-16 w-auto max-w-[220px] object-contain object-left"
               />
             </a>
 
-            <div className="hidden lg:flex items-center gap-7">
+            <div className="hidden lg:flex items-center justify-self-center gap-7">
               {link('About', 'about')}
 
               <div
@@ -162,7 +162,7 @@ export default function Navigation({ currentPage, navigate }: Props) {
                     onClick={go('capabilities')}
                     onKeyDown={onMegaKeyDown('capabilities')}
                     aria-current={currentPage === 'capabilities' ? 'page' : undefined}
-                    className={`text-sm font-medium tracking-wide transition-colors duration-150 ${linkFocus} ${
+                    className={`nav-link text-sm font-medium tracking-wide transition-colors duration-150 ${linkFocus} ${
                       currentPage === 'capabilities' ? 'text-orange' : 'text-steel hover:text-white'
                     }`}
                   >
@@ -242,7 +242,7 @@ export default function Navigation({ currentPage, navigate }: Props) {
                     onClick={go('products')}
                     onKeyDown={onMegaKeyDown('products')}
                     aria-current={currentPage === 'products' ? 'page' : undefined}
-                    className={`text-sm font-medium tracking-wide transition-colors duration-150 ${linkFocus} ${
+                    className={`nav-link text-sm font-medium tracking-wide transition-colors duration-150 ${linkFocus} ${
                       currentPage === 'products' ? 'text-orange' : 'text-steel hover:text-white'
                     }`}
                   >
@@ -319,12 +319,12 @@ export default function Navigation({ currentPage, navigate }: Props) {
               {link('Careers', 'careers')}
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 justify-self-end">
               <a
                 href={hrefFor('contact')}
                 onClick={go('contact')}
                 aria-current={currentPage === 'contact' ? 'page' : undefined}
-                className={`hidden lg:block text-sm tracking-wide transition-colors ${linkFocus} ${
+                className={`nav-link hidden lg:block text-sm tracking-wide transition-colors ${linkFocus} ${
                   currentPage === 'contact' ? 'text-orange' : 'text-steel hover:text-white'
                 }`}
               >
@@ -334,12 +334,12 @@ export default function Navigation({ currentPage, navigate }: Props) {
                 href={hrefFor('quote')}
                 onClick={go('quote')}
                 aria-current={currentPage === 'quote' ? 'page' : undefined}
-                className={`hidden lg:flex items-center gap-2 text-white text-[13px] font-medium px-5 py-2.5 transition-colors duration-150 tracking-wide focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-orange ${
+                className={`btn-chamfer nav-cta group hidden lg:flex items-center gap-2 text-white text-[13px] font-medium px-5 py-2.5 tracking-wide focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-orange ${
                   currentPage === 'quote' ? 'bg-orange-light' : 'bg-orange hover:bg-orange-light'
                 }`}
               >
                 Request a Quote
-                <svg viewBox="0 0 16 16" className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg viewBox="0 0 16 16" className="w-3 h-3 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M3 8h10M9 4l4 4-4 4" />
                 </svg>
               </a>
@@ -482,7 +482,7 @@ export default function Navigation({ currentPage, navigate }: Props) {
                 href={hrefFor('quote')}
                 onClick={go('quote')}
                 aria-current={currentPage === 'quote' ? 'page' : undefined}
-                className={`mt-5 w-full bg-orange text-white text-sm font-medium py-3.5 tracking-wide text-center block focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-orange ${
+                className={`btn-chamfer mt-5 w-full bg-orange text-white text-sm font-medium py-3.5 tracking-wide text-center block focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-orange ${
                   currentPage === 'quote' ? 'bg-orange-light' : 'hover:bg-orange-light'
                 }`}
               >

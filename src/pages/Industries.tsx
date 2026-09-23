@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import { useEffect, useState, type CSSProperties } from 'react'
 import type { Page } from '../App'
 import { images } from '../content/assets'
 import { isTechnicalPhoto, photoClass, productWellClass } from '../content/imagePresentation'
@@ -53,30 +53,22 @@ const industrySections = (publicPrototypeCards.length > 0 ? publicPrototypeCards
 })
 
 export default function Industries({ navigate }: Props) {
-  const heroRef = useRef<HTMLElement>(null)
   const [heroVisible, setHeroVisible] = useState(false)
   const [activeAnchor, setActiveAnchor] = useState(industrySections[0]?.anchorId ?? '')
   const [revealed, setRevealed] = useState<Record<string, boolean>>({})
 
   useEffect(() => {
+    // Hero is always the first thing on the page, so reveal it on mount rather than
+    // waiting for a scroll-triggered IntersectionObserver — gating it on scroll
+    // position raced against the navigation scroll-to-top reset and could leave it
+    // permanently hidden.
+    const revealId = window.requestAnimationFrame(() => setHeroVisible(true))
+
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (reduceMotion || !('IntersectionObserver' in window)) {
-      setHeroVisible(true)
       setRevealed(Object.fromEntries(industrySections.map((section) => [section.anchorId, true])))
-      return
+      return () => window.cancelAnimationFrame(revealId)
     }
-
-    const hero = heroRef.current
-    const heroObserver = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setHeroVisible(true)
-          heroObserver.disconnect()
-        }
-      },
-      { threshold: 0.18 },
-    )
-    if (hero) heroObserver.observe(hero)
 
     const sectionObserver = new IntersectionObserver(
       (entries) => {
@@ -110,7 +102,7 @@ export default function Industries({ navigate }: Props) {
     })
 
     return () => {
-      heroObserver.disconnect()
+      window.cancelAnimationFrame(revealId)
       sectionObserver.disconnect()
       spyObserver.disconnect()
     }
@@ -120,7 +112,6 @@ export default function Industries({ navigate }: Props) {
     <div className="industries-page">
       {/* Hero */}
       <section
-        ref={heroRef}
         className={`industries-hero relative overflow-hidden ${heroVisible ? 'is-visible' : ''}`}
       >
         <div className="industries-hero-ambient" aria-hidden="true" />

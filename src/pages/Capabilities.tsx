@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { Page } from '../App'
 import { images } from '../content/assets'
 import { catalogFillClass, imageFrame, isTechnicalPhoto, photoClass } from '../content/imagePresentation'
@@ -20,8 +20,8 @@ function SL({ text }: { text: string }) {
   )
 }
 
-function AR() {
-  return <svg viewBox="0 0 16 16" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+function AR({ className = 'w-3.5 h-3.5' }: { className?: string }) {
+  return <svg viewBox="0 0 16 16" className={className} fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
 }
 
 function unique(values: string[]): string[] {
@@ -69,30 +69,22 @@ const caps = capabilityPageSections
   .filter((section): section is NonNullable<typeof section> => Boolean(section))
 
 export default function Capabilities({ navigate }: Props) {
-  const heroRef = useRef<HTMLElement>(null)
   const [heroVisible, setHeroVisible] = useState(false)
   const [activeAnchor, setActiveAnchor] = useState(caps[0]?.anchorId ?? '')
   const [revealed, setRevealed] = useState<Record<string, boolean>>({})
 
   useEffect(() => {
+    // Hero is always the first thing on the page, so reveal it on mount rather than
+    // waiting for a scroll-triggered IntersectionObserver — gating it on scroll
+    // position raced against the navigation scroll-to-top reset and could leave it
+    // permanently hidden.
+    const revealId = window.requestAnimationFrame(() => setHeroVisible(true))
+
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (reduceMotion || !('IntersectionObserver' in window)) {
-      setHeroVisible(true)
       setRevealed(Object.fromEntries(caps.map((cap) => [cap.anchorId, true])))
-      return
+      return () => window.cancelAnimationFrame(revealId)
     }
-
-    const hero = heroRef.current
-    const heroObserver = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setHeroVisible(true)
-          heroObserver.disconnect()
-        }
-      },
-      { threshold: 0.18 },
-    )
-    if (hero) heroObserver.observe(hero)
 
     const sectionObserver = new IntersectionObserver(
       (entries) => {
@@ -126,7 +118,7 @@ export default function Capabilities({ navigate }: Props) {
     })
 
     return () => {
-      heroObserver.disconnect()
+      window.cancelAnimationFrame(revealId)
       sectionObserver.disconnect()
       spyObserver.disconnect()
     }
@@ -136,32 +128,22 @@ export default function Capabilities({ navigate }: Props) {
     <div className="caps-page">
       {/* Hero */}
       <section
-        ref={heroRef}
-        className={`caps-page-hero relative overflow-hidden ${heroVisible ? 'is-visible' : ''}`}
+        className={`caps-page-hero relative overflow-hidden flex flex-col min-h-[calc(100svh-4.5rem)] ${heroVisible ? 'is-visible' : ''}`}
       >
-        <div className="caps-page-hero-ambient" aria-hidden="true" />
-        <div className="caps-page-hero-grid" aria-hidden="true" />
-        <div className="caps-page-hero-scan" aria-hidden="true" />
-        <div className="caps-page-hero-field" aria-hidden="true">
-          <span className="caps-page-hero-ring" />
-          <span className="caps-page-hero-ring caps-page-hero-ring-2" />
-          <span className="caps-page-hero-ring caps-page-hero-ring-3" />
-          <span className="caps-page-hero-cross" />
-          <span className="caps-page-hero-dot" />
-        </div>
-        <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
-          <div className="caps-page-crumb font-mono text-xs text-steel uppercase tracking-widest mb-6 flex items-center gap-2">
-            <button onClick={() => navigate('home')} className="hover:text-cyan transition-colors">Home</button>
-            <span>/</span>
-            <span className="text-cyan">Capabilities</span>
-          </div>
+        <div className="absolute inset-0 blueprint-grid opacity-[0.08]" aria-hidden="true" />
+        <div className="relative flex-1 flex flex-col justify-center max-w-[1440px] mx-auto w-full px-6 xl:px-12">
           <SL text="Manufacturing Capabilities" />
-          <h1 className="caps-page-heading font-display font-black text-white text-5xl lg:text-7xl uppercase leading-none tracking-tight mb-6">
-            Precision At<br />Every Process
+          <h1 className="caps-page-heading font-display font-black text-white text-5xl lg:text-7xl uppercase leading-none tracking-tight mb-6 sm:whitespace-nowrap">
+            Precision At Every Process
           </h1>
           <p className="caps-page-lede text-steel max-w-2xl text-lg leading-relaxed">
-          CNC machining, tooling, jigs and fixtures, assembly, part marking, inspection, NDT, and load testing.
+            CNC machining, tooling, jigs and fixtures, assembly, part marking, inspection, NDT, and load testing.
           </p>
+        </div>
+        <div className="absolute bottom-0 left-0 right-0 pointer-events-none" aria-hidden="true">
+          <svg viewBox="0 0 1440 100" preserveAspectRatio="none" className="w-full h-[48px] sm:h-[68px] lg:h-[88px] block">
+            <path d="M0,52 C420,104 860,58 1440,40 L1440,100 L0,100 Z" fill="#0E1B33" />
+          </svg>
         </div>
       </section>
 
@@ -216,7 +198,7 @@ export default function Capabilities({ navigate }: Props) {
                 )}
 
                 {cap.items.length > 0 && (
-                  <ul className="space-y-2 mb-8">
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 mb-8">
                     {cap.items.map(item => (
                       <li key={item} className={`flex items-start gap-3 text-sm ${i % 2 === 0 ? 'text-steel' : 'text-mid'}`}>
                         <div className="w-4 h-4 border border-cyan flex items-center justify-center shrink-0 mt-0.5">
@@ -229,8 +211,8 @@ export default function Capabilities({ navigate }: Props) {
                     ))}
                   </ul>
                 )}
-                <button onClick={() => navigate('quote')} className={`flex items-center gap-2 font-medium text-sm px-7 py-3.5 transition-colors ${i % 2 === 0 ? 'bg-blue hover:bg-blue-light text-white' : 'bg-navy hover:bg-navy-light text-white'}`}>
-                  Request Capability Quote <AR />
+                <button onClick={() => navigate('quote')} className={`btn-chamfer group flex items-center gap-2 font-medium text-sm px-7 py-3.5 transition-all duration-200 hover:-translate-y-0.5 ${i % 2 === 0 ? 'bg-blue hover:bg-blue-light text-white' : 'bg-navy hover:bg-navy-light text-white'}`}>
+                  Request Capability Quote <AR className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
                 </button>
               </div>
 
@@ -276,15 +258,15 @@ export default function Capabilities({ navigate }: Props) {
       ))}
 
       {/* CTA */}
-      <section className="bg-navy py-20 blueprint-grid">
+      <section className="bg-orange py-20">
         <div className="max-w-[1440px] mx-auto px-6 xl:px-12 text-center">
           <h2 className="font-display font-bold text-white text-5xl uppercase mb-4">Ready to Manufacture?</h2>
-          <p className="text-steel max-w-lg mx-auto mb-8">Submit your drawings and specifications for a technical and commercial proposal.</p>
+          <p className="text-white/70 max-w-lg mx-auto mb-8">Submit your drawings and specifications for a technical and commercial proposal.</p>
           <div className="flex items-center justify-center gap-4">
-            <button onClick={() => navigate('quote')} className="bg-cyan hover:bg-cyan/90 text-navy font-bold text-sm px-8 py-4 flex items-center gap-2 transition-colors">
-              Request a Quote <AR />
+            <button onClick={() => navigate('quote')} className="btn-chamfer group bg-white text-orange hover:bg-off font-bold text-sm px-8 py-4 flex items-center gap-2 transition-all duration-200 hover:-translate-y-0.5">
+              Request a Quote <AR className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
             </button>
-            <button onClick={() => navigate('contact')} className="border border-white/20 text-white hover:bg-white/5 font-medium text-sm px-8 py-4 transition-colors">
+            <button onClick={() => navigate('contact')} className="btn-chamfer border border-white/30 text-white hover:bg-white/10 hover:border-white/60 font-medium text-sm px-8 py-4 transition-all duration-200 hover:-translate-y-0.5">
               Talk to Our Engineers
             </button>
           </div>

@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState, type CSSProperties, type FormEvent, type MouseEvent } from 'react'
+import { useEffect, useId, useState, type CSSProperties, type FormEvent, type MouseEvent } from 'react'
 import type { Page } from '../App'
 import ContactAnimatedBackground from '../components/ContactAnimatedBackground'
 import UnconfirmedNote from '../components/UnconfirmedNote'
@@ -87,7 +87,6 @@ function Arrow() {
 
 export default function Contact({ navigate }: Props) {
   const formId = useId()
-  const heroRef = useRef<HTMLElement>(null)
   const [heroVisible, setHeroVisible] = useState(false)
   const [revealed, setRevealed] = useState<Record<string, boolean>>({})
   const [contactDetails, setContactDetails] = useState({
@@ -108,25 +107,18 @@ export default function Contact({ navigate }: Props) {
   const [notificationWarning, setNotificationWarning] = useState(false)
 
   useEffect(() => {
+    // Hero is always the first thing on the page, so reveal it on mount rather than
+    // waiting for a scroll-triggered IntersectionObserver — gating it on scroll
+    // position raced against the navigation scroll-to-top reset and could leave it
+    // permanently hidden.
+    const revealId = window.requestAnimationFrame(() => setHeroVisible(true))
+
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const ids = ['con-info', 'con-form', 'con-map']
     if (reduceMotion || !('IntersectionObserver' in window)) {
-      setHeroVisible(true)
       setRevealed(Object.fromEntries(ids.map((id) => [id, true])))
-      return
+      return () => window.cancelAnimationFrame(revealId)
     }
-
-    const hero = heroRef.current
-    const heroObserver = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setHeroVisible(true)
-          heroObserver.disconnect()
-        }
-      },
-      { threshold: 0.12 },
-    )
-    if (hero) heroObserver.observe(hero)
 
     const revealObserver = new IntersectionObserver(
       (entries) => {
@@ -144,7 +136,7 @@ export default function Contact({ navigate }: Props) {
     })
 
     return () => {
-      heroObserver.disconnect()
+      window.cancelAnimationFrame(revealId)
       revealObserver.disconnect()
     }
   }, [])
@@ -228,7 +220,7 @@ export default function Contact({ navigate }: Props) {
       <ContactAnimatedBackground />
 
       <div className="contact-content">
-        <section ref={heroRef} className={`contact-hero ${heroVisible ? 'is-visible' : ''}`}>
+        <section className={`contact-hero ${heroVisible ? 'is-visible' : ''}`}>
           <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
             <div className="contact-crumb font-mono text-xs text-steel uppercase tracking-widest mb-6 flex items-center gap-2">
               <a href={hrefFor('home')} onClick={go('home')} className="hover:text-cyan transition-colors focus-visible:outline-none focus-visible:text-cyan">Home</a>

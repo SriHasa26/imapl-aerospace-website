@@ -4,8 +4,9 @@ import HeroBackdrop from '../components/HeroBackdrop'
 import LocationsMap from '../components/LocationsMap'
 import PrismaticBurst from '../components/PrismaticBurst'
 import SitePhoto from '../components/SitePhoto'
+import SplashCursor from '../components/SplashCursor'
 import { images } from '../content/assets'
-import { catalogFillClass, imageFrame, isTechnicalPhoto, photoClass, productFrameStyle, productWellClass } from '../content/imagePresentation'
+import { catalogFillClass, imageFrame, isTechnicalPhoto, photoClass, productWellClass } from '../content/imagePresentation'
 import {
   capabilities as capabilityRecords,
   capabilityPageSections,
@@ -15,6 +16,7 @@ import {
   description,
   foundingYear,
   headquarters,
+  mission,
   officialName,
   publicWorkAreas,
   shortName,
@@ -282,16 +284,14 @@ function ProcessWorkflow({
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="process-header flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
-        <div>
+      <div className="process-header flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-20">
+        <div className="flex-1 min-w-0">
           <SectionLabel text="Our Process" />
-          <h2 className="font-display font-bold text-navy text-4xl lg:text-5xl uppercase leading-tight">
-            From Brief
-            <br />
-            To Finished Part
+          <h2 className="font-display font-bold text-navy text-4xl lg:text-5xl uppercase leading-tight sm:whitespace-nowrap">
+            From Brief To Finished Part
           </h2>
-          <p className="mt-4 max-w-xl text-mid text-sm lg:text-base leading-relaxed">
-            Six connected manufacturing stages — from machining through inspection — so every programme moves with a clear path from enquiry to dispatch.
+          <p className="mt-5 max-w-none text-mid text-sm lg:text-base leading-relaxed">
+            Six connected manufacturing stages: From machining through inspection, so every programme moves with a clear path from enquiry to dispatch.
           </p>
         </div>
         <div className="flex items-center gap-4 shrink-0">
@@ -305,15 +305,15 @@ function ProcessWorkflow({
         </div>
       </div>
 
-      <div className="process-timeline relative mb-8">
+      <div className="process-timeline relative mb-10">
         <div className="process-timeline-track hidden lg:block absolute top-[27px] left-[6%] right-[6%]" />
-        <div className="hidden lg:block absolute top-[27px] left-[6%] right-[6%] h-px overflow-hidden">
+        <div className="hidden lg:block absolute top-[27px] left-[6%] right-[6%] h-[2px] overflow-hidden">
           <div
             className="process-timeline-progress h-full origin-left"
             style={{ width: `${progress}%` }}
           />
         </div>
-        <div className="flex gap-3 overflow-x-auto pb-2 lg:grid lg:grid-cols-6 lg:gap-4 lg:overflow-visible [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="flex gap-5 overflow-x-auto pb-2 lg:grid lg:grid-cols-6 lg:gap-7 lg:overflow-visible [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {steps.map((step, index) => {
             const isActive = index === active
             return (
@@ -324,24 +324,30 @@ function ProcessWorkflow({
                   setActive(index)
                   setPaused(true)
                 }}
-                className={`process-stage min-w-[9.5rem] lg:min-w-0 text-left group ${isActive ? 'is-active' : ''}`}
+                className={`process-stage min-w-[9.5rem] lg:min-w-0 text-left lg:text-center group ${isActive ? 'is-active' : ''}`}
                 style={{ animationDelay: `${index * 70}ms` }}
               >
-                <div className="flex lg:justify-center mb-4">
-                  <div
-                    className={`process-node relative z-10 w-14 h-14 flex items-center justify-center border ${
-                      isActive
-                        ? 'bg-orange border-orange text-white process-node-active'
-                        : 'bg-navy border-navy text-orange group-hover:border-orange'
-                    }`}
-                  >
-                    <span className="font-mono text-sm font-semibold">{step.step}</span>
+                <div className="flex lg:justify-center mb-5">
+                  <div className="relative">
+                    <div
+                      aria-hidden="true"
+                      className={`process-node absolute inset-0 pointer-events-none ${isActive ? 'process-node-active' : ''}`}
+                    />
+                    <div
+                      className={`btn-chamfer relative z-10 w-14 h-14 flex items-center justify-center border transition-all duration-300 ${
+                        isActive
+                          ? 'bg-orange border-orange text-white'
+                          : 'bg-navy border-navy text-orange group-hover:border-orange group-hover:-translate-y-0.5'
+                      }`}
+                    >
+                      <span className="font-mono text-sm font-semibold">{step.step}</span>
+                    </div>
                   </div>
                 </div>
-                <div className={`font-mono text-[10px] uppercase tracking-[0.16em] mb-1 ${isActive ? 'text-orange' : 'text-mid'}`}>
+                <div className={`font-mono text-[10px] uppercase tracking-[0.16em] mb-2 ${isActive ? 'text-orange' : 'text-mid'}`}>
                   Stage {step.step}
                 </div>
-                <h3 className={`font-display font-bold uppercase leading-tight ${isActive ? 'text-orange' : 'text-navy group-hover:text-orange'}`}>
+                <h3 className={`font-display font-bold uppercase leading-tight min-h-[2.5rem] lg:min-h-[2.6rem] ${isActive ? 'text-orange' : 'text-navy group-hover:text-orange'}`}>
                   {step.title}
                 </h3>
               </button>
@@ -361,22 +367,22 @@ function ProcessWorkflow({
             style={{ width: paused ? `${progress}%` : undefined }}
           />
         </div>
-        <div key={current.step} className="process-feature-swap process-panel-inner relative grid lg:grid-cols-[auto_minmax(0,1fr)_auto] gap-8 p-6 sm:p-8 lg:p-10">
+        <div key={current.step} className="process-feature-swap process-panel-inner relative grid lg:grid-cols-[auto_minmax(0,1fr)_auto] gap-8 lg:gap-10 p-7 sm:p-9 lg:p-12">
           <div className="process-panel-icon w-16 h-16 sm:w-20 sm:h-20 border border-orange/40 text-orange flex items-center justify-center">
             {current.icon}
           </div>
           <div>
-            <div className="font-mono text-[11px] text-orange uppercase tracking-[0.18em] mb-3">
+            <div className="font-mono text-[11px] text-orange uppercase tracking-[0.18em] mb-3.5">
               Current stage
             </div>
-            <h3 className="font-display font-black text-white text-3xl lg:text-4xl uppercase leading-tight mb-3">
+            <h3 className="font-display font-black text-white text-3xl lg:text-4xl uppercase leading-tight mb-4">
               {current.title}
             </h3>
-            <p className="text-steel text-sm lg:text-base leading-relaxed max-w-2xl mb-5">
+            <p className="text-steel text-sm lg:text-base leading-relaxed max-w-2xl mb-6">
               {current.desc}
             </p>
             {current.items.length > 0 && (
-              <ul className="flex flex-wrap gap-2">
+              <ul className="flex flex-wrap gap-2.5">
                 {current.items.map((item) => (
                   <li
                     key={item}
@@ -395,10 +401,10 @@ function ProcessWorkflow({
             <button
               type="button"
               onClick={() => navigate('capabilities')}
-              className="bg-orange hover:bg-orange-light text-white font-medium text-sm px-6 py-3.5 flex items-center gap-3 transition-colors w-fit"
+              className="btn-chamfer group bg-orange hover:bg-orange-light text-white font-medium text-sm px-6 py-3.5 flex items-center gap-3 transition-all duration-200 w-fit hover:-translate-y-0.5"
             >
               View this capability
-              <ArrowRight />
+              <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
             </button>
           </div>
         </div>
@@ -418,48 +424,48 @@ export default function Home({ navigate }: Props) {
   return (
     <div>
       {/* ── HERO ── */}
-      <section className="home-section min-h-[100svh] flex flex-col overflow-hidden bg-navy" aria-label="Igniting Minds Aerospace manufacturing">
+      <section className="home-section min-h-screen min-h-[100svh] flex flex-col overflow-hidden bg-navy" aria-label="Igniting Minds Aerospace manufacturing">
         <HeroBackdrop />
         <div className="absolute inset-0 bg-gradient-to-r from-navy/55 via-navy/20 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-navy/70 via-transparent to-navy/15" />
         <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-transparent to-orange/15" />
         <div className="absolute inset-0 blueprint-grid opacity-[0.08]" />
 
-        <div className="relative flex-1 flex flex-col justify-center max-w-[1440px] mx-auto w-full min-w-0 px-6 xl:px-12 pt-28 pb-16">
+        <div className="relative flex-1 flex flex-col justify-center max-w-[1440px] mx-auto w-full min-w-0 px-6 xl:px-12 pt-24 pb-8 lg:pt-24 lg:pb-10">
           <div className="max-w-3xl xl:max-w-4xl anim-fade-up min-w-0">
             <SectionLabel text="Aerospace Engineering & Manufacturing" className="text-[11px] sm:text-sm" />
-            <h1 className="font-display font-black text-white uppercase leading-[0.98] tracking-[-0.02em] text-[clamp(2.6rem,6.2vw,6.75rem)] [text-shadow:0_8px_32px_rgba(10,20,38,0.55)]">
+            <h1 className="font-display font-black text-white uppercase leading-[0.98] tracking-[-0.02em] text-[clamp(2.4rem,5.4vw,5.75rem)] [text-shadow:0_8px_32px_rgba(10,20,38,0.55)]">
               IGNITING<br />
               THE FUTURE<br />
               <span className="text-orange">OF FLIGHT</span>
             </h1>
-            <p className="mt-6 max-w-xl text-steel text-base lg:text-lg leading-relaxed">
+            <p className="mt-5 max-w-xl text-steel text-base lg:text-lg leading-relaxed [text-shadow:0_2px_10px_rgba(10,20,38,0.65)]">
               {description.value}
             </p>
-            <div className="mt-8 flex flex-wrap gap-4">
+            <div className="mt-6 flex flex-wrap gap-4">
               <button
                 onClick={() => navigate('capabilities')}
-                className="bg-orange hover:bg-orange-light text-white font-medium text-sm px-8 py-3.5 flex items-center gap-3 transition-colors duration-200 shadow-lg shadow-orange/25"
+                className="btn-chamfer group bg-orange hover:bg-orange-light text-white font-medium text-sm px-8 py-3.5 flex items-center gap-3 transition-all duration-200 shadow-lg shadow-orange/25 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-orange/30"
               >
                 Explore Capabilities
-                <ArrowRight />
+                <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
               </button>
               <button
                 onClick={() => navigate('quote')}
-                className="border border-orange/60 text-orange hover:bg-orange/10 font-medium text-sm px-8 py-3.5 flex items-center gap-3 transition-colors duration-200 glass-dark"
+                className="btn-chamfer group border border-orange/60 text-orange hover:bg-orange/10 hover:border-orange font-medium text-sm px-8 py-3.5 flex items-center gap-3 transition-all duration-200 glass-dark hover:-translate-y-0.5"
               >
                 Request a Quote
-                <ArrowRight />
+                <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
               </button>
             </div>
           </div>
 
-          <div className="mt-auto pt-16">
-            <div className="border-t border-white/15 pt-6 grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-10">
+          <div className="mt-auto pt-8 lg:pt-10">
+            <div className="border-t border-white/15 pt-5 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 lg:gap-10">
               {identityBand.slice(0, 3).map((item) => (
                 <div key={item.label}>
-                  <div className="font-display font-black text-white text-4xl lg:text-5xl tracking-tight">{item.val}</div>
-                  <div className="font-mono text-[11px] text-orange uppercase tracking-[0.16em] mt-2">{item.label}</div>
+                  <div className="font-display font-black text-white text-3xl lg:text-4xl tracking-tight [text-shadow:0_2px_10px_rgba(10,20,38,0.65)]">{item.val}</div>
+                  <div className="font-mono text-[11px] text-orange uppercase tracking-[0.16em] mt-2 [text-shadow:0_1px_6px_rgba(10,20,38,0.65)]">{item.label}</div>
                 </div>
               ))}
             </div>
@@ -537,10 +543,10 @@ export default function Home({ navigate }: Props) {
               </ul>
               <button
                 onClick={() => navigate('about')}
-                className="bg-navy hover:bg-navy-light text-white font-medium text-sm px-7 py-3.5 flex items-center gap-3 transition-colors w-fit shadow-lg shadow-navy/20"
+                className="btn-chamfer group bg-navy hover:bg-navy-light text-white font-medium text-sm px-7 py-3.5 flex items-center gap-3 transition-all duration-200 w-fit shadow-lg shadow-navy/20 hover:-translate-y-0.5"
               >
                 Learn About Us
-                <ArrowRight />
+                <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
               </button>
             </div>
           </div>
@@ -548,7 +554,7 @@ export default function Home({ navigate }: Props) {
       </section>
 
       {/* ── CAPABILITIES ── */}
-      <section className="home-section caps-type-section bg-navy">
+      <section className="home-section caps-type-section min-h-screen min-h-[100svh] bg-navy">
         <div className="caps-type-inner max-w-[1440px] mx-auto w-full px-6 xl:px-12 py-12 lg:py-0">
           <div ref={revealCaps.ref} className={`caps-type-header reveal ${revealCaps.visible ? 'visible' : ''}`}>
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-8 lg:mb-0">
@@ -556,44 +562,54 @@ export default function Home({ navigate }: Props) {
                 <div className="caps-kicker">
                   <SectionLabel text="Manufacturing Capabilities" />
                 </div>
-                <h2 className="caps-heading font-black text-white uppercase leading-[0.95]">
-                  Precision At Every<br />Process
+                <h2 className="caps-heading font-black text-white uppercase leading-[0.95] lg:whitespace-nowrap">
+                  Precision At Every Process
                 </h2>
               </div>
               <button
                 onClick={() => navigate('capabilities')}
-                className="caps-link flex items-center gap-2 text-orange uppercase hover:text-white transition-colors shrink-0"
+                className="caps-link group flex items-center gap-2 text-orange uppercase hover:text-white transition-colors shrink-0"
               >
-                All Capabilities <ArrowRight className="w-3.5 h-3.5" />
+                All Capabilities
+                <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
               </button>
             </div>
           </div>
 
-          <div className="caps-fill-grid grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="caps-fill-grid grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {homeCapabilities.map((cap, i) => (
               <button
                 type="button"
                 key={cap.num}
-                className={`caps-card im-card im-card-hover p-6 group text-left relative h-full reveal ${revealCaps.visible ? 'visible' : ''}`}
+                className={`caps-card im-card im-card-hover group text-left relative overflow-hidden h-full p-6 reveal ${revealCaps.visible ? 'visible' : ''}`}
                 style={{ transitionDelay: `${i * 80}ms` }}
                 onClick={() => navigate('capabilities')}
               >
-                <div className="caps-card-head flex items-start justify-between mb-4">
-                  <div className="text-orange group-hover:text-white transition-colors">{cap.icon}</div>
-                  <span className="caps-card-num text-steel/50">{cap.num}</span>
+                <span
+                  aria-hidden="true"
+                  className="caps-card-ghost absolute font-display font-black leading-none text-white/[0.05] group-hover:text-orange/[0.14] transition-colors duration-300 pointer-events-none select-none"
+                >
+                  {cap.num}
+                </span>
+                <div className="relative">
+                  <div className="caps-card-head flex items-center gap-3 mb-3">
+                    <div className="btn-chamfer caps-icon-badge flex items-center justify-center shrink-0 bg-orange/10 border border-orange/30 text-orange group-hover:bg-orange group-hover:text-white group-hover:border-orange transition-colors duration-300">
+                      {cap.icon}
+                    </div>
+                    <h3 className="caps-card-title font-bold text-white uppercase group-hover:text-orange transition-colors min-w-0">
+                      {cap.title}
+                    </h3>
+                  </div>
+                  <p className="caps-card-copy text-steel mb-4">{cap.desc}</p>
+                  <ul className="caps-card-list space-y-1.5">
+                    {cap.items.map(item => (
+                      <li key={item} className="caps-card-item text-steel/70 flex items-center gap-2">
+                        <div className="w-1 h-1 bg-orange/50 shrink-0" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <h3 className="caps-card-title font-bold text-white uppercase mb-2 group-hover:text-orange transition-colors">
-                  {cap.title}
-                </h3>
-                <p className="caps-card-copy text-steel mb-4">{cap.desc}</p>
-                <ul className="space-y-1.5">
-                  {cap.items.map(item => (
-                    <li key={item} className="caps-card-item text-steel/70 flex items-center gap-2">
-                      <div className="w-1 h-1 bg-orange/50 shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
               </button>
             ))}
           </div>
@@ -601,14 +617,14 @@ export default function Home({ navigate }: Props) {
       </section>
 
       {/* ── INDUSTRIES ── */}
-      <section className="home-section industries-screen bg-off">
+      <section className="home-section industries-screen min-h-screen min-h-[100svh] bg-off">
         <div className="industries-screen-inner max-w-[1440px] mx-auto px-6 xl:px-12 py-16 lg:py-20">
           <div ref={revealIndustries.ref} className={`reveal ${revealIndustries.visible ? 'visible' : ''} shrink-0`}>
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-8">
               <div>
                 <SectionLabel text="Industries Served" />
-                <h2 className="font-display font-bold text-navy text-4xl lg:text-5xl uppercase leading-tight">
-                  Aerospace<br />Manufacturing
+                <h2 className="font-display font-bold text-navy text-4xl lg:text-5xl uppercase leading-tight sm:whitespace-nowrap">
+                  Aerospace Manufacturing
                 </h2>
               </div>
               <button
@@ -624,13 +640,47 @@ export default function Home({ navigate }: Props) {
               const src = ind.image ? images[ind.image] : images.manufacturingImage
               const featured = i === 0
               const catalog = catalogFillClass(src)
+              const spanClass = featured ? 'lg:col-span-7 lg:row-span-2 lg:min-h-0' : 'lg:col-span-5 lg:min-h-0'
+
+              if (catalog) {
+                return (
+                  <button
+                    key={ind.id}
+                    onClick={() => navigate('industries')}
+                    className={`home-industry-card group flex flex-col text-left reveal ${revealIndustries.visible ? 'visible' : ''} ${spanClass}`}
+                    style={{ transitionDelay: `${i * 80}ms` }}
+                  >
+                    <div className="home-industry-card-well relative shrink-0">
+                      <SitePhoto
+                        src={src}
+                        alt={ind.industry}
+                        role={isTechnicalPhoto(src) ? 'photo' : 'decorative'}
+                        frame="landscape"
+                        className="absolute inset-0 im-photo-hover p-3"
+                      />
+                    </div>
+                    <div className="home-industry-card-body flex-1 flex flex-col justify-center">
+                      <p className="font-mono text-[11px] text-orange uppercase tracking-wider mb-1.5">
+                        {ind.workAreas?.[0] ?? 'Aerospace'}
+                      </p>
+                      <h3 className="font-display font-bold text-white text-lg lg:text-xl uppercase leading-tight">
+                        {ind.industry}
+                      </h3>
+                      <p className="text-steel text-sm leading-relaxed mt-2 line-clamp-2">{ind.description}</p>
+                      <div className="mt-3 flex items-center gap-2 text-orange group-hover:text-white transition-colors">
+                        <span className="font-mono text-xs uppercase tracking-wider">Learn more</span>
+                        <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                      </div>
+                    </div>
+                  </button>
+                )
+              }
+
               return (
                 <button
                   key={ind.id}
                   onClick={() => navigate('industries')}
-                  className={`relative min-h-[18rem] text-left group overflow-hidden reveal ${revealIndustries.visible ? 'visible' : ''} ${
-                    featured ? 'lg:col-span-7 lg:row-span-2 lg:min-h-0' : 'lg:col-span-5 lg:min-h-0'
-                  } ${catalog ? `bg-off ${catalog}` : 'bg-navy'}`}
+                  className={`relative min-h-[18rem] text-left group overflow-hidden bg-navy reveal ${revealIndustries.visible ? 'visible' : ''} ${spanClass}`}
                   style={{ transitionDelay: `${i * 80}ms` }}
                 >
                   <SitePhoto
@@ -638,9 +688,9 @@ export default function Home({ navigate }: Props) {
                     alt={ind.industry}
                     role={isTechnicalPhoto(src) ? 'photo' : 'decorative'}
                     frame={featured ? 'panorama' : 'landscape'}
-                    className={`absolute inset-0 im-photo-hover${catalog ? '' : isTechnicalPhoto(src) ? ' p-6 sm:p-8' : ''}`}
+                    className={`absolute inset-0 im-photo-hover${isTechnicalPhoto(src) ? ' p-6 sm:p-8' : ''}`}
                   />
-                  <div className={`absolute inset-0 ${catalog ? 'im-overlay-caption im-overlay-caption-catalog' : 'im-overlay-caption'}`} />
+                  <div className="absolute inset-0 im-overlay-caption" />
                   <div className="absolute bottom-0 left-0 right-0 p-5 lg:p-6">
                     <h3 className="font-display font-bold text-white text-xl lg:text-2xl uppercase leading-tight">
                       {ind.industry}
@@ -667,8 +717,8 @@ export default function Home({ navigate }: Props) {
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-8">
             <div>
               <SectionLabel text="Featured Products" />
-              <h2 className="font-display font-bold text-white text-4xl lg:text-5xl uppercase leading-tight">
-                Built for Critical<br />Applications
+              <h2 className="font-display font-bold text-white text-4xl lg:text-5xl uppercase leading-tight sm:whitespace-nowrap">
+                Built for Critical Applications
               </h2>
             </div>
             <button
@@ -687,11 +737,10 @@ export default function Home({ navigate }: Props) {
                 <button
                   key={product.id}
                   onClick={() => navigate('products')}
-                  className="im-card im-card-hover text-left group overflow-hidden"
+                  className="im-card im-card-hover text-left group overflow-hidden h-full flex flex-col"
                 >
                   <div
-                    className={`${imageFrame.card} ${productWellClass(img) || 'bg-navy im-media-product'}`}
-                    style={productFrameStyle(img)}
+                    className={`${imageFrame.card} shrink-0 ${productWellClass(img) || 'bg-navy im-media-product'}`}
                   >
                     <SitePhoto
                       src={img}
@@ -700,14 +749,14 @@ export default function Home({ navigate }: Props) {
                       className="im-photo-hover"
                     />
                   </div>
-                  <div className="p-5">
+                  <div className="p-5 flex-1 flex flex-col">
                     <div className="font-mono text-[11px] text-orange uppercase tracking-widest mb-2">{product.category}</div>
                     <h3 className="font-display font-bold text-white text-3xl uppercase leading-tight mb-2 group-hover:text-orange transition-colors">
                       {product.name}
                     </h3>
                     <p className="text-steel text-sm leading-relaxed mb-4">{product.shortDescription}</p>
                     {specs.length > 0 && (
-                      <div className="border-t border-border-dark pt-3 grid grid-cols-3 gap-2">
+                      <div className="mt-auto border-t border-border-dark pt-3 grid grid-cols-3 gap-2">
                         {specs.map((spec) => (
                           <div key={spec.label}>
                             <div className="font-mono text-[10px] text-steel/70 uppercase tracking-wider">{spec.label}</div>
@@ -748,18 +797,18 @@ export default function Home({ navigate }: Props) {
           <div className="home-quality-layout">
             <div className="home-quality-copy">
               <SectionLabel text="Quality Assurance" />
-              <h2 className="home-quality-heading font-display font-bold text-white text-4xl lg:text-5xl uppercase leading-tight mb-5">
+              <h2 className="home-quality-heading font-display font-bold text-navy text-4xl lg:text-5xl uppercase leading-tight mb-5">
                 Inspection.<br />Load Testing.<br />Marking.
               </h2>
-              <p className="home-quality-lede text-steel leading-relaxed mb-6">
+              <p className="home-quality-lede text-mid leading-relaxed mb-6">
                 Dimensional, geometric, and CMM inspection, NDT, load testing, and part marking.
               </p>
               <div className="home-quality-certs">
                 {qualityCards.map((item) => (
                   <div key={item.cert} className="home-quality-cert">
                     <div className="home-quality-cert-mark" aria-hidden="true" />
-                    <div className="font-display font-bold text-orange text-lg uppercase leading-tight">{item.cert}</div>
-                    <div className="font-mono text-[11px] text-steel mt-1.5 tracking-wider leading-relaxed">{item.desc}</div>
+                    <div className="font-display font-bold text-navy text-lg uppercase leading-tight">{item.cert}</div>
+                    <div className="font-mono text-[11px] text-mid mt-1.5 tracking-wider leading-relaxed">{item.desc}</div>
                   </div>
                 ))}
               </div>
@@ -823,8 +872,8 @@ export default function Home({ navigate }: Props) {
                     )}
                   </span>
                 </div>
-                <h3 className="font-display font-bold text-white text-xl uppercase mt-3">{item.val}</h3>
-                <p className="font-mono text-[11px] text-steel mt-2 tracking-wider leading-relaxed">{item.label}</p>
+                <h3 className="font-display font-bold text-navy text-xl uppercase mt-3">{item.val}</h3>
+                <p className="font-mono text-[11px] text-mid mt-2 tracking-wider leading-relaxed">{item.label}</p>
                 <span className="home-quality-method-line" aria-hidden="true" />
               </article>
             ))}
@@ -859,10 +908,10 @@ export default function Home({ navigate }: Props) {
             </div>
             <button
               onClick={() => navigate('facilities')}
-              className="border border-white/30 text-white hover:bg-white/10 font-medium text-sm px-7 py-3.5 flex items-center gap-3 transition-colors w-fit"
+              className="btn-chamfer group bg-orange hover:bg-orange-light text-white font-medium text-sm px-7 py-3.5 flex items-center gap-3 transition-all duration-200 w-fit shadow-lg shadow-orange/25 hover:-translate-y-0.5"
             >
               Tour the Facility
-              <ArrowRight />
+              <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
             </button>
           </div>
         </div>
@@ -876,16 +925,16 @@ export default function Home({ navigate }: Props) {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <SectionLabel text="Work Areas" />
-              <h2 className="font-display font-bold text-white text-4xl lg:text-5xl uppercase leading-tight mb-5">
+              <h2 className="font-display font-bold text-navy text-4xl lg:text-5xl uppercase leading-tight mb-5">
                 Engineering &amp;<br />Manufacturing
               </h2>
-              <p className="text-steel leading-relaxed mb-8">
+              <p className="text-mid leading-relaxed mb-8">
                 {description.value}
               </p>
               <div className="grid grid-cols-3 gap-3">
                 {reachChips.map(s => (
                   <div key={s.label} className="work-neu-chip px-4 py-4">
-                    <div className="font-display font-bold text-white text-3xl lg:text-4xl">{s.val}</div>
+                    <div className="font-display font-bold text-navy text-3xl lg:text-4xl">{s.val}</div>
                     <div className="font-mono text-[11px] text-orange mt-1 uppercase tracking-widest">{s.label}</div>
                   </div>
                 ))}
@@ -900,7 +949,7 @@ export default function Home({ navigate }: Props) {
       </section>
 
       {/* ── CASE STUDIES ── */}
-      <section className="home-section case-screen">
+      <section className="home-section case-screen min-h-screen min-h-[100svh]">
         <div className="case-screen-glow" aria-hidden="true" />
         <div className="case-scan" aria-hidden="true" />
         <div
@@ -912,8 +961,8 @@ export default function Home({ navigate }: Props) {
               <div className="case-kicker">
                 <SectionLabel text="Case Studies" />
               </div>
-              <h2 className="case-heading font-display font-bold text-navy text-4xl lg:text-5xl uppercase leading-tight">
-                Resources Being<br />Updated
+              <h2 className="case-heading font-display font-bold text-navy text-4xl lg:text-5xl uppercase leading-tight sm:whitespace-nowrap">
+                Resources Being Updated
               </h2>
             </div>
             <button
@@ -1013,33 +1062,44 @@ export default function Home({ navigate }: Props) {
       </section>
 
       {/* ── CAREERS HIGHLIGHT ── */}
-      <section className="home-section overflow-hidden careers-morph-section py-24">
+      <section className="home-section overflow-hidden careers-morph-section min-h-screen min-h-[100svh] py-24">
         <div className="careers-morph-orb left-[-3rem] top-[-3rem]" />
         <div className="careers-morph-orb right-[-2rem] bottom-[-4rem]" style={{ animationDelay: '1.4s' }} />
         <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
-          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+          <div className="grid lg:grid-cols-2 gap-12">
             <div>
-              <div className="font-mono text-[11px] text-white/70 uppercase tracking-[0.22em] mb-3">Join Our Team</div>
-              <h2 className="font-display font-bold text-white text-4xl lg:text-5xl uppercase leading-tight drop-shadow-sm">
+              <div className="font-mono text-[11px] text-orange uppercase tracking-[0.22em] mb-3">Join Our Team</div>
+              <h2 className="font-display font-bold text-navy text-4xl lg:text-5xl uppercase leading-tight mb-5">
                 Build the Future<br />of Aerospace
               </h2>
-            </div>
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
-              <div className="grid grid-cols-3 gap-3">
+              <p className="text-mid leading-relaxed mb-8 max-w-lg">
+                {mission.value}
+              </p>
+              <div className="grid grid-cols-3 gap-3 mb-8 max-w-md">
                 {identityBand.slice(0, 3).map(s => (
-                  <div key={s.label} className="careers-neu-stat px-4 py-3 min-w-[7.5rem]">
-                    <div className="font-display font-bold text-white text-2xl lg:text-3xl">{s.val}</div>
-                    <div className="font-mono text-[10px] text-white/75 uppercase tracking-widest mt-1">{s.label}</div>
+                  <div key={s.label} className="careers-neu-stat px-4 py-3">
+                    <div className="font-display font-bold text-navy text-2xl lg:text-3xl">{s.val}</div>
+                    <div className="font-mono text-[10px] text-orange uppercase tracking-widest mt-1">{s.label}</div>
                   </div>
                 ))}
               </div>
               <button
                 onClick={() => navigate('careers')}
-                className="careers-skeuo-btn text-orange font-medium text-sm px-8 py-3.5 flex items-center gap-3 shrink-0"
+                className="btn-chamfer group bg-orange hover:bg-orange-light text-white font-medium text-sm px-8 py-3.5 flex items-center gap-3 transition-all duration-200 shadow-lg shadow-orange/25 hover:-translate-y-0.5 w-fit"
               >
                 Explore Careers
-                <ArrowRight />
+                <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
               </button>
+            </div>
+
+            <div className="careers-photo-frame">
+              <SitePhoto
+                src={images.careersWebp}
+                alt="Team member at Igniting Minds Aerospace"
+                role="decorative"
+                frame="portrait"
+                className="absolute inset-0"
+              />
             </div>
           </div>
         </div>
@@ -1062,10 +1122,33 @@ export default function Home({ navigate }: Props) {
             colors={['#ffffff', '#7EB6E8', '#003580']}
           />
         </div>
+        <div className="absolute inset-0 blueprint-grid opacity-[0.07]" aria-hidden="true" />
         <div className="absolute inset-0 bg-gradient-to-b from-navy/55 via-navy/25 to-navy/60 pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_55%_at_50%_45%,transparent_0%,rgba(10,20,38,0.45)_100%)] pointer-events-none" />
+        <span className="absolute top-8 left-8 w-10 h-10 border-l border-t border-orange/30 pointer-events-none" aria-hidden="true" />
+        <span className="absolute top-8 right-8 w-10 h-10 border-r border-t border-orange/30 pointer-events-none" aria-hidden="true" />
+        <span className="absolute bottom-8 left-8 w-10 h-10 border-l border-b border-orange/30 pointer-events-none" aria-hidden="true" />
+        <span className="absolute bottom-8 right-8 w-10 h-10 border-r border-b border-orange/30 pointer-events-none" aria-hidden="true" />
+        <SplashCursor
+          DENSITY_DISSIPATION={3.5}
+          VELOCITY_DISSIPATION={2}
+          PRESSURE={0.1}
+          CURL={3}
+          SPLAT_RADIUS={0.2}
+          SPLAT_FORCE={6000}
+          COLOR_UPDATE_SPEED={10}
+          SHADING
+          RAINBOW_MODE={false}
+          COLOR="#F47820"
+        />
+
         <div className="relative z-10 max-w-[1440px] mx-auto w-full px-6 xl:px-12 text-center">
-          <div className="font-mono text-[11px] text-orange uppercase tracking-[0.22em] mb-6">Ready to Work Together?</div>
-          <h2 className="font-display font-black text-white text-5xl lg:text-7xl xl:text-8xl uppercase leading-none tracking-tight mb-6">
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <span className="w-8 h-px bg-orange/60" aria-hidden="true" />
+            <span className="font-mono text-[11px] text-orange uppercase tracking-[0.22em]">Ready to Work Together?</span>
+            <span className="w-8 h-px bg-orange/60" aria-hidden="true" />
+          </div>
+          <h2 className="font-display font-black text-white text-5xl lg:text-7xl xl:text-8xl uppercase leading-none tracking-tight mb-6 [text-shadow:0_8px_32px_rgba(10,20,38,0.55)]">
             Request a<br />Quote Today
           </h2>
           <p className="text-steel max-w-xl mx-auto leading-relaxed mb-10">
@@ -1074,16 +1157,17 @@ export default function Home({ navigate }: Props) {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button
               onClick={() => navigate('quote')}
-              className="bg-orange hover:bg-orange-light text-white font-bold text-sm px-10 py-4 flex items-center gap-3 transition-colors shadow-lg shadow-orange/25"
+              className="btn-chamfer group bg-orange hover:bg-orange-light text-white font-bold text-sm px-10 py-4 flex items-center gap-3 transition-all duration-200 shadow-lg shadow-orange/25 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-orange/30"
             >
               Submit RFQ
-              <ArrowRight />
+              <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
             </button>
             <button
               onClick={() => navigate('contact')}
-              className="border border-white/20 text-white hover:bg-white/5 font-medium text-sm px-10 py-4 transition-colors"
+              className="btn-chamfer group border border-white/20 text-white hover:bg-white/5 hover:border-white/40 font-medium text-sm px-10 py-4 flex items-center gap-3 transition-all duration-200 hover:-translate-y-0.5"
             >
               Contact Our Team
+              <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
             </button>
           </div>
         </div>

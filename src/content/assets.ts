@@ -25,6 +25,7 @@ export const images = {
   tigWeldingImage: '/images/capabilities/machining-2.png',
   careersImage: '/images/careers/careers-team.jpg',
   careersCultureImage: '/images/careers/careers-training.jpg',
+  careersWebp: '/images/careers/careers.webp',
   aboutHeroImage: '/images/about/about-engineering-discussion.jpg',
   aboutHeritageImage: '/images/about/about-team-group.jpg',
   aboutTeamSeatedImage: '/images/about/about-team-seated.jpg',

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import { useEffect, useState, type CSSProperties } from 'react'
 import type { NavigateFn } from '../App'
 import { images } from '../content/assets'
 import { photoClass } from '../content/imagePresentation'
@@ -112,31 +112,23 @@ const lifeCards = [
 type Leader = (typeof publicLeadership)[number]
 
 export default function Careers({ navigate }: Props) {
-  const heroRef = useRef<HTMLElement>(null)
   const [heroVisible, setHeroVisible] = useState(false)
   const [revealed, setRevealed] = useState<Record<string, boolean>>({})
   const [openLeader, setOpenLeader] = useState<Leader | null>(null)
 
   useEffect(() => {
+    // Hero is always the first thing on the page, so reveal it on mount rather than
+    // waiting for a scroll-triggered IntersectionObserver — gating it on scroll
+    // position raced against the navigation scroll-to-top reset and could leave it
+    // permanently hidden.
+    const revealId = window.requestAnimationFrame(() => setHeroVisible(true))
+
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const ids = ['car-why', 'car-life', 'car-split', 'car-culture', 'car-cta']
     if (reduceMotion || !('IntersectionObserver' in window)) {
-      setHeroVisible(true)
       setRevealed(Object.fromEntries(ids.map((id) => [id, true])))
-      return
+      return () => window.cancelAnimationFrame(revealId)
     }
-
-    const hero = heroRef.current
-    const heroObserver = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setHeroVisible(true)
-          heroObserver.disconnect()
-        }
-      },
-      { threshold: 0.12 },
-    )
-    if (hero) heroObserver.observe(hero)
 
     const revealObserver = new IntersectionObserver(
       (entries) => {
@@ -154,7 +146,7 @@ export default function Careers({ navigate }: Props) {
     })
 
     return () => {
-      heroObserver.disconnect()
+      window.cancelAnimationFrame(revealId)
       revealObserver.disconnect()
     }
   }, [])
@@ -171,7 +163,6 @@ export default function Careers({ navigate }: Props) {
   return (
     <div className="careers-page">
       <section
-        ref={heroRef}
         className={`careers-hero relative overflow-hidden ${heroVisible ? 'is-visible' : ''}`}
       >
         <img

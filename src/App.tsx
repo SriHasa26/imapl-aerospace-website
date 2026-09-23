@@ -87,14 +87,14 @@ function scrollToCurrentTarget() {
   if (hash) {
     const target = document.getElementById(hash)
     if (target) {
-      target.scrollIntoView({ behavior: 'instant', block: 'start' })
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' })
       return
     }
   }
 
   window.scrollTo({
     top: 0,
-    behavior: 'instant',
+    behavior: 'smooth',
   })
 }
 
