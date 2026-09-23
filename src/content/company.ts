@@ -188,10 +188,14 @@ export interface LeadershipPerson {
   name: string
   title: string
   summary?: string
+  biography?: string
+  experience?: string
+  focusAreas?: string[]
   photo?: ImageKey
   sourceType: SourcedValue<string>["sourceType"]
   sourceRef?: string
   verificationStatus: VerificationStatus
+  notes?: string
 }
 
 export const leadership = {
@@ -203,31 +207,70 @@ export const leadership = {
       name: "Chakrapani M",
       title: "Founder & Managing Director",
       summary:
-        "Leads strategic growth with a focus on aerospace tooling and component manufacturing, built on collaboration and transparency.",
+        "Leads Igniting Minds Aerospace with a focus on aerospace tooling, precision manufacturing and long-term capability development. He directs strategic growth and the company's vision to become a preferred supplier in aerospace tooling and component manufacturing, with collaboration and transparency central to how the team works.",
+      biography:
+        "Chakrapani Muppala is the Founder and Managing Director of Igniting Minds Aerospace. He leads the company's strategic growth and its vision to become a preferred supplier in aerospace tooling and component manufacturing.\n\nHe strongly believes in employee collaboration and transparency, which remain integral to the company's culture and leadership approach. At IMA, leadership is committed to developing talented people, embracing innovation, and delivering precision-driven solutions to the global aerospace industry.",
+      experience:
+        "This leadership focus covers aerospace manufacturing, complex tooling solutions, quality, innovation and advanced manufacturing capabilities. Leadership at Igniting Minds Aerospace is driven by integrity, innovation, customer focus and continuous improvement, with an emphasis on customer partnerships and scalable aerospace capability.",
+      focusAreas: [
+        "Aerospace manufacturing",
+        "Aerospace tooling",
+        "Precision manufacturing",
+        "Strategic growth",
+        "Customer partnerships",
+        "Capability development",
+      ],
       photo: "leadershipChakrapani" as const,
       sourceType: "OWNER_DOCUMENT" as const,
       sourceRef: COMPANY_PROFILE_2026,
       verificationStatus: "SOURCE_SUPPORTED" as const,
+      notes: `Title from 2026 company profile. Biography from ${LEGACY_LEADERSHIP}. Full published name Chakrapani Muppala is used only in the expanded profile.`,
     },
     {
       name: "Manjunatha S",
       title: "Director - Projects",
       summary:
-        "More than 27 years in aerospace and automotive project management, planning, scheduling, and customer programmes.",
+        "More than 27 years in aerospace and automotive project management, planning, scheduling and customer programmes. As Director - Projects, his expertise includes resource planning, utilisation, customer engagement and strategic execution in support of operational delivery.",
+      biography:
+        "Manjunatha S is Director - Projects at Igniting Minds Aerospace. He brings more than 27 years of experience in the aerospace and automotive industries.\n\nHis expertise includes project management, resource planning and utilisation, customer engagement, and strategic execution.",
+      experience:
+        "This experience covers planning, scheduling and customer programmes, and continues to support sustained growth and operational excellence at Igniting Minds Aerospace.",
+      focusAreas: [
+        "Project management",
+        "Planning and scheduling",
+        "Resource planning and utilisation",
+        "Customer programmes",
+        "Strategic execution",
+        "Aerospace and automotive programmes",
+      ],
       photo: "leadershipManjunatha" as const,
       sourceType: "OWNER_DOCUMENT" as const,
       sourceRef: COMPANY_PROFILE_2026,
       verificationStatus: "SOURCE_SUPPORTED" as const,
+      notes: `Title kept as Director - Projects from the current approved website and 2026 company profile. Biography from ${LEGACY_LEADERSHIP}. LinkedIn listings that use Director - Tooling are not used to rename this role.`,
     },
     {
       name: "Beerappa K",
       title: "Director - Finance",
       summary:
-        "More than 18 years in manufacturing-industry finance, including budgeting and forecasting.",
+        "More than 18 years in manufacturing-industry finance, including budgeting and forecasting. As Director - Finance, he provides strategic direction in financial planning and forecasting to strengthen financial and operational performance.",
+      biography:
+        "Beerappa K is Director - Finance at Igniting Minds Aerospace. He has in-depth knowledge of the financial demands and challenges of the manufacturing industry, with more than 18 years of experience in the sector.\n\nHe provides strategic direction in financial planning and forecasting to strengthen the financial and operational performance of Igniting Minds Aerospace.",
+      experience:
+        "This remit includes budgeting, forecasting and financial planning in support of manufacturing operations and sustainable business growth.",
+      focusAreas: [
+        "Finance leadership",
+        "Budgeting",
+        "Forecasting",
+        "Financial planning",
+        "Manufacturing-industry finance",
+        "Operational financial performance",
+      ],
       photo: "leadershipBeerappa" as const,
       sourceType: "OWNER_DOCUMENT" as const,
       sourceRef: COMPANY_PROFILE_2026,
       verificationStatus: "SOURCE_SUPPORTED" as const,
+      notes: `Title from 2026 company profile. Biography from ${LEGACY_LEADERSHIP}. Public promoter listings are not added as extra job titles.`,
     },
   ] satisfies LeadershipPerson[],
   prototypeTeam: [

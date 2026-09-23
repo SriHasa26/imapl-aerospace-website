@@ -3,19 +3,19 @@ import Navigation from './components/Navigation'
 import Footer from './components/Footer'
 import { hrefFor } from './nav'
 import { parseAdminLocation, type AdminRoute } from './admin/routes'
-import Home from './pages/Home'
-import About from './pages/About'
-import Capabilities from './pages/Capabilities'
-import Products from './pages/Products'
-import Industries from './pages/Industries'
-import Quality from './pages/Quality'
-import Facilities from './pages/Facilities'
-import Resources from './pages/Resources'
-import Careers from './pages/Careers'
-import Privacy from './pages/Privacy'
-import Terms from './pages/Terms'
-import NotFound from './pages/NotFound'
 
+const Home = lazy(() => import('./pages/Home'))
+const About = lazy(() => import('./pages/About'))
+const Capabilities = lazy(() => import('./pages/Capabilities'))
+const Products = lazy(() => import('./pages/Products'))
+const Industries = lazy(() => import('./pages/Industries'))
+const Quality = lazy(() => import('./pages/Quality'))
+const Facilities = lazy(() => import('./pages/Facilities'))
+const Resources = lazy(() => import('./pages/Resources'))
+const Careers = lazy(() => import('./pages/Careers'))
+const Privacy = lazy(() => import('./pages/Privacy'))
+const Terms = lazy(() => import('./pages/Terms'))
+const NotFound = lazy(() => import('./pages/NotFound'))
 const Contact = lazy(() => import('./pages/Contact'))
 const RequestQuote = lazy(() => import('./pages/RequestQuote'))
 const AdminBranch = lazy(() => import('./admin/AdminBranch'))

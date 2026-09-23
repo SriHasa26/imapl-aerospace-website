@@ -1,5 +1,7 @@
 import { useEffect, useState, type CSSProperties } from 'react'
 import type { NavigateFn } from '../App'
+import LifeAtImapl from '../components/LifeAtImapl'
+import LeadershipProfileModal from '../components/LeadershipProfileModal'
 import { images } from '../content/assets'
 import { photoClass } from '../content/imagePresentation'
 import {
@@ -74,7 +76,7 @@ const whyCards = [
   {
     num: '04',
     title: 'Collaborative Teams',
-    desc: publicLeadership[0]?.summary ?? 'Built on collaboration and transparency.',
+    desc: 'Built on collaboration and transparency.',
   },
   {
     num: '05',
@@ -124,7 +126,7 @@ export default function Careers({ navigate }: Props) {
     const revealId = window.requestAnimationFrame(() => setHeroVisible(true))
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const ids = ['car-why', 'car-life', 'car-split', 'car-culture', 'car-cta']
+    const ids = ['car-why', 'car-life', 'car-split', 'car-culture', 'car-gallery', 'car-cta']
     if (reduceMotion || !('IntersectionObserver' in window)) {
       setRevealed(Object.fromEntries(ids.map((id) => [id, true])))
       return () => window.cancelAnimationFrame(revealId)
@@ -151,15 +153,6 @@ export default function Careers({ navigate }: Props) {
     }
   }, [])
 
-  useEffect(() => {
-    if (!openLeader) return
-    const onKey = (event: globalThis.KeyboardEvent) => {
-      if (event.key === 'Escape') setOpenLeader(null)
-    }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [openLeader])
-
   return (
     <div className="careers-page">
       <section
@@ -169,6 +162,8 @@ export default function Careers({ navigate }: Props) {
           src={images.careersImage}
           alt="Igniting Minds Aerospace team"
           className={`absolute inset-0 ${photoClass(images.careersImage, 'decorative')} opacity-[0.5]`}
+          decoding="async"
+          fetchPriority="high"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-navy/78 via-navy/42 to-navy/20" />
         <div className="absolute inset-0 bg-gradient-to-t from-navy/70 via-transparent to-navy/20" />
@@ -341,7 +336,7 @@ export default function Careers({ navigate }: Props) {
                         <h3 className="font-display font-bold text-white text-xl uppercase mb-2">{person.name}</h3>
                         {person.summary && <p className="text-steel text-sm leading-relaxed mb-4">{person.summary}</p>}
                         <button type="button" className="careers-text-btn" onClick={() => setOpenLeader(person)}>
-                          Read Profile <AR />
+                          View Profile <AR />
                         </button>
                       </div>
                     </article>
@@ -449,6 +444,8 @@ export default function Careers({ navigate }: Props) {
         </section>
       )}
 
+      <LifeAtImapl visible={revealed['car-gallery']} />
+
       <section id="car-cta" className={`careers-cta ${revealed['car-cta'] ? 'is-visible' : ''}`}>
         <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
           <div className="careers-cta-panel">
@@ -469,24 +466,11 @@ export default function Careers({ navigate }: Props) {
         </div>
       </section>
 
-      {openLeader && (
-        <div className="careers-modal" role="dialog" aria-modal="true" aria-labelledby="careers-modal-title">
-          <button type="button" className="careers-modal-backdrop" aria-label="Close profile" onClick={() => setOpenLeader(null)} />
-          <div className="careers-modal-panel">
-            <div className="font-mono text-[11px] text-cyan uppercase tracking-widest mb-2">{openLeader.title}</div>
-            <h3 id="careers-modal-title" className="font-display font-bold text-white text-2xl uppercase mb-4">{openLeader.name}</h3>
-            {openLeader.summary && <p className="text-steel leading-relaxed mb-6">{openLeader.summary}</p>}
-            <div className="flex flex-wrap gap-3">
-              <button type="button" onClick={() => navigate('about', '#leadership')} className="bg-orange hover:bg-orange-light text-white font-medium text-sm px-6 py-3 flex items-center gap-2">
-                View on About <AR />
-              </button>
-              <button type="button" onClick={() => setOpenLeader(null)} className="border border-white/20 text-white font-medium text-sm px-6 py-3">
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <LeadershipProfileModal
+        person={openLeader}
+        onClose={() => setOpenLeader(null)}
+        portraitFocus={portraitFocus}
+      />
     </div>
   )
 }

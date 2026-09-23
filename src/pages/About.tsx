@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import type { Page } from '../App'
 import { images, type ImageKey } from '../content/assets'
 import { imageFrame, photoClass } from '../content/imagePresentation'
+import LeadershipProfileModal from '../components/LeadershipProfileModal'
 import {
   description,
   foundingYear,
@@ -17,6 +18,7 @@ import {
   workAreaDescriptions,
   workAreaImages,
   yearsOfExperience,
+  type LeadershipPerson,
 } from '../content/company'
 import { isConflicting, type MaybeConflicting, type VerificationStatus } from '../content/types'
 
@@ -113,12 +115,13 @@ function useInView() {
 
 export default function About({ navigate }: Props) {
   const profileReveal = useInView()
+  const [openLeader, setOpenLeader] = useState<LeadershipPerson | null>(null)
   return (
     <div>
       {/* Hero */}
       <section className="relative min-h-screen min-h-[100svh] flex flex-col justify-center pt-32 pb-32 bg-navy overflow-hidden">
         <div className="absolute inset-0">
-          <img src={images.aboutHeroImage} alt="Engineering discussion on the shop floor" className={`${photoClass(images.aboutHeroImage, 'decorative')} opacity-70`} />
+          <img src={images.aboutHeroImage} alt="Engineering discussion on the shop floor" className={`${photoClass(images.aboutHeroImage, 'decorative')} opacity-70`} decoding="async" fetchPriority="high" />
           <div className="absolute inset-0 bg-gradient-to-r from-navy/75 via-navy/32 to-navy/15" />
           <div className="absolute inset-0 bg-gradient-to-t from-navy/55 via-transparent to-navy/15" />
         </div>
@@ -207,7 +210,7 @@ export default function About({ navigate }: Props) {
             </div>
             <div>
               <div className={`${imageFrame.group} relative bg-navy`}>
-                <img src={images.aboutHeritageImage} alt="Igniting Minds Aerospace team on the manufacturing floor" className={`${photoClass(images.aboutHeritageImage, 'photo', 'group')}`} />
+                <img src={images.aboutHeritageImage} alt="Igniting Minds Aerospace team on the manufacturing floor" className={`${photoClass(images.aboutHeritageImage, 'photo', 'group')}`} loading="lazy" decoding="async" />
               </div>
               <div className="about-story-pair">
                 <div className="about-story-pair-frame">
@@ -324,6 +327,8 @@ export default function About({ navigate }: Props) {
                           alt={person.name}
                           width={400}
                           height={500}
+                          loading="lazy"
+                          decoding="async"
                           style={{ objectPosition: focus }}
                         />
                       </div>
@@ -339,6 +344,13 @@ export default function About({ navigate }: Props) {
                       <h3 className="font-display font-bold text-white text-xl uppercase">{person.name}</h3>
                       <div className="font-mono text-xs text-cyan uppercase tracking-wider mt-1 mb-2">{person.title}</div>
                       <div className="about-leader-summary font-mono text-xs text-steel">{person.summary}</div>
+                      <button
+                        type="button"
+                        className="about-leader-profile-btn"
+                        onClick={() => setOpenLeader(person)}
+                      >
+                        View Profile <ArrowRight />
+                      </button>
                     </div>
                   </article>
                 )
@@ -363,6 +375,12 @@ export default function About({ navigate }: Props) {
           </div>
         </div>
       </section>
+
+      <LeadershipProfileModal
+        person={openLeader}
+        onClose={() => setOpenLeader(null)}
+        portraitFocus={portraitFocus}
+      />
     </div>
   )
 }

@@ -1,14 +1,134 @@
-import type { MouseEvent } from 'react'
+import type { MouseEvent, ReactNode, SVGProps } from 'react'
 import type { NavigateFn, Page } from '../App'
 import { images } from '../content/assets'
 import { publicCapabilityNavItems } from '../content/capabilities'
 import { description } from '../content/company'
-import { companyContact } from '../content/contact'
+import { companyContact, socialLinks as publishedSocialLinks } from '../content/contact'
 import UnconfirmedNote from './UnconfirmedNote'
 import { hrefFor, shouldSpaNavigate } from '../nav'
 
 interface Props {
   navigate: NavigateFn
+}
+
+function publishedSocialHref(network: string): string | undefined {
+  return publishedSocialLinks.find((item) => item.value.network === network)?.value.url
+}
+
+function SocialGlyph({ children, ...props }: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" className="w-5 h-5" aria-hidden="true" {...props}>
+      {children}
+    </svg>
+  )
+}
+
+const footerSocialLinks: Array<{
+  name: string
+  href: string | undefined
+  ariaLabel: string
+  icon: ReactNode
+}> = [
+  {
+    name: 'Facebook',
+    href: publishedSocialHref('Facebook'),
+    ariaLabel: 'Official IMAPL Facebook',
+    icon: (
+      <SocialGlyph fill="currentColor">
+        <path d="M14.5 8.25V6.6c0-.86.5-1.35 1.45-1.35H17.5V3h-2.55C12.4 3 11 4.45 11 6.7v1.55H8.75v2.6H11V21h3.1v-8.15h2.45l.5-2.6H14.1V8.25h.4Z" />
+      </SocialGlyph>
+    ),
+  },
+  {
+    name: 'Instagram',
+    href: publishedSocialHref('Instagram'),
+    ariaLabel: 'Official IMAPL Instagram',
+    icon: (
+      <SocialGlyph fill="none" stroke="currentColor" strokeWidth="1.6">
+        <rect x="4" y="4" width="16" height="16" rx="4.5" />
+        <circle cx="12" cy="12" r="3.4" />
+        <circle cx="16.6" cy="7.4" r="0.9" fill="currentColor" stroke="none" />
+      </SocialGlyph>
+    ),
+  },
+  {
+    name: 'LinkedIn',
+    href: publishedSocialHref('LinkedIn'),
+    ariaLabel: 'Official IMAPL LinkedIn',
+    icon: (
+      <SocialGlyph fill="currentColor">
+        <path d="M6.4 9.4H4V20h2.4V9.4ZM5.2 4A1.45 1.45 0 1 0 5.2 6.9 1.45 1.45 0 0 0 5.2 4ZM20 20h-2.45v-5.5c0-1.85-.65-3.1-2.3-3.1-1.25 0-2 .85-2.3 1.65-.1.28-.15.68-.15 1.08V20H10.4s.05-9.15 0-10.1h2.45v1.45c.35-.55 1.85-1.85 4.35-1.85 3.05 0 5.3 2 5.3 6.3V20H20Z" />
+      </SocialGlyph>
+    ),
+  },
+  {
+    name: 'X',
+    href: publishedSocialHref('X'),
+    ariaLabel: 'Official IMAPL X',
+    icon: (
+      <SocialGlyph fill="currentColor">
+        <path d="M17.2 3h2.95l-6.45 7.35L21.5 21h-5.7l-4.45-5.85L6.2 21H3.2l6.9-7.9L2.5 3h5.85l4.05 5.35L17.2 3Zm-1.05 16.15h1.65L7.95 4.75H6.2l9.95 14.4Z" />
+      </SocialGlyph>
+    ),
+  },
+  {
+    name: 'YouTube',
+    href: publishedSocialHref('YouTube'),
+    ariaLabel: 'Official IMAPL YouTube',
+    icon: (
+      <SocialGlyph fill="currentColor">
+        <path d="M21.5 7.35a2.7 2.7 0 0 0-1.9-1.92C18.05 5.05 12 5.05 12 5.05s-6.05 0-7.6.38A2.7 2.7 0 0 0 2.5 7.35 27.6 27.6 0 0 0 2.1 12a27.6 27.6 0 0 0 .4 4.65 2.7 2.7 0 0 0 1.9 1.92c1.55.38 7.6.38 7.6.38s6.05 0 7.6-.38a2.7 2.7 0 0 0 1.9-1.92A27.6 27.6 0 0 0 21.9 12a27.6 27.6 0 0 0-.4-4.65ZM10.15 15.2V8.8l6.05 3.2-6.05 3.2Z" />
+      </SocialGlyph>
+    ),
+  },
+]
+
+function socialHref(name: string, href: string | undefined): { url: string; isPlaceholder: boolean } {
+  if (!href) {
+    return { url: `#placeholder-official-imapl-${name.toLowerCase()}`, isPlaceholder: true }
+  }
+  return { url: href, isPlaceholder: false }
+}
+
+const socialButtonClass =
+  'w-8 h-8 border border-border-dark flex items-center justify-center text-steel cursor-pointer transition-all duration-200 ease-out hover:scale-[1.08] hover:text-white hover:border-steel/50 hover:opacity-90 focus-visible:outline-none focus-visible:text-orange focus-visible:border-orange'
+
+function FooterSocialLinks({ className = '', landmark = true }: { className?: string; landmark?: boolean }) {
+  const links = footerSocialLinks.map((item) => {
+    const { url, isPlaceholder } = socialHref(item.name, item.href)
+    return (
+      <a
+        key={item.name}
+        href={url}
+        {...(isPlaceholder
+          ? {
+              onClick: (event: MouseEvent<HTMLAnchorElement>) => event.preventDefault(),
+              'aria-disabled': true,
+              title: `${item.name} official URL pending`,
+            }
+          : {
+              target: '_blank',
+              rel: 'noopener noreferrer',
+            })}
+        aria-label={isPlaceholder ? `${item.ariaLabel} (official URL pending)` : item.ariaLabel}
+        className={socialButtonClass}
+      >
+        {item.icon}
+      </a>
+    )
+  })
+
+  const classes = `flex items-center gap-3 flex-wrap ${className}`.trim()
+
+  if (landmark) {
+    return (
+      <nav aria-label="Official IMAPL social media" className={classes}>
+        {links}
+      </nav>
+    )
+  }
+
+  return <div className={classes}>{links}</div>
 }
 
 const companyLinks: { l: string; p: Page; hash?: string }[] = [
@@ -21,34 +141,6 @@ const companyLinks: { l: string; p: Page; hash?: string }[] = [
 ]
 
 const capabilityLinks = publicCapabilityNavItems()
-
-const socialLinks: { title: string; href: string; icon: string }[] = [
-  {
-    title: 'Facebook',
-    href: 'https://www.facebook.com/people/Igniting-Minds-Aerospace-Private-Limited/100064074880086/',
-    icon: 'M13.5 9H15.5V6H13.5C11.57 6 10 7.57 10 9.5V11H8V14H10V20H13V14H15L15.5 11H13V9.5C13 9.22 13.22 9 13.5 9Z',
-  },
-  {
-    title: 'Instagram',
-    icon: 'M12 8.3A3.7 3.7 0 1 0 12 15.7A3.7 3.7 0 1 0 12 8.3ZM12 13.7A1.7 1.7 0 1 1 12 10.3A1.7 1.7 0 1 1 12 13.7ZM16 4H8A4 4 0 0 0 4 8V16A4 4 0 0 0 8 20H16A4 4 0 0 0 20 16V8A4 4 0 0 0 16 4ZM18 16A2 2 0 0 1 16 18H8A2 2 0 0 1 6 16V8A2 2 0 0 1 8 6H16A2 2 0 0 1 18 8V16ZM16.5 7.5A1 1 0 1 0 16.5 9.5A1 1 0 1 0 16.5 7.5Z',
-    href: 'https://www.instagram.com/ignitingmindsaerospace',
-  },
-  {
-    title: 'LinkedIn',
-    href: 'https://www.linkedin.com/company/ignitingmindsaerospaceprivatelimited/',
-    icon: 'M6.94 8.5H4.56V19H6.94V8.5ZM5.75 7.1c.83 0 1.5-.68 1.5-1.5S6.58 4.1 5.75 4.1a1.5 1.5 0 0 0 0 3ZM19.5 19h-2.38v-5.34c0-1.27-.02-2.9-1.77-2.9-1.77 0-2.04 1.38-2.04 2.81V19H10.9V8.5h2.28v1.43h.03c.32-.6 1.1-1.24 2.27-1.24 2.43 0 2.88 1.6 2.88 3.68V19Z',
-  },
-  {
-    title: 'X (Twitter)',
-    href: 'https://www.x.com/AerospaceM80368',
-    icon: 'M13.62 10.7 19.9 4h-1.49l-5.45 5.82L8.6 4H4l6.58 9.32L4 20.4h1.49l5.75-6.14 4.6 6.14H20l-6.38-9.7Zm-2.04 2.17-.67-.93L6.1 5.1h2.28l4.26 5.9.67.94 5.54 7.67h-2.28l-4.99-6.74Z',
-  },
-  {
-    title: 'YouTube',
-    href: 'https://www.youtube.com/@ignitingmindsaerospace',
-    icon: 'M21.6 8.2a3.02 3.02 0 0 0-2.12-2.14C17.68 5.6 12 5.6 12 5.6s-5.68 0-7.48.46A3.02 3.02 0 0 0 2.4 8.2 31.6 31.6 0 0 0 1.95 12a31.6 31.6 0 0 0 .45 3.8 3.02 3.02 0 0 0 2.12 2.14c1.8.46 7.48.46 7.48.46s5.68 0 7.48-.46a3.02 3.02 0 0 0 2.12-2.14c.3-1.26.45-2.53.45-3.8a31.6 31.6 0 0 0-.45-3.8ZM9.95 14.75V9.25L14.9 12l-4.95 2.75Z',
-  },
-]
 
 const linkFocus = 'focus-visible:outline-none focus-visible:text-orange'
 
@@ -71,28 +163,14 @@ export default function Footer({ navigate }: Props) {
                 src={images.brandLogo}
                 alt={images.brandLogoAlt}
                 className="h-20 lg:h-24 w-auto max-w-[280px] object-contain object-left"
+                loading="lazy"
+                decoding="async"
               />
             </a>
             <p className="text-steel text-sm leading-relaxed max-w-xs mb-8">
               {description.value}
             </p>
-            <div className="flex items-center gap-2.5">
-              {socialLinks.map(s => (
-                <a
-                  key={s.title}
-                  href={s.href}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  aria-label={s.title}
-                  title={s.title}
-                  className={`btn-chamfer w-9 h-9 bg-white/5 border border-white/10 flex items-center justify-center text-white/90 hover:bg-orange hover:border-orange hover:text-white transition-colors ${linkFocus}`}
-                >
-                  <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
-                    <path d={s.icon} />
-                  </svg>
-                </a>
-              ))}
-            </div>
+            <FooterSocialLinks />
           </div>
 
           <div className="lg:pl-6">
@@ -174,33 +252,36 @@ export default function Footer({ navigate }: Props) {
           <p className="font-mono text-xs text-steel tracking-wider">
             © 2024 IGNITING MINDS AEROSPACE PVT. LTD. — ALL RIGHTS RESERVED.
           </p>
-          <div className="flex items-center gap-5 flex-wrap justify-center">
-            <a
-              href={hrefFor('privacy')}
-              onClick={go('privacy')}
-              className={`font-mono text-xs text-steel hover:text-white transition-colors tracking-wider ${linkFocus}`}
-            >
-              Privacy
-            </a>
-            <a
-              href={hrefFor('terms')}
-              onClick={go('terms')}
-              className={`font-mono text-xs text-steel hover:text-white transition-colors tracking-wider ${linkFocus}`}
-            >
-              Terms
-            </a>
-            <span
-              title="Not published. This site does not currently set first-party cookies."
-              className="font-mono text-xs text-steel/80 tracking-wider"
-            >
-              Cookies
-            </span>
-            <span
-              title="Not published. A production sitemap is deferred while the site remains noindex."
-              className="font-mono text-xs text-steel/80 tracking-wider"
-            >
-              Sitemap
-            </span>
+          <div className="flex flex-col sm:flex-row items-center justify-center md:justify-end gap-4 sm:gap-6 flex-wrap">
+            <div className="flex items-center gap-5 flex-wrap justify-center">
+              <a
+                href={hrefFor('privacy')}
+                onClick={go('privacy')}
+                className={`font-mono text-xs text-steel hover:text-white transition-colors tracking-wider ${linkFocus}`}
+              >
+                Privacy
+              </a>
+              <a
+                href={hrefFor('terms')}
+                onClick={go('terms')}
+                className={`font-mono text-xs text-steel hover:text-white transition-colors tracking-wider ${linkFocus}`}
+              >
+                Terms
+              </a>
+              <span
+                title="Not published. This site does not currently set first-party cookies."
+                className="font-mono text-xs text-steel/80 tracking-wider"
+              >
+                Cookies
+              </span>
+              <span
+                title="Not published. A production sitemap is deferred while the site remains noindex."
+                className="font-mono text-xs text-steel/80 tracking-wider"
+              >
+                Sitemap
+              </span>
+            </div>
+            <FooterSocialLinks className="justify-center" landmark={false} />
           </div>
         </div>
       </div>

@@ -146,7 +146,7 @@ export const capabilities: CapabilityRecord[] = [
     ],
     equipment: [],
     materials: [],
-    image: "inspectionCmmCrysta",
+    image: "inspectionEquipment",
     sourceType: "OWNER_DOCUMENT",
     sourceRef: COMPANY_PROFILE_2026,
     verificationStatus: "SOURCE_SUPPORTED",

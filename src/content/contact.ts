@@ -113,35 +113,35 @@ export const mapLink: SourcedValue<null> = {
 
 export const socialLinks: Array<SourcedValue<{ network: string; url: string }>> = [
   {
-    value: { network: "Facebook", url: "https://www.facebook.com/105929730815433" },
-    sourceType: "LEGACY_WEBSITE",
-    sourceRef: LEGACY_CONTACT,
-    verificationStatus: "OWNER_VERIFICATION_REQUIRED",
+    value: { network: "Facebook", url: "https://www.facebook.com/people/Igniting-Minds-Aerospace-Private-Limited/100064074880086/" },
+    sourceType: "CURRENT_PROJECT",
+    sourceRef: "Provided directly by the site owner",
+    verificationStatus: "SOURCE_SUPPORTED",
   },
   {
     value: { network: "Instagram", url: "https://www.instagram.com/ignitingmindsaerospace" },
-    sourceType: "LEGACY_WEBSITE",
-    sourceRef: LEGACY_CONTACT,
-    verificationStatus: "OWNER_VERIFICATION_REQUIRED",
+    sourceType: "CURRENT_PROJECT",
+    sourceRef: "Provided directly by the site owner",
+    verificationStatus: "SOURCE_SUPPORTED",
   },
   {
     value: { network: "X", url: "https://www.x.com/AerospaceM80368" },
-    sourceType: "LEGACY_WEBSITE",
-    sourceRef: LEGACY_CONTACT,
-    verificationStatus: "OWNER_VERIFICATION_REQUIRED",
+    sourceType: "CURRENT_PROJECT",
+    sourceRef: "Provided directly by the site owner",
+    verificationStatus: "SOURCE_SUPPORTED",
   },
   {
     value: { network: "YouTube", url: "https://www.youtube.com/@ignitingmindsaerospace" },
-    sourceType: "LEGACY_WEBSITE",
-    sourceRef: LEGACY_CONTACT,
-    verificationStatus: "OWNER_VERIFICATION_REQUIRED",
+    sourceType: "CURRENT_PROJECT",
+    sourceRef: "Provided directly by the site owner",
+    verificationStatus: "SOURCE_SUPPORTED",
   },
   {
-    value: { network: "LinkedIn", url: "https://www.linkedin.com/feed/" },
-    sourceType: "LEGACY_WEBSITE",
-    sourceRef: LEGACY_CONTACT,
-    verificationStatus: "OWNER_VERIFICATION_REQUIRED",
-    notes: "Legacy footer points at a generic feed URL, not a company page.",
+    value: { network: "LinkedIn", url: "https://www.linkedin.com/company/ignitingmindsaerospaceprivatelimited/" },
+    sourceType: "CURRENT_PROJECT",
+    sourceRef: "Provided directly by the site owner",
+    verificationStatus: "SOURCE_SUPPORTED",
+    notes: "Legacy footer pointed at a generic feed URL, not a company page; replaced with the actual company page.",
   },
 ]
 
