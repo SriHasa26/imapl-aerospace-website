@@ -112,7 +112,7 @@ export default function Industries({ navigate }: Props) {
     <div className="industries-page">
       {/* Hero */}
       <section
-        className={`industries-hero relative overflow-hidden ${heroVisible ? 'is-visible' : ''}`}
+        className={`industries-hero relative overflow-hidden flex flex-col min-h-[calc(100svh-4.5rem)] ${heroVisible ? 'is-visible' : ''}`}
       >
         <div className="industries-hero-ambient" aria-hidden="true" />
         <div className="industries-hero-grid" aria-hidden="true" />
@@ -123,22 +123,22 @@ export default function Industries({ navigate }: Props) {
           <span className="industries-hero-cross" />
           <span className="industries-hero-dot" />
         </div>
-        <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
-          <div className="industries-crumb font-mono text-xs text-steel uppercase tracking-widest mb-6 flex items-center gap-2">
-            <button onClick={() => navigate('home')} className="hover:text-cyan transition-colors">Home</button>
-            <span>/</span>
-            <span className="text-cyan">Industries</span>
-          </div>
+        <div className="relative flex-1 flex flex-col justify-center max-w-[1440px] mx-auto w-full px-6 xl:px-12">
           <div className="industries-eyebrow flex items-center gap-3 mb-3">
             <div className="industries-eyebrow-rule h-px bg-orange" />
             <span className="font-mono text-xs sm:text-sm text-orange uppercase tracking-[0.16em]">Industries Served</span>
           </div>
-          <h1 className="industries-heading font-display font-black text-white text-5xl lg:text-7xl uppercase leading-none tracking-tight mb-6">
-            Aerospace<br />Manufacturing
+          <h1 className="industries-heading font-display font-black text-white text-5xl lg:text-7xl uppercase leading-none tracking-tight mb-6 sm:whitespace-nowrap">
+            Aerospace Manufacturing
           </h1>
           <p className="industries-lede text-steel max-w-2xl text-lg leading-relaxed">
             Aerospace manufacturing and MRO tooling — aero-engine tooling, precision aerospace components, and MRO tooling.
           </p>
+        </div>
+        <div className="absolute bottom-0 left-0 right-0 pointer-events-none" aria-hidden="true">
+          <svg viewBox="0 0 1440 100" preserveAspectRatio="none" className="w-full h-[48px] sm:h-[68px] lg:h-[88px] block">
+            <path d="M0,52 C420,104 860,58 1440,40 L1440,100 L0,100 Z" fill="#0E1B33" />
+          </svg>
         </div>
       </section>
 

@@ -99,30 +99,23 @@ export default function Products({ navigate, hash = "" }: Props) {
   return (
     <div className="products-page">
       {/* Hero */}
-      <section className="products-hero relative overflow-hidden">
+      <section className="products-hero relative overflow-hidden flex flex-col min-h-[calc(100svh-4.5rem)]">
         <div className="products-hero-ambient" aria-hidden="true" />
         <div className="products-hero-grid" aria-hidden="true" />
-        <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
-          <div className="font-mono text-xs text-steel uppercase tracking-widest mb-6 flex items-center gap-2">
-            <button
-              onClick={() => navigate("home")}
-              className="hover:text-cyan transition-colors"
-            >
-              Home
-            </button>
-            <span>/</span>
-            <span className="text-cyan">Products</span>
-          </div>
+        <div className="relative flex-1 flex flex-col justify-center max-w-[1440px] mx-auto w-full px-6 xl:px-12">
           <SL text="Product Lines" />
-          <h1 className="font-display font-black text-white text-5xl lg:text-7xl uppercase leading-none tracking-tight mb-6">
-            Built for Critical
-            <br />
-            Applications
+          <h1 className="font-display font-black text-white text-5xl lg:text-7xl uppercase leading-none tracking-tight mb-6 sm:whitespace-nowrap">
+            Built for Critical Applications
           </h1>
           <p className="text-steel max-w-2xl text-lg leading-relaxed">
             Precision aerospace components, aero-engine and MRO tooling, ground
             support equipment, and jigs and fixtures.
           </p>
+        </div>
+        <div className="absolute bottom-0 left-0 right-0 pointer-events-none" aria-hidden="true">
+          <svg viewBox="0 0 1440 100" preserveAspectRatio="none" className="w-full h-[48px] sm:h-[68px] lg:h-[88px] block">
+            <path d="M0,52 C420,104 860,58 1440,40 L1440,100 L0,100 Z" fill="#0E1B33" />
+          </svg>
         </div>
       </section>
 

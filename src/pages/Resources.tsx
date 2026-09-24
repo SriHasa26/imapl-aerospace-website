@@ -234,7 +234,7 @@ export default function Resources({ navigate }: Props) {
   return (
     <div className="resources-page">
       <section
-        className={`resources-hero relative overflow-hidden ${heroVisible ? 'is-visible' : ''}`}
+        className={`resources-hero relative overflow-hidden flex flex-col min-h-[calc(100svh-4.5rem)] ${heroVisible ? 'is-visible' : ''}`}
       >
         <div className="resources-hero-ambient" aria-hidden="true" />
         <div className="resources-hero-grid" aria-hidden="true" />
@@ -247,24 +247,22 @@ export default function Resources({ navigate }: Props) {
           <span>DOC / ENG</span>
           <span>REF {shortName.value}</span>
         </div>
-        <div className="relative max-w-[1440px] mx-auto w-full min-w-0 px-6 xl:px-12">
-          <div className="resources-crumb font-mono text-xs text-steel uppercase tracking-widest mb-6 flex items-center gap-2">
-            <button onClick={() => navigate('home')} className="hover:text-cyan transition-colors">Home</button>
-            <span>/</span>
-            <span className="text-cyan">Resources</span>
-          </div>
+        <div className="relative flex-1 flex flex-col justify-center max-w-[1440px] mx-auto w-full min-w-0 px-6 xl:px-12">
           <div className="resources-eyebrow flex items-center gap-3 mb-3">
             <div className="resources-eyebrow-rule h-px bg-orange" />
             <span className="font-mono text-xs sm:text-sm text-orange uppercase tracking-[0.16em]">Knowledge & Resources</span>
           </div>
-          <h1 className="resources-heading font-display font-black text-white text-5xl lg:text-7xl uppercase leading-none tracking-tight mb-6">
-            Engineering<br />Insights &{' '}
-            <br className="sm:hidden" />
-            Resources
+          <h1 className="resources-heading font-display font-black text-white text-5xl lg:text-7xl uppercase leading-none tracking-tight mb-6 sm:whitespace-nowrap">
+            Engineering Insights & Resources
           </h1>
           <p className="resources-lede text-steel max-w-2xl w-full min-w-0 text-lg leading-relaxed">
             Explore {shortName.value} manufacturing capabilities, technical information, aerospace tooling expertise, company publications, and engineering insights.
           </p>
+        </div>
+        <div className="absolute bottom-0 left-0 right-0 pointer-events-none" aria-hidden="true">
+          <svg viewBox="0 0 1440 100" preserveAspectRatio="none" className="w-full h-[48px] sm:h-[68px] lg:h-[88px] block">
+            <path d="M0,52 C420,104 860,58 1440,40 L1440,100 L0,100 Z" fill="#0E1B33" />
+          </svg>
         </div>
       </section>
 
