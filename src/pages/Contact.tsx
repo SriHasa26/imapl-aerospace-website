@@ -242,7 +242,7 @@ export default function Contact({ navigate }: Props) {
               <a
                 href={hrefFor('quote')}
                 onClick={go('quote')}
-                className="contact-cta inline-flex items-center gap-3 bg-orange hover:bg-orange-light text-white font-medium text-sm px-8 py-3.5 min-h-12 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-orange"
+                className="btn-chamfer contact-cta inline-flex items-center gap-3 bg-orange hover:bg-orange-light text-white font-medium text-sm tracking-wide px-8 py-3.5 min-h-12 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-orange"
               >
                 Request a Quote
                 <Arrow />
@@ -372,7 +372,7 @@ export default function Contact({ navigate }: Props) {
                       <a
                         href={hrefFor('home')}
                         onClick={go('home')}
-                        className="contact-cta inline-flex items-center justify-center gap-3 bg-orange hover:bg-orange-light text-white font-medium text-sm px-7 py-3.5 min-h-12 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-orange"
+                        className="btn-chamfer contact-cta inline-flex items-center justify-center gap-3 bg-orange hover:bg-orange-light text-white font-medium text-sm tracking-wide px-7 py-3.5 min-h-12 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-orange"
                       >
                         Return Home
                         <Arrow />
@@ -380,7 +380,7 @@ export default function Contact({ navigate }: Props) {
                       <button
                         type="button"
                         onClick={resetForm}
-                        className="border border-border-dark text-steel hover:text-white font-medium text-sm px-7 py-3.5 min-h-12 transition-colors focus-visible:outline focus-visible:outline-1 focus-visible:outline-orange"
+                        className="btn-chamfer border border-border-dark text-steel hover:text-white font-medium text-sm tracking-wide px-7 py-3.5 min-h-12 transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-orange"
                       >
                         Send Another Enquiry
                       </button>

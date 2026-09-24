@@ -32,11 +32,11 @@ function SL({ text }: { text: string }) {
   )
 }
 
-function AR() {
+function AR({ className = "" }: { className?: string }) {
   return (
     <svg
       viewBox="0 0 16 16"
-      className="w-3.5 h-3.5"
+      className={`w-3.5 h-3.5 ${className}`}
       fill="none"
       stroke="currentColor"
       strokeWidth="1.5"
@@ -226,34 +226,30 @@ export default function Products({ navigate, hash = "" }: Props) {
       </section>
 
       {/* Custom capability note */}
-      <section className="bg-orange py-16">
-        <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="font-display font-bold text-white text-4xl uppercase mb-4">
-                Custom Manufacturing for Your Program
-              </h2>
-              <p className="text-white/70 leading-relaxed">
-                Not all programs fit a catalog. Our engineering team works
-                directly from your drawings, specifications, and MRD to develop
-                a manufacturing plan tailored to your program requirements,
-                quality standards, and delivery schedule.
-              </p>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button
-                onClick={() => navigate("quote")}
-                className="bg-white text-orange hover:bg-off font-medium text-sm px-7 py-4 flex items-center gap-2 transition-colors"
-              >
-                Submit RFQ <AR />
-              </button>
-              <button
-                onClick={() => navigate("capabilities")}
-                className="border border-white/30 text-white hover:bg-white/10 font-medium text-sm px-7 py-4 transition-colors"
-              >
-                View Capabilities
-              </button>
-            </div>
+      <section className="bg-orange min-h-screen flex items-center">
+        <div className="max-w-[1440px] mx-auto px-6 xl:px-12 text-center">
+          <h2 className="font-display font-bold text-white text-4xl lg:text-5xl uppercase mb-4">
+            Custom Manufacturing for Your Program
+          </h2>
+          <p className="text-white/70 max-w-lg mx-auto mb-8">
+            Not all programs fit a catalog. Our engineering team works
+            directly from your drawings, specifications, and MRD to develop
+            a manufacturing plan tailored to your program requirements,
+            quality standards, and delivery schedule.
+          </p>
+          <div className="flex items-center justify-center gap-4">
+            <button
+              onClick={() => navigate("quote")}
+              className="btn-chamfer group bg-white text-orange hover:bg-off font-bold text-sm tracking-wide px-8 py-4 flex items-center gap-2 transition-all duration-200 hover:-translate-y-0.5"
+            >
+              Submit RFQ <AR className="transition-transform duration-200 group-hover:translate-x-1" />
+            </button>
+            <button
+              onClick={() => navigate("capabilities")}
+              className="btn-chamfer border border-white/30 text-white hover:bg-white/10 hover:border-white/60 font-medium text-sm tracking-wide px-8 py-4 transition-all duration-200 hover:-translate-y-0.5"
+            >
+              View Capabilities
+            </button>
           </div>
         </div>
       </section>

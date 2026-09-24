@@ -14,8 +14,8 @@ import { isPublishable } from '../content/types'
 
 interface Props { navigate: NavigateFn }
 
-function AR() {
-  return <svg viewBox="0 0 16 16" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+function AR({ className = 'w-3.5 h-3.5' }: { className?: string }) {
+  return <svg viewBox="0 0 16 16" className={className} fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
 }
 
 function DocIcon() {
@@ -46,7 +46,7 @@ type Topic = {
 
 function familyDescription(id: string, fallback: string): string {
   const family = productFamilies.find((item) => item.id === id && isPublishable(item.verificationStatus))
-  return family?.description ?? family?.shortDescription ?? fallback
+  return family?.shortDescription ?? family?.description ?? fallback
 }
 
 function capabilityDescription(id: string, fallback: string): string {
@@ -201,7 +201,7 @@ export default function Resources({ navigate }: Props) {
 
   useEffect(() => {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const ids = ['res-featured', 'res-topics', 'res-quality', 'res-docs', 'res-cta']
+    const ids = ['res-featured', 'res-topics', 'res-quality', 'res-docs']
     if (reduceMotion || !('IntersectionObserver' in window)) {
       setRevealed(Object.fromEntries(ids.map((id) => [id, true])))
       return
@@ -236,17 +236,6 @@ export default function Resources({ navigate }: Props) {
       <section
         className={`resources-hero relative overflow-hidden flex flex-col min-h-[calc(100svh-4.5rem)] ${heroVisible ? 'is-visible' : ''}`}
       >
-        <div className="resources-hero-ambient" aria-hidden="true" />
-        <div className="resources-hero-grid" aria-hidden="true" />
-        <div className="resources-hero-scan" aria-hidden="true" />
-        <span className="resources-hero-dot resources-hero-dot--a" aria-hidden="true" />
-        <span className="resources-hero-dot resources-hero-dot--b" aria-hidden="true" />
-        <span className="resources-hero-dot resources-hero-dot--c" aria-hidden="true" />
-        <div className="resources-hero-coords" aria-hidden="true">
-          <span>LIB 01</span>
-          <span>DOC / ENG</span>
-          <span>REF {shortName.value}</span>
-        </div>
         <div className="relative flex-1 flex flex-col justify-center max-w-[1440px] mx-auto w-full min-w-0 px-6 xl:px-12">
           <div className="resources-eyebrow flex items-center gap-3 mb-3">
             <div className="resources-eyebrow-rule h-px bg-orange" />
@@ -288,14 +277,13 @@ export default function Resources({ navigate }: Props) {
       {showFeatured && (
         <section
           id="res-featured"
-          className={`resources-featured ${revealed['res-featured'] ? 'is-visible' : ''}`}
+          className={`resources-featured min-h-screen flex items-center ${revealed['res-featured'] ? 'is-visible' : ''}`}
         >
-          <div className="resources-featured-ambient" aria-hidden="true" />
-          <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
+          <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12 w-full">
             <button
               type="button"
               onClick={() => openTopic(featured)}
-              className="resources-featured-card"
+              className="resources-featured-card group"
             >
               <div className="resources-featured-media">
                 <div className={['resources-featured-well', productWellClass(featured.img)].filter(Boolean).join(' ')}>
@@ -319,7 +307,7 @@ export default function Resources({ navigate }: Props) {
                 <h2 className="font-display font-bold text-white text-3xl lg:text-4xl uppercase leading-tight mb-4">{featured.title}</h2>
                 <p className="text-steel leading-relaxed mb-8">{featured.excerpt}</p>
                 <span className="resources-cta-label">
-                  {featured.cta} <AR />
+                  {featured.cta} <AR className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
                 </span>
               </div>
             </button>
@@ -345,7 +333,7 @@ export default function Resources({ navigate }: Props) {
                   key={topic.id}
                   type="button"
                   onClick={() => openTopic(topic)}
-                  className="resources-card"
+                  className="resources-card group"
                   style={{ '--resources-stagger': `${Math.min(index, 5) * 80}ms` } as CSSProperties}
                 >
                   <div className="resources-card-media">
@@ -370,7 +358,7 @@ export default function Resources({ navigate }: Props) {
                     <h3 className="font-display font-bold text-white text-lg uppercase leading-tight mb-2">{topic.title}</h3>
                     <p className="text-steel text-sm leading-relaxed mb-4">{topic.excerpt}</p>
                     <span className="resources-cta-label resources-cta-label--sm">
-                      {topic.cta} <AR />
+                      {topic.cta} <AR className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
                     </span>
                   </div>
                 </button>
@@ -383,9 +371,9 @@ export default function Resources({ navigate }: Props) {
       {showQualityStrip && (
         <section
           id="res-quality"
-          className={`resources-quality ${revealed['res-quality'] ? 'is-visible' : ''}`}
+          className={`resources-quality min-h-screen flex items-center ${revealed['res-quality'] ? 'is-visible' : ''}`}
         >
-          <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
+          <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12 w-full">
             <div className="resources-eyebrow flex items-center gap-3 mb-3">
               <div className="resources-eyebrow-rule h-px bg-orange" />
               <span className="font-mono text-xs sm:text-sm text-orange uppercase tracking-[0.16em]">Quality Reference</span>
@@ -397,14 +385,14 @@ export default function Resources({ navigate }: Props) {
                   key={cert.code}
                   type="button"
                   onClick={() => navigate('quality')}
-                  className="resources-cert"
+                  className="resources-cert group"
                   style={{ '--resources-stagger': `${index * 80}ms` } as CSSProperties}
                 >
                   <div className="font-mono text-[11px] text-cyan uppercase tracking-widest mb-3">{cert.code}</div>
                   <h3 className="font-display font-bold text-white text-xl uppercase mb-2">{cert.name}</h3>
                   <p className="text-steel text-sm leading-relaxed mb-4">{cert.details[0]?.[1]}</p>
                   <span className="resources-cta-label resources-cta-label--sm">
-                    View Quality <AR />
+                    View Quality <AR className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
                   </span>
                 </button>
               ))}
@@ -418,7 +406,6 @@ export default function Resources({ navigate }: Props) {
           id="res-docs"
           className={`resources-docs ${revealed['res-docs'] ? 'is-visible' : ''}`}
         >
-          <div className="resources-docs-ambient" aria-hidden="true" />
           <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
             <div className="resources-eyebrow flex items-center gap-3 mb-3">
               <div className="resources-eyebrow-rule h-px bg-orange" />
@@ -452,9 +439,9 @@ export default function Resources({ navigate }: Props) {
                         <button
                           type="button"
                           onClick={() => navigate('contact')}
-                          className="resources-doc-btn"
+                          className="btn-chamfer group bg-navy hover:bg-navy-light text-white font-medium text-[13px] tracking-wide px-4 py-2.5 inline-flex items-center gap-2 transition-all duration-200 hover:-translate-y-0.5"
                         >
-                          Request Document <AR />
+                          Request Document <AR className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
                         </button>
                       </div>
                     </div>
@@ -468,25 +455,20 @@ export default function Resources({ navigate }: Props) {
 
       <section
         id="res-cta"
-        className={`resources-cta ${revealed['res-cta'] ? 'is-visible' : ''}`}
+        className="bg-orange min-h-screen flex items-center"
       >
-        <div className="resources-cta-ambient" aria-hidden="true" />
-        <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
-          <div className="resources-cta-panel">
-            <div className="resources-eyebrow flex items-center gap-3 mb-3">
-              <div className="resources-eyebrow-rule h-px bg-orange" />
-              <span className="font-mono text-xs sm:text-sm text-orange uppercase tracking-[0.16em]">Technical Enquiries</span>
-            </div>
-            <h2 className="font-display font-bold text-white text-4xl uppercase mb-4">Need Technical Information?</h2>
-            <p className="text-steel max-w-xl leading-relaxed mb-8">
-              Contact our engineering team for product, capability, and manufacturing enquiries.
-            </p>
+        <div className="max-w-[1440px] mx-auto px-6 xl:px-12 text-center">
+          <h2 className="font-display font-bold text-white text-4xl lg:text-5xl uppercase mb-4">Need Technical Information?</h2>
+          <p className="text-white/70 max-w-lg mx-auto mb-8">
+            Contact our engineering team for product, capability, and manufacturing enquiries.
+          </p>
+          <div className="flex items-center justify-center gap-4">
             <button
               type="button"
               onClick={() => navigate('contact')}
-              className="bg-orange hover:bg-orange-light text-white font-medium text-sm px-8 py-4 flex items-center gap-2 transition-colors"
+              className="btn-chamfer group bg-white text-orange hover:bg-off font-bold text-sm tracking-wide px-8 py-4 flex items-center gap-2 transition-all duration-200 hover:-translate-y-0.5"
             >
-              Contact {shortName.value} <AR />
+              Contact {shortName.value} <AR className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
             </button>
           </div>
         </div>

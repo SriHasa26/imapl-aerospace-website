@@ -211,7 +211,7 @@ export default function Capabilities({ navigate }: Props) {
                     ))}
                   </ul>
                 )}
-                <button onClick={() => navigate('quote')} className={`btn-chamfer group flex items-center gap-2 font-medium text-sm px-7 py-3.5 transition-all duration-200 hover:-translate-y-0.5 ${i % 2 === 0 ? 'bg-blue hover:bg-blue-light text-white' : 'bg-navy hover:bg-navy-light text-white'}`}>
+                <button onClick={() => navigate('quote')} className={`btn-chamfer group flex items-center gap-2 font-medium text-sm tracking-wide px-7 py-3.5 transition-all duration-200 hover:-translate-y-0.5 ${i % 2 === 0 ? 'bg-blue hover:bg-blue-light text-white' : 'bg-navy hover:bg-navy-light text-white'}`}>
                   Request Capability Quote <AR className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
                 </button>
               </div>
@@ -241,15 +241,15 @@ export default function Capabilities({ navigate }: Props) {
       ))}
 
       {/* CTA */}
-      <section className="bg-orange py-20">
+      <section className="bg-orange min-h-screen flex items-center">
         <div className="max-w-[1440px] mx-auto px-6 xl:px-12 text-center">
           <h2 className="font-display font-bold text-white text-5xl uppercase mb-4">Ready to Manufacture?</h2>
           <p className="text-white/70 max-w-lg mx-auto mb-8">Submit your drawings and specifications for a technical and commercial proposal.</p>
           <div className="flex items-center justify-center gap-4">
-            <button onClick={() => navigate('quote')} className="btn-chamfer group bg-white text-orange hover:bg-off font-bold text-sm px-8 py-4 flex items-center gap-2 transition-all duration-200 hover:-translate-y-0.5">
+            <button onClick={() => navigate('quote')} className="btn-chamfer group bg-white text-orange hover:bg-off font-bold text-sm tracking-wide px-8 py-4 flex items-center gap-2 transition-all duration-200 hover:-translate-y-0.5">
               Request a Quote <AR className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
             </button>
-            <button onClick={() => navigate('contact')} className="btn-chamfer border border-white/30 text-white hover:bg-white/10 hover:border-white/60 font-medium text-sm px-8 py-4 transition-all duration-200 hover:-translate-y-0.5">
+            <button onClick={() => navigate('contact')} className="btn-chamfer border border-white/30 text-white hover:bg-white/10 hover:border-white/60 font-medium text-sm tracking-wide px-8 py-4 transition-all duration-200 hover:-translate-y-0.5">
               Talk to Our Engineers
             </button>
           </div>

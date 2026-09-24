@@ -313,21 +313,21 @@ export default function RequestQuote({ navigate }: Props) {
             <a
               href={hrefFor('home')}
               onClick={go('home')}
-              className="bg-orange hover:bg-orange-light text-white font-medium text-sm px-7 py-3.5 min-h-12 transition-colors focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-cyan"
+              className="btn-chamfer bg-orange hover:bg-orange-light text-white font-medium text-sm tracking-wide px-7 py-3.5 min-h-12 transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-cyan"
             >
               Return to Home
             </a>
             <a
               href={hrefFor('capabilities')}
               onClick={go('capabilities')}
-              className="border border-border-dark text-steel hover:text-white font-medium text-sm px-7 py-3.5 min-h-12 transition-colors focus-visible:outline focus-visible:outline-1 focus-visible:outline-cyan"
+              className="btn-chamfer border border-border-dark text-steel hover:text-white font-medium text-sm tracking-wide px-7 py-3.5 min-h-12 transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-cyan"
             >
               Continue Browsing
             </a>
             <button
               type="button"
               onClick={restart}
-              className="border border-border-dark text-steel hover:text-white font-medium text-sm px-7 py-3.5 min-h-12 transition-colors focus-visible:outline focus-visible:outline-1 focus-visible:outline-cyan"
+              className="btn-chamfer border border-border-dark text-steel hover:text-white font-medium text-sm tracking-wide px-7 py-3.5 min-h-12 transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-cyan"
             >
               Submit Another RFQ
             </button>
@@ -727,7 +727,7 @@ export default function RequestQuote({ navigate }: Props) {
             <button
               type="button"
               onClick={handlePrev}
-              className={`border border-border-dark text-steel hover:text-white hover:border-steel font-medium text-sm px-6 py-3 min-h-12 transition-colors flex items-center justify-center gap-2 focus-visible:outline focus-visible:outline-1 focus-visible:outline-cyan ${step === 1 ? 'invisible hidden sm:flex sm:invisible' : ''}`}
+              className={`btn-chamfer border border-border-dark text-steel hover:text-white hover:border-steel font-medium text-sm tracking-wide px-6 py-3 min-h-12 transition-all duration-200 hover:-translate-y-0.5 flex items-center justify-center gap-2 focus-visible:outline focus-visible:outline-1 focus-visible:outline-cyan ${step === 1 ? 'invisible hidden sm:flex sm:invisible' : ''}`}
             >
               Previous
             </button>
@@ -736,7 +736,7 @@ export default function RequestQuote({ navigate }: Props) {
               <button
                 type="button"
                 onClick={handleNext}
-                className="bg-orange hover:bg-orange-light text-white font-medium text-sm px-8 py-3 min-h-12 flex items-center justify-center gap-2 transition-colors focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-cyan"
+                className="btn-chamfer bg-orange hover:bg-orange-light text-white font-medium text-sm tracking-wide px-8 py-3 min-h-12 flex items-center justify-center gap-2 transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-cyan"
               >
                 Continue
               </button>
@@ -744,7 +744,7 @@ export default function RequestQuote({ navigate }: Props) {
               <button
                 type="submit"
                 disabled={phase !== 'idle'}
-                className="bg-orange hover:bg-orange-light disabled:opacity-60 text-white font-bold text-sm px-8 py-3 min-h-12 flex items-center justify-center gap-2 transition-colors focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-white"
+                className="btn-chamfer bg-orange hover:bg-orange-light disabled:opacity-60 text-white font-bold text-sm tracking-wide px-8 py-3 min-h-12 flex items-center justify-center gap-2 transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 {phase === 'uploading' ? 'Uploading drawing…' : phase === 'submitting' ? 'Submitting…' : rfqAccepted && fileUploadStatus === 'failed' ? 'Retry upload' : 'Submit Request'}
               </button>

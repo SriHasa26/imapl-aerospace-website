@@ -20,8 +20,17 @@ import { isConflicting, type MaybeConflicting, type VerificationStatus } from '.
 
 interface Props { navigate: (page: Page) => void }
 
-function AR() {
-  return <svg viewBox="0 0 16 16" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+function SL({ text }: { text: string }) {
+  return (
+    <div className="facilities-eyebrow flex items-center gap-3 mb-3">
+      <div className="facilities-eyebrow-rule h-px bg-orange" />
+      <span className="font-mono text-xs sm:text-sm text-orange uppercase tracking-[0.16em]">{text}</span>
+    </div>
+  )
+}
+
+function AR({ className = 'w-3.5 h-3.5' }: { className?: string }) {
+  return <svg viewBox="0 0 16 16" className={className} fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
 }
 
 function isPublishable(status: VerificationStatus): boolean {
@@ -115,7 +124,7 @@ export default function Facilities({ navigate }: Props) {
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const tourIds = photoTour.map((bay) => `fac-tour-${bay.num}`)
-    const extraIds = ['fac-location', 'fac-tour', 'fac-equipment']
+    const extraIds = ['fac-stats', 'fac-location', 'fac-tour', 'fac-equipment', 'fac-identity']
     if (reduceMotion || !('IntersectionObserver' in window)) {
       setRevealed(Object.fromEntries([...tourIds, ...extraIds].map((id) => [id, true])))
       return () => window.cancelAnimationFrame(revealId)
@@ -165,106 +174,78 @@ export default function Facilities({ navigate }: Props) {
     <div className="facilities-page">
       {/* Hero */}
       <section
-        className={`facilities-hero relative overflow-hidden ${heroVisible ? 'is-visible' : ''}`}
+        className={`facilities-hero relative overflow-hidden flex flex-col min-h-[calc(100svh-4.5rem)] ${heroVisible ? 'is-visible' : ''}`}
       >
-        <img src={images.facilityImage} alt="Igniting Minds Aerospace manufacturing facility" className={`absolute inset-0 ${photoClass(images.facilityImage, 'decorative')} opacity-55`} decoding="async" fetchPriority="high" />
-        <div className="absolute inset-0 bg-gradient-to-r from-navy/78 via-navy/45 to-navy/22" />
-        <div className="absolute inset-0 bg-gradient-to-t from-navy/70 via-transparent to-navy/22" />
-        <div className="facilities-hero-ambient" aria-hidden="true" />
-        <div className="facilities-hero-grid" aria-hidden="true" />
-        <div className="facilities-hero-scan" aria-hidden="true" />
-        <span className="facilities-hero-dot facilities-hero-dot--a" aria-hidden="true" />
-        <span className="facilities-hero-dot facilities-hero-dot--b" aria-hidden="true" />
-        <span className="facilities-hero-dot facilities-hero-dot--c" aria-hidden="true" />
-        <div className="relative max-w-[1440px] mx-auto w-full px-6 xl:px-12">
-          <div className="facilities-crumb font-mono text-[9px] text-steel uppercase tracking-widest mb-6 flex items-center gap-2">
-            <button onClick={() => navigate('home')} className="hover:text-cyan transition-colors">Home</button>
-            <span>/</span>
-            <span className="text-cyan">Facilities</span>
-          </div>
-          <div className="facilities-eyebrow flex items-center gap-3 mb-4">
-            <div className="facilities-eyebrow-rule h-px bg-orange" />
-            <span className="font-mono text-[10px] text-orange uppercase tracking-[0.2em]">Our Facilities</span>
-          </div>
-          <h1 className="facilities-heading font-display font-black text-white text-5xl lg:text-7xl uppercase leading-none tracking-tight mb-6">
+        <div className="relative flex-1 flex flex-col justify-center max-w-[1440px] mx-auto w-full px-6 xl:px-12">
+          <SL text="Our Facilities" />
+          <h1 className="facilities-heading font-display font-black text-white text-5xl lg:text-7xl uppercase leading-none tracking-tight mb-6 sm:whitespace-nowrap">
             {publicArea ? (
-              <>
-                {publicArea} of<br />Advanced<br />Manufacturing
-              </>
+              <>{publicArea} of Advanced Manufacturing</>
             ) : (
-              <>
-                Advanced<br />Aerospace<br />Manufacturing
-              </>
+              <>Advanced Aerospace Manufacturing</>
             )}
           </h1>
-          <div className="facilities-hero-stats grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 pt-8 border-t border-border-dark mt-8 min-w-0">
-            {heroStats.map(s => (
-              <div key={s.label} className="facilities-stat min-w-0">
-                <div className="font-display font-black text-white text-4xl">{s.val}</div>
-                <div className="font-mono text-[9px] text-cyan mt-1 uppercase tracking-widest">{s.unit}</div>
-                <div className="font-mono text-[9px] text-steel/70 mt-0.5 break-words">{s.label}</div>
+          <p className="facilities-lede text-steel max-w-2xl text-lg leading-relaxed">
+            Precision aerospace manufacturing, aero-engine and MRO tooling, and ground support equipment production.
+          </p>
+        </div>
+        <div className="absolute bottom-0 left-0 right-0 pointer-events-none" aria-hidden="true">
+          <svg viewBox="0 0 1440 100" preserveAspectRatio="none" className="w-full h-[48px] sm:h-[68px] lg:h-[88px] block">
+            <path d="M0,52 C420,104 860,58 1440,40 L1440,100 L0,100 Z" fill="#0E1B33" />
+          </svg>
+        </div>
+      </section>
+
+      {/* Facility snapshot */}
+      <section id="fac-stats" className="bg-off min-h-screen flex items-center">
+        <div className={`quality-reveal max-w-[1440px] mx-auto px-6 xl:px-12 w-full ${revealed['fac-stats'] ? 'is-visible' : ''}`}>
+          <SL text="Facility Snapshot" />
+          <h2 className="font-display font-bold text-navy text-4xl lg:text-5xl uppercase leading-tight mb-14">
+            Built For Scale
+          </h2>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+            {heroStats.map((s) => (
+              <div key={s.label} className="quality-card quality-card--light p-8 text-center">
+                <div className="font-display font-black text-blue text-4xl lg:text-5xl mb-2">{s.val}</div>
+                <div className="font-mono text-xs text-navy uppercase tracking-widest">{s.unit}</div>
+                <div className="font-mono text-xs text-mid mt-1">{s.label}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Location / identity */}
-      <section
-        id="fac-location"
-        className={`facilities-location ${revealed['fac-location'] ? 'is-visible' : ''}`}
-      >
-        <div className="facilities-location-ambient" aria-hidden="true" />
-        <div className="facilities-location-grid" aria-hidden="true" />
-        <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
-          <div className="facilities-location-panel">
-            <div className="grid lg:grid-cols-3 gap-8">
-              <div className="lg:col-span-2">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="facilities-eyebrow-rule h-px bg-orange" />
-                  <span className="font-mono text-[10px] text-blue uppercase tracking-[0.2em]">
-                    {publicLocations.length > 0 || publicLocationSummary ? 'Location' : 'Manufacturing'}
-                  </span>
+      {/* Location */}
+      <section id="fac-location" className="bg-navy min-h-screen flex items-center">
+        <div className={`quality-reveal max-w-[1440px] mx-auto px-6 xl:px-12 w-full ${revealed['fac-location'] ? 'is-visible' : ''}`}>
+          <div className="grid lg:grid-cols-3 gap-10 items-center">
+            <div className="lg:col-span-2">
+              <SL text={publicLocations.length > 0 || publicLocationSummary ? 'Location' : 'Manufacturing'} />
+              <h2 className="font-display font-bold text-white text-4xl uppercase leading-tight mb-4">{locationHeading}</h2>
+              <p className="text-steel leading-relaxed max-w-xl">{locationBody}</p>
+            </div>
+            <div className="quality-card quality-card--dark divide-y divide-border-dark">
+              {locationFacts.map(([k, v]) => (
+                <div key={`${k}-${v}`} className="px-5 py-4">
+                  <div className="font-mono text-[11px] text-steel uppercase tracking-wider mb-1">{k}</div>
+                  <div className="text-sm text-white">{v}</div>
                 </div>
-                <h2 className="font-display font-bold text-navy text-3xl uppercase mb-4">{locationHeading}</h2>
-                <p className="text-mid leading-relaxed max-w-xl">
-                  {locationBody}
-                </p>
-              </div>
-              <div className="space-y-0 facilities-facts">
-                {locationFacts.map(([k, v]) => (
-                  <div key={`${k}-${v}`} className="facilities-fact">
-                    <div className="font-mono text-[9px] text-steel uppercase tracking-wider mb-1">{k}</div>
-                    <div className="text-sm text-mid">{v}</div>
-                  </div>
-                ))}
-              </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      <div className="facilities-blend facilities-blend--to-dark" aria-hidden="true" />
-
       {/* Bay by bay / photo tour */}
       <section className={`facilities-tour ${revealed['fac-tour'] ? 'is-visible' : ''}`}>
-        <div className="facilities-tour-ambient" aria-hidden="true" />
-        <div className="facilities-tour-grid" aria-hidden="true" />
         <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
           <div id="fac-tour" className="facilities-tour-intro scroll-mt-32">
-            <div className="facilities-eyebrow flex items-center gap-3 mb-4">
-              <div className="facilities-eyebrow-rule h-px bg-orange" />
-              <span className="font-mono text-[10px] text-orange uppercase tracking-[0.2em]">Facility Tour</span>
-            </div>
+            <SL text="Facility Tour" />
             <h2 className="font-display font-bold text-white text-4xl lg:text-5xl uppercase leading-tight mb-8">
               {publicBays.length > 0 ? (
-                <>
-                  Six Integrated<br />Manufacturing Areas
-                </>
+                <>Six Integrated<br />Manufacturing Areas</>
               ) : (
-                <>
-                  Aerospace<br />Manufacturing
-                </>
+                <>Aerospace<br />Manufacturing</>
               )}
             </h2>
           </div>
@@ -303,7 +284,6 @@ export default function Facilities({ navigate }: Props) {
                     />
                   </div>
                   <div className="facilities-bay-overlay" />
-                  <div className="facilities-bay-scan" aria-hidden="true" />
                   <div className="facilities-bay-corner facilities-bay-corner--tl" />
                   <div className="facilities-bay-corner facilities-bay-corner--tr" />
                   <div className="facilities-bay-corner facilities-bay-corner--bl" />
@@ -325,102 +305,60 @@ export default function Facilities({ navigate }: Props) {
         </div>
       </section>
 
-      {publicLegacyMachines.length > 0 ? (
-        <div className="facilities-blend facilities-blend--to-light" aria-hidden="true" />
-      ) : (
-        <div className="facilities-blend facilities-blend--to-blue" aria-hidden="true" />
-      )}
-
+      {/* Equipment */}
       {publicLegacyMachines.length > 0 && (
-        <section
-          id="fac-equipment"
-          className={`facilities-equipment ${revealed['fac-equipment'] ? 'is-visible' : ''}`}
-        >
-          <div className="facilities-equipment-ambient" aria-hidden="true" />
-          <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="facilities-eyebrow-rule h-px bg-orange" />
-              <span className="font-mono text-[10px] text-blue uppercase tracking-[0.2em]">Equipment</span>
-            </div>
-            <h2 className="font-display font-bold text-navy text-4xl uppercase mb-10">Named Machines</h2>
-            <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <section id="fac-equipment" className="bg-off min-h-screen flex items-center">
+          <div className={`quality-reveal max-w-[1440px] mx-auto px-6 xl:px-12 w-full ${revealed['fac-equipment'] ? 'is-visible' : ''}`}>
+            <SL text="Equipment" />
+            <h2 className="font-display font-bold text-navy text-4xl lg:text-5xl uppercase leading-tight mb-14">Named Machines</h2>
+            <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {publicLegacyMachines.map((machine) => (
-                <li key={machine} className="facilities-machine text-sm text-mid">{machine}</li>
+                <li key={machine} className="quality-card quality-card--light p-5 text-sm text-navy">{machine}</li>
               ))}
             </ul>
           </div>
         </section>
       )}
 
-      {publicLegacyMachines.length > 0 && (
-        <div className="facilities-blend facilities-blend--from-light-to-blue" aria-hidden="true" />
-      )}
-
-      {showExpansion ? (
-        <section className="facilities-identity">
-          <div className="facilities-identity-ambient" aria-hidden="true" />
-          <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <div className="font-mono text-[9px] text-white/50 uppercase tracking-widest mb-3">{prototypeExpansion.phaseLabel}</div>
-                <h2 className="font-display font-bold text-white text-4xl uppercase mb-4">
-                  {prototypeExpansion.headline}
-                </h2>
-                <p className="text-white/70 leading-relaxed">
-                  {prototypeExpansion.detail}
-                </p>
+      {/* Identity / expansion */}
+      <section id="fac-identity" className="facilities-identity min-h-screen flex items-center">
+        <div className={`quality-reveal relative max-w-[1440px] mx-auto px-6 xl:px-12 w-full ${revealed['fac-identity'] ? 'is-visible' : ''}`}>
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <div className="font-mono text-xs text-white/50 uppercase tracking-widest mb-3">
+                {showExpansion ? prototypeExpansion.phaseLabel : shortName.value}
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                {prototypeExpansion.stats.map(s => (
-                  <div key={s.label} className="facilities-identity-stat">
-                    <div className="font-display font-bold text-white text-3xl">{s.val}</div>
-                    <div className="font-mono text-[9px] text-white/60 mt-1 uppercase tracking-widest">{s.label}</div>
-                  </div>
-                ))}
-              </div>
+              <h2 className="font-display font-bold text-white text-4xl uppercase leading-tight mb-4">
+                {showExpansion ? prototypeExpansion.headline : 'Aerospace Manufacturing'}
+              </h2>
+              <p className="text-white/70 leading-relaxed">
+                {showExpansion ? prototypeExpansion.detail : description.value}
+              </p>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              {(showExpansion ? prototypeExpansion.stats : identityStats).map((s) => (
+                <div key={s.label} className="facilities-identity-stat">
+                  <div className="font-display font-bold text-white text-3xl">{s.val}</div>
+                  <div className="font-mono text-[11px] text-white/60 mt-1 uppercase tracking-widest">{s.label}</div>
+                </div>
+              ))}
             </div>
           </div>
-        </section>
-      ) : (
-        <section className="facilities-identity">
-          <div className="facilities-identity-ambient" aria-hidden="true" />
-          <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <div className="font-mono text-[9px] text-white/50 uppercase tracking-widest mb-3">{shortName.value}</div>
-                <h2 className="font-display font-bold text-white text-4xl uppercase mb-4">
-                  Aerospace Manufacturing
-                </h2>
-                <p className="text-white/70 leading-relaxed">
-                  {description.value}
-                </p>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                {identityStats.map(s => (
-                  <div key={s.label} className="facilities-identity-stat">
-                    <div className="font-display font-bold text-white text-3xl">{s.val}</div>
-                    <div className="font-mono text-[9px] text-white/60 mt-1 uppercase tracking-widest">{s.label}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
-
-      <div className="facilities-blend facilities-blend--from-blue-to-navy" aria-hidden="true" />
+        </div>
+      </section>
 
       {/* CTA */}
-      <section className="facilities-cta">
-        <div className="facilities-cta-ambient" aria-hidden="true" />
-        <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12 text-center">
-          <h2 className="font-display font-bold text-white text-4xl uppercase mb-4">Schedule a Facility Visit</h2>
-          <p className="text-steel max-w-md mx-auto mb-8">
+      <section className="bg-orange min-h-screen flex items-center">
+        <div className="max-w-[1440px] mx-auto px-6 xl:px-12 text-center">
+          <h2 className="font-display font-bold text-white text-4xl lg:text-5xl uppercase mb-4">Schedule a Facility Visit</h2>
+          <p className="text-white/70 max-w-lg mx-auto mb-8">
             {officialName.value} welcomes site visits. Use the contact form to request a visit.
           </p>
-          <button onClick={() => navigate('contact')} className="bg-blue hover:bg-blue-light text-white font-medium text-sm px-8 py-4 flex items-center gap-2 mx-auto transition-colors">
-            Request a Visit <AR />
-          </button>
+          <div className="flex items-center justify-center gap-4">
+            <button onClick={() => navigate('contact')} className="btn-chamfer group bg-white text-orange hover:bg-off font-bold text-sm tracking-wide px-8 py-4 flex items-center gap-2 transition-all duration-200 hover:-translate-y-0.5">
+              Request a Visit <AR className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
+            </button>
+          </div>
         </div>
       </section>
     </div>

@@ -26,8 +26,8 @@ import { isConflicting, isPublishable } from '../content/types'
 
 interface Props { navigate: NavigateFn }
 
-function AR() {
-  return <svg viewBox="0 0 16 16" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+function AR({ className = 'w-3.5 h-3.5' }: { className?: string }) {
+  return <svg viewBox="0 0 16 16" className={className} fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
 }
 
 const portraitFocus: Record<string, string> = {
@@ -111,6 +111,8 @@ const lifeCards = [
   },
 ]
 
+const bentoAreas = ['eng', 'collab', 'learn']
+
 type Leader = (typeof publicLeadership)[number]
 
 export default function Careers({ navigate }: Props) {
@@ -126,7 +128,7 @@ export default function Careers({ navigate }: Props) {
     const revealId = window.requestAnimationFrame(() => setHeroVisible(true))
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const ids = ['car-why', 'car-life', 'car-split', 'car-culture', 'car-gallery', 'car-cta']
+    const ids = ['car-why', 'car-life', 'car-split', 'car-openings', 'car-culture', 'car-gallery']
     if (reduceMotion || !('IntersectionObserver' in window)) {
       setRevealed(Object.fromEntries(ids.map((id) => [id, true])))
       return () => window.cancelAnimationFrame(revealId)
@@ -156,29 +158,9 @@ export default function Careers({ navigate }: Props) {
   return (
     <div className="careers-page">
       <section
-        className={`careers-hero relative overflow-hidden ${heroVisible ? 'is-visible' : ''}`}
+        className={`careers-hero relative overflow-hidden flex flex-col min-h-[calc(100svh-4.5rem)] ${heroVisible ? 'is-visible' : ''}`}
       >
-        <img
-          src={images.careersImage}
-          alt="Igniting Minds Aerospace team"
-          className={`absolute inset-0 ${photoClass(images.careersImage, 'decorative')} opacity-[0.5]`}
-          decoding="async"
-          fetchPriority="high"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-navy/78 via-navy/42 to-navy/20" />
-        <div className="absolute inset-0 bg-gradient-to-t from-navy/70 via-transparent to-navy/20" />
-        <div className="careers-hero-ambient" aria-hidden="true" />
-        <div className="careers-hero-grid" aria-hidden="true" />
-        <div className="careers-hero-scan" aria-hidden="true" />
-        <span className="careers-hero-dot careers-hero-dot--a" aria-hidden="true" />
-        <span className="careers-hero-dot careers-hero-dot--b" aria-hidden="true" />
-        <span className="careers-hero-dot careers-hero-dot--c" aria-hidden="true" />
-        <div className="relative max-w-[1440px] mx-auto w-full min-w-0 px-6 xl:px-12">
-          <div className="careers-crumb font-mono text-xs text-steel uppercase tracking-widest mb-6 flex items-center gap-2">
-            <button onClick={() => navigate('home')} className="hover:text-cyan transition-colors">Home</button>
-            <span>/</span>
-            <span className="text-cyan">Careers</span>
-          </div>
+        <div className="relative flex-1 flex flex-col justify-center max-w-[1440px] mx-auto w-full min-w-0 px-6 xl:px-12">
           <div className="careers-eyebrow flex items-center gap-3 mb-3">
             <div className="careers-eyebrow-rule h-px bg-orange" />
             <span className="font-mono text-xs sm:text-sm text-orange uppercase tracking-[0.16em]">Careers</span>
@@ -186,23 +168,28 @@ export default function Careers({ navigate }: Props) {
           <h1 className="careers-heading font-display font-black text-white text-5xl lg:text-7xl uppercase leading-none tracking-tight mb-6">
             Build the Future<br />with Precision
           </h1>
-          <p className="careers-lede text-steel max-w-2xl w-full min-w-0 text-lg leading-relaxed">
+          <p className="careers-lede text-steel max-w-2xl w-full min-w-0 text-lg leading-relaxed mb-10">
             {description.value} Current vacancies are not confirmed on this site.
           </p>
-          <div className="careers-hero-stats mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6 border-t border-border-dark pt-8">
+          <div className="careers-lede grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl border-t border-border-dark pt-8">
             {displayedHeroStats.map((s) => (
-              <div key={s.label} className="careers-stat min-w-0">
-                <div className="font-display font-bold text-white text-4xl">{s.val}</div>
-                <div className="font-mono text-xs text-cyan mt-1 uppercase tracking-widest">{s.label}</div>
+              <div key={s.label} className="quality-card quality-card--dark p-5 text-center">
+                <div className="font-display font-black text-white text-3xl mb-1">{s.val}</div>
+                <div className="font-mono text-[11px] text-cyan uppercase tracking-widest">{s.label}</div>
               </div>
             ))}
           </div>
         </div>
+        <div className="absolute bottom-0 left-0 right-0 pointer-events-none" aria-hidden="true">
+          <svg viewBox="0 0 1440 100" preserveAspectRatio="none" className="w-full h-[48px] sm:h-[68px] lg:h-[88px] block">
+            <path d="M0,52 C420,104 860,58 1440,40 L1440,100 L0,100 Z" fill="#0E1B33" />
+          </svg>
+        </div>
       </section>
 
-      <section id="car-why" className={`careers-why ${revealed['car-why'] ? 'is-visible' : ''}`}>
+      <section id="car-why" className={`careers-why min-h-screen flex items-center ${revealed['car-why'] ? 'is-visible' : ''}`}>
         <div className="careers-why-grid" aria-hidden="true" />
-        <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
+        <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12 w-full">
           <div className="careers-eyebrow flex items-center gap-3 mb-3">
             <div className="careers-eyebrow-rule h-px bg-orange" />
             <span className="font-mono text-xs sm:text-sm text-orange uppercase tracking-[0.16em]">01 / Why IMAPL</span>
@@ -226,57 +213,56 @@ export default function Careers({ navigate }: Props) {
         </div>
       </section>
 
-      <section id="car-life" className={`careers-life ${revealed['car-life'] ? 'is-visible' : ''}`}>
+      <section id="car-life" className={`careers-life min-h-screen flex items-center ${revealed['car-life'] ? 'is-visible' : ''}`}>
         <div className="careers-life-ambient" aria-hidden="true" />
-        <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
+        <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12 w-full">
           <div className="careers-eyebrow flex items-center gap-3 mb-3">
             <div className="careers-eyebrow-rule h-px bg-orange" />
             <span className="font-mono text-xs sm:text-sm text-orange uppercase tracking-[0.16em]">02 / Life at {shortName.value}</span>
           </div>
           <h2 className="font-display font-bold text-navy text-4xl uppercase mb-4">Life at {shortName.value}</h2>
           <p className="text-mid max-w-2xl leading-relaxed mb-10">{vision.value}</p>
-          <div className="careers-life-pair">
-            <article className="careers-life-card careers-life-pair-card">
-              <div className="careers-life-well">
-                <img
-                  src={images.careersGroupImage}
-                  alt="Igniting Minds Aerospace team"
-                  loading="lazy"
-                  decoding="async"
-                  className={`${photoClass(images.careersGroupImage, 'photo', 'pair')} careers-life-img`}
-                />
+          <div className="careers-bento">
+            <article className="careers-bento-tile careers-bento-team">
+              <img
+                src={images.careersGroupImage}
+                alt="Igniting Minds Aerospace team"
+                loading="lazy"
+                decoding="async"
+                className={`${photoClass(images.careersGroupImage, 'photo', 'pair')} careers-bento-img`}
+              />
+              <div className="careers-bento-overlay">
+                <span className="font-mono text-[11px] text-cyan uppercase tracking-widest">Our People</span>
+                <span className="font-display font-bold text-white text-2xl lg:text-3xl uppercase leading-tight">One Team, One Mission</span>
               </div>
             </article>
-            <article className="careers-life-card careers-life-pair-card">
-              <div className="careers-life-well">
-                <img
-                  src={images.careersCultureImage}
-                  alt="Training at IMAPL"
-                  loading="lazy"
-                  decoding="async"
-                  className={`${photoClass(images.careersCultureImage, 'decorative')} careers-life-img`}
-                />
+            <article className="careers-bento-tile careers-bento-culture">
+              <img
+                src={images.careersCultureImage}
+                alt="Training at IMAPL"
+                loading="lazy"
+                decoding="async"
+                className={`${photoClass(images.careersCultureImage, 'decorative')} careers-bento-img`}
+              />
+              <div className="careers-bento-overlay">
+                <span className="font-mono text-[11px] text-cyan uppercase tracking-widest">Development</span>
+                <span className="font-display font-bold text-white text-xl uppercase leading-tight">Hands-On Training</span>
               </div>
             </article>
-          </div>
-          <div className="careers-life-grid">
             {lifeCards.map((card, index) => (
               <article
                 key={card.title}
-                className="careers-life-card"
-                style={{ '--careers-stagger': `${index * 80}ms` } as CSSProperties}
+                className={`careers-bento-tile careers-bento-${bentoAreas[index] ?? 'eng'}`}
+                style={{ '--careers-stagger': `${(index + 2) * 80}ms` } as CSSProperties}
               >
-                <div className="careers-life-well">
-                  <img
-                    src={card.img}
-                    alt={card.alt}
-                    loading="lazy"
-                    className={`${photoClass(card.img, 'decorative')} careers-life-img`}
-                  />
-                </div>
-                <div className="careers-life-body">
-                  <h3 className="font-display font-bold text-navy text-xl uppercase mb-2">{card.title}</h3>
-                  <p className="text-mid text-sm leading-relaxed">{card.desc}</p>
+                <img
+                  src={card.img}
+                  alt={card.alt}
+                  loading="lazy"
+                  className={`${photoClass(card.img, 'decorative')} careers-bento-img`}
+                />
+                <div className="careers-bento-overlay">
+                  <span className="font-mono text-[11px] text-cyan uppercase tracking-widest">{card.title}</span>
                 </div>
               </article>
             ))}
@@ -294,63 +280,67 @@ export default function Careers({ navigate }: Props) {
         </div>
       </section>
 
-      <section id="car-split" className={`careers-split ${revealed['car-split'] ? 'is-visible' : ''}`}>
+      <section id="car-split" className={`careers-split min-h-screen flex items-center ${revealed['car-split'] ? 'is-visible' : ''}`}>
         <div className="careers-split-ambient" aria-hidden="true" />
-        <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
-          <div className="careers-split-grid">
-            <div className="careers-people min-w-0">
-              <div className="careers-eyebrow flex items-center gap-3 mb-3">
-                <div className="careers-eyebrow-rule h-px bg-orange" />
-                <span className="font-mono text-xs sm:text-sm text-orange uppercase tracking-[0.16em]">03 / People</span>
-              </div>
-              <h2 className="font-display font-bold text-white text-4xl uppercase mb-4">People of {shortName.value}</h2>
-              <p className="text-steel text-sm leading-relaxed mb-8 max-w-xl">
-                Leadership published in the company profile. Employee testimonials are not published on this site.
-              </p>
-              <div className="careers-people-list">
-                {publicLeadership.map((person, index) => {
-                  const src = person.photo ? images[person.photo] : undefined
-                  return (
-                    <article
-                      key={person.name}
-                      className="careers-person"
-                      style={{ '--careers-stagger': `${index * 80}ms` } as CSSProperties}
-                    >
-                      <div className="careers-person-photo">
-                        {src ? (
-                          <img
-                            src={src}
-                            alt={person.name}
-                            width={160}
-                            height={200}
-                            loading="lazy"
-                            className="careers-person-img"
-                            style={{ objectPosition: portraitFocus[person.name] ?? 'center 16%' }}
-                          />
-                        ) : (
-                          <div className="careers-person-fallback" />
-                        )}
-                      </div>
-                      <div className="careers-person-copy min-w-0">
-                        <div className="font-mono text-[11px] text-cyan uppercase tracking-widest mb-1">{person.title}</div>
-                        <h3 className="font-display font-bold text-white text-xl uppercase mb-2">{person.name}</h3>
-                        {person.summary && <p className="text-steel text-sm leading-relaxed mb-4">{person.summary}</p>}
-                        <button type="button" className="careers-text-btn" onClick={() => setOpenLeader(person)}>
-                          View Profile <AR />
-                        </button>
-                      </div>
-                    </article>
-                  )
-                })}
-              </div>
+        <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12 w-full">
+          <div className="careers-people min-w-0">
+            <div className="careers-eyebrow flex items-center gap-3 mb-3">
+              <div className="careers-eyebrow-rule h-px bg-orange" />
+              <span className="font-mono text-xs sm:text-sm text-orange uppercase tracking-[0.16em]">03 / People</span>
             </div>
+            <h2 className="font-display font-bold text-white text-4xl uppercase mb-4">People of {shortName.value}</h2>
+            <p className="text-steel text-sm leading-relaxed mb-8 max-w-xl">
+              Leadership published in the company profile. Employee testimonials are not published on this site.
+            </p>
+            <div className="about-leaders-grid">
+              {publicLeadership.map((person) => {
+                const src = person.photo ? images[person.photo] : undefined
+                return (
+                  <article key={person.name} className="about-leader-card">
+                    {src ? (
+                      <div className="about-leader-photo">
+                        <img
+                          src={src}
+                          alt={person.name}
+                          width={400}
+                          height={500}
+                          loading="lazy"
+                          style={{ objectPosition: portraitFocus[person.name] ?? 'center 16%' }}
+                        />
+                      </div>
+                    ) : (
+                      <div className="about-leader-photo flex items-center justify-center">
+                        <svg viewBox="0 0 32 32" className="w-8 h-8 text-steel" fill="none" stroke="currentColor" strokeWidth="1">
+                          <circle cx="16" cy="11" r="5" />
+                          <path d="M4 28c0-6.627 5.373-12 12-12s12 5.373 12 12" />
+                        </svg>
+                      </div>
+                    )}
+                    <div className="about-leader-copy">
+                      <h3 className="font-display font-bold text-white text-xl uppercase">{person.name}</h3>
+                      <div className="font-mono text-xs text-cyan uppercase tracking-wider mt-1 mb-2">{person.title}</div>
+                      {person.summary && <div className="about-leader-summary font-mono text-xs text-steel">{person.summary}</div>}
+                      <button type="button" className="about-leader-profile-btn" onClick={() => setOpenLeader(person)}>
+                        View Profile <AR />
+                      </button>
+                    </div>
+                  </article>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
 
-            <aside className="careers-openings min-w-0">
+      <section id="car-openings" className={`careers-openings-section min-h-screen flex items-center ${revealed['car-openings'] ? 'is-visible' : ''}`}>
+        <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12 w-full">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            <div className="careers-openings min-w-0">
               <div className="careers-eyebrow flex items-center gap-3 mb-3">
                 <div className="careers-eyebrow-rule h-px bg-orange" />
                 <span className="font-mono text-xs sm:text-sm text-orange uppercase tracking-[0.16em]">04 / Opportunities</span>
               </div>
-              <h2 className="font-display font-bold text-white text-4xl uppercase mb-6">
+              <h2 className="font-display font-bold text-navy text-4xl uppercase mb-6">
                 {confirmedOpenings.length > 0 ? 'Current Openings' : 'Career Opportunities'}
               </h2>
               {confirmedOpenings.length > 0 ? (
@@ -364,46 +354,58 @@ export default function Careers({ navigate }: Props) {
                     >
                       <div>
                         {job.dept && (
-                          <div className="font-mono text-[11px] text-cyan uppercase tracking-widest mb-2">{job.dept}</div>
+                          <div className="font-mono text-[11px] text-blue uppercase tracking-widest mb-2">{job.dept}</div>
                         )}
-                        <h3 className="font-display font-bold text-white text-lg uppercase">{job.role}</h3>
+                        <h3 className="font-display font-bold text-navy text-lg uppercase">{job.role}</h3>
                       </div>
                       <span className="careers-text-btn">Enquire <AR /></span>
                     </button>
                   ))}
                 </div>
               ) : (
-                <div className="careers-status">
+                <div className="careers-status careers-status--light careers-status--wide">
                   <div className="careers-status-row">
                     <span className="careers-status-dot" aria-hidden="true" />
                     <div>
-                      <div className="font-mono text-[11px] text-cyan uppercase tracking-widest mb-1">Current status</div>
-                      <h3 className="font-display font-bold text-white text-2xl uppercase">No confirmed openings at this time</h3>
+                      <div className="font-mono text-[11px] text-blue uppercase tracking-widest mb-1">Current status</div>
+                      <h3 className="font-display font-bold text-navy text-2xl uppercase">No confirmed openings at this time</h3>
                     </div>
                   </div>
-                  <p className="text-steel text-sm leading-relaxed">
+                  <p className="text-mid text-sm leading-relaxed max-w-2xl">
                     No confirmed current vacancies are published. Legacy and prototype role titles are held internally and are not presented as open positions.
                   </p>
-                  <p className="text-steel text-sm leading-relaxed">
+                  <p className="text-mid text-sm leading-relaxed max-w-2xl">
                     We welcome professional enquiries regarding future opportunities at {shortName.value}. The contact form submits an enquiry; it does not send a resume or application to HR.
                   </p>
                   <button
                     type="button"
                     onClick={() => navigate('contact')}
-                    className="bg-orange hover:bg-orange-light text-white font-medium text-sm px-7 py-3.5 flex items-center gap-2 transition-colors w-fit"
+                    className="btn-chamfer group bg-orange hover:bg-orange-light text-white font-medium text-sm tracking-wide px-7 py-3.5 flex items-center gap-2 transition-all duration-200 hover:-translate-y-0.5 w-fit"
                   >
-                    Contact Our Team <AR />
+                    Contact Our Team <AR className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
                   </button>
                 </div>
               )}
-            </aside>
+            </div>
+
+            <div className="careers-openings-figure relative">
+              <div className="careers-openings-well">
+                <img
+                  src={images.careersImage}
+                  alt="Igniting Minds Aerospace team"
+                  loading="lazy"
+                  decoding="async"
+                  className={`${photoClass(images.careersImage, 'decorative')} careers-openings-img`}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section id="car-culture" className={`careers-culture ${revealed['car-culture'] ? 'is-visible' : ''}`}>
+      <section id="car-culture" className={`careers-culture min-h-screen flex items-center ${revealed['car-culture'] ? 'is-visible' : ''}`}>
         <div className="careers-culture-grid" aria-hidden="true" />
-        <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
+        <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12 w-full">
           <div className="careers-eyebrow flex items-center gap-3 mb-3">
             <div className="careers-eyebrow-rule h-px bg-orange" />
             <span className="font-mono text-xs sm:text-sm text-orange uppercase tracking-[0.16em]">05 / Culture</span>
@@ -421,7 +423,6 @@ export default function Careers({ navigate }: Props) {
               >
                 <div className="font-mono text-[11px] text-orange tracking-widest mb-3">{String(index + 1).padStart(2, '0')}</div>
                 <h3 className="font-display font-bold text-white text-lg uppercase leading-tight">{area}</h3>
-                {index < publicWorkAreas.length - 1 && <div className="careers-flow-line" aria-hidden="true" />}
               </article>
             ))}
           </div>
@@ -429,8 +430,8 @@ export default function Careers({ navigate }: Props) {
       </section>
 
       {publicBenefits.length > 0 && (
-        <section className="careers-benefits">
-          <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
+        <section className="careers-benefits min-h-screen flex items-center">
+          <div className="max-w-[1440px] mx-auto px-6 xl:px-12 w-full">
             <h2 className="font-display font-bold text-white text-4xl uppercase mb-12">What We Offer</h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {publicBenefits.map((b) => (
@@ -446,21 +447,19 @@ export default function Careers({ navigate }: Props) {
 
       <LifeAtImapl visible={revealed['car-gallery']} />
 
-      <section id="car-cta" className={`careers-cta ${revealed['car-cta'] ? 'is-visible' : ''}`}>
-        <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
-          <div className="careers-cta-panel">
-            <div>
-              <h2 className="font-display font-bold text-white text-4xl uppercase">Interested in Careers?</h2>
-              <p className="text-white/70 mt-2 max-w-lg">
-                Contact the team about careers. This does not submit an application or store a resume.
-              </p>
-            </div>
+      <section className="bg-orange min-h-screen flex items-center">
+        <div className="max-w-[1440px] mx-auto px-6 xl:px-12 text-center">
+          <h2 className="font-display font-bold text-white text-4xl lg:text-5xl uppercase mb-4">Interested in Careers?</h2>
+          <p className="text-white/70 max-w-lg mx-auto mb-8">
+            Contact the team about careers. This does not submit an application or store a resume.
+          </p>
+          <div className="flex items-center justify-center gap-4">
             <button
               type="button"
               onClick={() => navigate('contact')}
-              className="bg-white text-orange hover:bg-off font-medium text-sm px-7 py-4 flex items-center gap-2 transition-colors shrink-0"
+              className="btn-chamfer group bg-white text-orange hover:bg-off font-bold text-sm tracking-wide px-8 py-4 flex items-center gap-2 transition-all duration-200 hover:-translate-y-0.5"
             >
-              Enquire via Contact <AR />
+              Enquire via Contact <AR className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
             </button>
           </div>
         </div>

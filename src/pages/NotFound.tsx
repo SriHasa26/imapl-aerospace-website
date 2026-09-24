@@ -32,21 +32,21 @@ export default function NotFound({ navigate }: Props) {
             <a
               href={hrefFor('home')}
               onClick={go('home')}
-              className="bg-blue hover:bg-blue-light text-white font-medium text-sm px-8 py-4 transition-colors focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-cyan"
+              className="btn-chamfer bg-blue hover:bg-blue-light text-white font-medium text-sm tracking-wide px-8 py-4 transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-cyan"
             >
               Return Home
             </a>
             <a
               href={hrefFor('capabilities')}
               onClick={go('capabilities')}
-              className="border border-white/20 text-white hover:bg-white/5 font-medium text-sm px-8 py-4 transition-colors focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-cyan"
+              className="btn-chamfer border border-white/20 text-white hover:bg-white/5 font-medium text-sm tracking-wide px-8 py-4 transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-cyan"
             >
               View Capabilities
             </a>
             <a
               href={hrefFor('contact')}
               onClick={go('contact')}
-              className="border border-white/20 text-white hover:bg-white/5 font-medium text-sm px-8 py-4 transition-colors focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-cyan"
+              className="btn-chamfer border border-white/20 text-white hover:bg-white/5 font-medium text-sm tracking-wide px-8 py-4 transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-cyan"
             >
               Contact
             </a>

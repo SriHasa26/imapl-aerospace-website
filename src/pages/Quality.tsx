@@ -1,7 +1,7 @@
-import { useEffect, useState, type CSSProperties } from 'react'
+import { useEffect, useState } from 'react'
 import type { Page } from '../App'
-import { images } from '../content/assets'
 import { photoClass } from '../content/imagePresentation'
+import { images } from '../content/assets'
 import {
   geP23tf3,
   inspectionEquipment,
@@ -26,8 +26,8 @@ function SL({ text }: { text: string }) {
   )
 }
 
-function AR() {
-  return <svg viewBox="0 0 16 16" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+function AR({ className = 'w-3.5 h-3.5' }: { className?: string }) {
+  return <svg viewBox="0 0 16 16" className={className} fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
 }
 
 const publicInspection = isPublishable(inspectionProcesses.verificationStatus) ? inspectionProcesses.methods : []
@@ -36,7 +36,6 @@ const publicPartMarking = isPublishable(partMarking.verificationStatus) ? partMa
 const publicEquipment = inspectionEquipment.filter((item) => isPublishable(item.verificationStatus))
 const publicMetrics = isPublishable(qualityMetricsPrototype.verificationStatus) ? qualityMetricsPrototype.items : []
 const publicCerts = publishedCertifications.filter((cert) => isPublishable(cert.verificationStatus))
-const publicProcesses = prototypeQualityProcesses.filter((process) => isPublishable(process.verificationStatus))
 const publicPolicy = isPublishable(prototypeQualityPolicy.verificationStatus) ? prototypeQualityPolicy : undefined
 const showGeP23tf3 = isPublishable(geP23tf3.verificationStatus)
 
@@ -57,8 +56,8 @@ const metricCards = publicMetrics.length > 0
   ? publicMetrics.map((item) => ({ val: item, label: 'Quality metric', sub: 'Production data' }))
   : identityMetrics
 
-const processSteps = publicProcesses.length > 0
-  ? publicProcesses
+const processSteps = prototypeQualityProcesses.filter((process) => isPublishable(process.verificationStatus)).length > 0
+  ? prototypeQualityProcesses.filter((process) => isPublishable(process.verificationStatus))
   : [
       ...publicInspection.map((method, index) => ({
         step: String(index + 1).padStart(2, '0'),
@@ -82,14 +81,8 @@ const equipmentRows = publicEquipment.length > 0
 const policyText = publicPolicy?.statement
   ?? 'In-process and final inspection includes dimensional, geometric, and surface-finish verification and pre-dispatch inspection.'
 
-function moduleKey(val: string): string {
-  const key = val.toLowerCase().replace(/[^a-z]/g, '')
-  if (key.includes('inspect')) return 'inspect'
-  if (key.includes('geometry')) return 'geometry'
-  if (key.includes('load')) return 'load'
-  if (key.includes('mark')) return 'mark'
-  return 'generic'
-}
+const labImage = images.inspectionContracer
+const labImageAlt = 'MITUTOYO Contracer CV-2100'
 
 export default function Quality({ navigate }: Props) {
   const [heroVisible, setHeroVisible] = useState(false)
@@ -136,63 +129,48 @@ export default function Quality({ navigate }: Props) {
     <div className="quality-page">
       {/* Hero */}
       <section
-        className={`quality-hero relative overflow-hidden ${heroVisible ? 'is-visible' : ''}`}
+        className={`quality-hero relative overflow-hidden flex flex-col min-h-[calc(100svh-4.5rem)] ${heroVisible ? 'is-visible' : ''}`}
       >
-        <div className="absolute inset-0">
-          <img src={images.qualityHeroImage} alt="Mitutoyo CMM inspection" className={`${photoClass(images.qualityHeroImage, 'decorative')} opacity-[0.55]`} decoding="async" fetchPriority="high" />
-          <div className="absolute inset-0 bg-gradient-to-r from-navy/72 via-navy/38 to-navy/18" />
-          <div className="absolute inset-0 bg-gradient-to-t from-navy/68 via-transparent to-navy/16" />
-        </div>
-        <div className="quality-hero-ambient" aria-hidden="true" />
-        <div className="quality-hero-grid" aria-hidden="true" />
-        <div className="quality-hero-scan" aria-hidden="true" />
-        <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
-          <div className="quality-crumb font-mono text-xs text-steel uppercase tracking-widest mb-6 flex items-center gap-2">
-            <button onClick={() => navigate('home')} className="hover:text-cyan transition-colors">Home</button>
-            <span>/</span>
-            <span className="text-cyan">Quality</span>
-          </div>
+        <div className="relative flex-1 flex flex-col justify-center max-w-[1440px] mx-auto w-full px-6 xl:px-12">
           <SL text="Quality Assurance" />
-          <h1 className="quality-heading font-display font-black text-white text-5xl lg:text-7xl uppercase leading-none tracking-tight mb-6">
-            Inspection.<br />Verification.
+          <h1 className="quality-heading font-display font-black text-white text-5xl lg:text-7xl uppercase leading-none tracking-tight mb-6 sm:whitespace-nowrap">
+            Inspection &amp; Verification
           </h1>
-          <p className="quality-lede text-steel max-w-2xl text-lg leading-relaxed">
-            Inspection, NDT, load testing, and part marking — with AS9100 Rev D and ISO 9001 certified processes.
+          <p className="quality-lede text-steel max-w-2xl text-lg leading-relaxed mb-8">
+            AS9100 Rev D and ISO 9001 certified processes — dimensional inspection, load testing, and part marking.
           </p>
-        </div>
-      </section>
-
-      {/* Quality Policy / sourced process language */}
-      <section className="quality-policy bg-orange">
-        <div className="quality-policy-grid" aria-hidden="true" />
-        <div className="quality-policy-inner relative max-w-[1440px] mx-auto px-6 xl:px-12">
-          <div className="font-mono text-xs text-white/80 uppercase tracking-widest mb-1.5">
-            {publicPolicy ? 'Quality Policy Statement' : 'Inspection Process'}
-          </div>
-          <blockquote className="quality-policy-quote font-display font-bold text-white text-2xl lg:text-3xl uppercase leading-tight">
-            {`"${policyText}"`}
+          <blockquote className="quality-lede border-l-2 border-orange pl-5 max-w-2xl">
+            <div className="font-mono text-xs text-orange uppercase tracking-widest mb-2">
+              {publicPolicy ? 'Quality Policy Statement' : 'Inspection Process'}
+            </div>
+            <p className="text-white text-base sm:text-lg leading-relaxed">
+              {`"${policyText}"`}
+            </p>
+            {publicPolicy && (
+              <div className="mt-3 font-mono text-xs text-steel">— {publicPolicy.attribution}</div>
+            )}
           </blockquote>
-          {publicPolicy && (
-            <div className="mt-3 font-mono text-xs text-white/80">— {publicPolicy.attribution}</div>
-          )}
+        </div>
+        <div className="absolute bottom-0 left-0 right-0 pointer-events-none" aria-hidden="true">
+          <svg viewBox="0 0 1440 100" preserveAspectRatio="none" className="w-full h-[48px] sm:h-[68px] lg:h-[88px] block">
+            <path d="M0,52 C420,104 860,58 1440,40 L1440,100 L0,100 Z" fill="#0E1B33" />
+          </svg>
         </div>
       </section>
 
       {/* Key metrics */}
       <section
         id="quality-metrics"
-        className={`quality-metrics ${revealed['quality-metrics'] ? 'is-visible' : ''}`}
+        className="bg-off min-h-screen flex items-center"
       >
-        <div className="quality-metrics-ambient" aria-hidden="true" />
-        <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
-          <div className="quality-modules">
-            {metricCards.map((stat, index) => (
-              <div
-                key={stat.label + stat.val}
-                className={`quality-module quality-module--${moduleKey(stat.val)}`}
-                style={{ '--quality-stagger': `${index * 80}ms` } as CSSProperties}
-              >
-                <div className="quality-module-fx" aria-hidden="true" />
+        <div className={`quality-reveal max-w-[1440px] mx-auto px-6 xl:px-12 w-full ${revealed['quality-metrics'] ? 'is-visible' : ''}`}>
+          <SL text="Key Metrics" />
+          <h2 className="font-display font-bold text-navy text-4xl lg:text-5xl uppercase leading-tight mb-14">
+            Quality By The Numbers
+          </h2>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+            {metricCards.map((stat) => (
+              <div key={stat.label + stat.val} className="quality-card quality-card--light p-8 text-center">
                 <div className="font-display font-black text-blue text-4xl lg:text-5xl mb-2">{stat.val}</div>
                 <div className="font-mono text-xs text-navy uppercase tracking-widest">{stat.label}</div>
                 <div className="font-mono text-xs text-mid mt-1">{stat.sub}</div>
@@ -202,61 +180,32 @@ export default function Quality({ navigate }: Props) {
         </div>
       </section>
 
-      <div className="quality-blend quality-blend--to-dark" aria-hidden="true" />
-
       {/* Certifications / quality processes */}
       <section
         id="quality-certs"
-        className={`quality-certs ${revealed['quality-certs'] ? 'is-visible' : ''}`}
+        className="bg-navy min-h-screen flex items-center"
       >
-        <div className="quality-certs-ambient" aria-hidden="true" />
-        <div className="quality-certs-grid" aria-hidden="true" />
-        <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
+        <div className={`quality-reveal max-w-[1440px] mx-auto px-6 xl:px-12 w-full ${revealed['quality-certs'] ? 'is-visible' : ''}`}>
           <SL text={publicCerts.length > 0 ? 'Certifications & Accreditations' : 'Quality Processes'} />
           <h2 className="font-display font-bold text-white text-4xl lg:text-5xl uppercase leading-tight mb-14">
             {publicCerts.length > 0 ? (
-              <>
-                Globally Recognized<br />Standards
-              </>
+              <>Globally Recognized<br />Standards</>
             ) : (
-              <>
-                Inspection &<br />Part Marking
-              </>
+              <>Inspection &amp;<br />Part Marking</>
             )}
           </h2>
-          <div className="quality-cert-grid">
-            {(publicCerts.length > 0 ? publicCerts.map((cert) => ({
-              code: cert.code,
-              name: cert.name,
-              details: cert.details,
-              year: undefined as string | undefined,
-            })) : processCards.map((card) => ({
-              code: card.code,
-              name: card.name,
-              details: card.details,
-              year: undefined as string | undefined,
-            }))).map((cert, index) => (
-              <div
-                key={cert.code}
-                className="quality-cert"
-                style={{ '--quality-stagger': `${index * 90}ms` } as CSSProperties}
-              >
-                <div className="flex items-start justify-between gap-4 mb-5">
-                  <div>
-                    <div className="quality-cert-code font-display font-bold text-cyan text-3xl uppercase">{cert.code}</div>
-                    <div className="font-mono text-xs text-steel mt-1 tracking-wider">{cert.name}</div>
-                  </div>
-                  {cert.year && (
-                    <div className="border border-cyan/30 px-3 py-2 text-center shrink-0">
-                      <div className="font-mono text-[11px] text-steel uppercase tracking-wider">Issued</div>
-                      <div className="font-mono text-[11px] text-cyan mt-0.5">{cert.year}</div>
-                    </div>
-                  )}
-                </div>
-                <div className="space-y-2.5">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {(publicCerts.length > 0
+              ? publicCerts.map((cert) => ({ code: cert.code, name: cert.name, details: cert.details }))
+              : processCards.map((card) => ({ code: card.code, name: card.name, details: card.details }))
+            ).map((cert) => (
+              <div key={cert.code} className="quality-card quality-card--dark p-7">
+                <div className="font-display font-bold text-cyan text-3xl uppercase mb-1">{cert.code}</div>
+                <div className="font-mono text-xs text-steel mb-5 tracking-wider">{cert.name}</div>
+                <div className="space-y-2.5 border-t border-border-dark pt-4">
                   {cert.details.map(([k, v]) => (
                     <div key={`${k}-${v}`} className="flex items-start gap-3">
-                      <div className="font-mono text-[11px] text-steel uppercase tracking-wider w-24 shrink-0 pt-0.5">{k}</div>
+                      <div className="font-mono text-[11px] text-steel uppercase tracking-wider w-20 shrink-0 pt-0.5">{k}</div>
                       <div className="font-mono text-[11px] text-white">{v}</div>
                     </div>
                   ))}
@@ -267,28 +216,19 @@ export default function Quality({ navigate }: Props) {
         </div>
       </section>
 
-      <div className="quality-blend quality-blend--to-light" aria-hidden="true" />
-
       {/* Quality Process */}
       <section
         id="quality-process"
-        className={`quality-process ${revealed['quality-process'] ? 'is-visible' : ''}`}
+        className="bg-off min-h-screen flex items-center"
       >
-        <div className="quality-process-ambient" aria-hidden="true" />
-        <div className="quality-process-grid-bg" aria-hidden="true" />
-        <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
+        <div className={`quality-reveal max-w-[1440px] mx-auto px-6 xl:px-12 w-full ${revealed['quality-process'] ? 'is-visible' : ''}`}>
           <SL text="Quality Process" />
           <h2 className="font-display font-bold text-navy text-4xl lg:text-5xl uppercase leading-tight mb-14">
             Built In, Not<br />Inspected In
           </h2>
-          <div className="quality-process-grid">
-            {processSteps.map((p, index) => (
-              <article
-                key={p.step}
-                className="quality-step"
-                style={{ '--quality-stagger': `${index * 80}ms` } as CSSProperties}
-              >
-                <div className="quality-step-node" aria-hidden="true" />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {processSteps.map((p) => (
+              <article key={p.step} className="quality-card quality-card--light p-7">
                 <div className="font-mono text-[11px] text-blue font-semibold mb-4">{p.step}</div>
                 <h3 className="font-display font-bold text-navy text-xl uppercase mb-3">{p.title}</h3>
                 <p className="text-mid text-sm leading-relaxed">{p.desc}</p>
@@ -298,27 +238,20 @@ export default function Quality({ navigate }: Props) {
         </div>
       </section>
 
-      <div className="quality-blend quality-blend--to-dark" aria-hidden="true" />
-
-      {/* Equipment */}
+      {/* Metrology equipment */}
       <section
         id="quality-lab"
-        className={`quality-lab ${revealed['quality-lab'] ? 'is-visible' : ''}`}
+        className="bg-navy min-h-screen flex items-center"
       >
-        <div className="quality-lab-ambient" aria-hidden="true" />
-        <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
+        <div className={`quality-reveal max-w-[1440px] mx-auto px-6 xl:px-12 w-full ${revealed['quality-lab'] ? 'is-visible' : ''}`}>
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            <div className="quality-lab-copy">
+            <div>
               <SL text="Metrology Equipment" />
               <h2 className="font-display font-bold text-white text-4xl uppercase leading-tight mb-6">
                 {publicEquipment.length > 0 ? (
-                  <>
-                    State-of-the-Art<br />Verification Lab
-                  </>
+                  <>State-of-the-Art<br />Verification Lab</>
                 ) : (
-                  <>
-                    Load Testing &<br />Part Marking
-                  </>
+                  <>Load Testing &amp;<br />Part Marking</>
                 )}
               </h2>
               <p className="text-steel leading-relaxed mb-8">
@@ -340,42 +273,37 @@ export default function Quality({ navigate }: Props) {
                 </div>
               )}
             </div>
-            <div className="space-y-3">
-              <div className="quality-figure relative">
-                <div className="quality-figure-well im-media-product">
-                  <img src={images.inspectionContracer} alt="MITUTOYO Contracer CV-2100" className={`${photoClass(images.inspectionContracer, 'photo', 'landscape')} quality-figure-img`} loading="lazy" decoding="async" />
-                </div>
-                <div className="quality-figure-overlay" />
-                <div className="quality-figure-corner quality-figure-corner--tl" />
-                <div className="quality-figure-corner quality-figure-corner--tr" />
-                <div className="quality-figure-corner quality-figure-corner--bl" />
-                <div className="quality-figure-corner quality-figure-corner--br" />
+            <div className="industries-figure relative">
+              <div className="industries-figure-well im-media-product">
+                <img
+                  src={labImage}
+                  alt={labImageAlt}
+                  className={`${photoClass(labImage, 'photo', 'landscape')} industries-figure-img`}
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
-              <div className="quality-figure relative">
-                <div className="quality-figure-well im-media-product">
-                  <img src={images.qualityGaugeImage} alt="TRIMOS VT1000MA" className={`${photoClass(images.qualityGaugeImage, 'photo', 'landscape')} quality-figure-img`} loading="lazy" decoding="async" />
-                </div>
-                <div className="quality-figure-overlay" />
-                <div className="quality-figure-corner quality-figure-corner--tl" />
-                <div className="quality-figure-corner quality-figure-corner--tr" />
-                <div className="quality-figure-corner quality-figure-corner--bl" />
-                <div className="quality-figure-corner quality-figure-corner--br" />
-              </div>
+              <div className="industries-figure-overlay" />
+              <div className="industries-figure-corner industries-figure-corner--tl" />
+              <div className="industries-figure-corner industries-figure-corner--tr" />
+              <div className="industries-figure-corner industries-figure-corner--bl" />
+              <div className="industries-figure-corner industries-figure-corner--br" />
             </div>
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="bg-orange py-20">
-        <div className="max-w-[1440px] mx-auto px-6 xl:px-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-          <div>
-            <h2 className="font-display font-bold text-white text-4xl uppercase">Quality Documentation</h2>
-            <p className="text-white/70 mt-2">Use the quote form to request quality information. Certificate files are not published here.</p>
-          </div>
-          <div className="flex gap-4">
-            <button onClick={() => navigate('quote')} className="bg-white text-orange hover:bg-off font-medium text-sm px-7 py-4 flex items-center gap-2 transition-colors">
-              Request Documents <AR />
+      <section className="bg-orange min-h-screen flex items-center">
+        <div className="max-w-[1440px] mx-auto px-6 xl:px-12 text-center">
+          <h2 className="font-display font-bold text-white text-4xl lg:text-5xl uppercase mb-4">Quality Documentation</h2>
+          <p className="text-white/70 max-w-lg mx-auto mb-8">Use the quote form to request quality information. Certificate files are not published here.</p>
+          <div className="flex items-center justify-center gap-4">
+            <button onClick={() => navigate('quote')} className="btn-chamfer group bg-white text-orange hover:bg-off font-bold text-sm tracking-wide px-8 py-4 flex items-center gap-2 transition-all duration-200 hover:-translate-y-0.5">
+              Request Documents <AR className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
+            </button>
+            <button onClick={() => navigate('contact')} className="btn-chamfer border border-white/30 text-white hover:bg-white/10 hover:border-white/60 font-medium text-sm tracking-wide px-8 py-4 transition-all duration-200 hover:-translate-y-0.5">
+              Contact Us
             </button>
           </div>
         </div>

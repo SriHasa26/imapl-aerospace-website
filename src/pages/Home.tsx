@@ -330,7 +330,7 @@ function ProcessWorkflow({
       <div className="process-header flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-20">
         <div className="flex-1 min-w-0">
           <SectionLabel text="Our Process" />
-          <h2 className="font-display font-bold text-navy text-4xl lg:text-5xl uppercase leading-tight sm:whitespace-nowrap">
+          <h2 className="font-display font-bold text-navy text-4xl lg:text-5xl uppercase leading-tight sm:whitespace-nowrap mt-4">
             From Brief To Finished Part
           </h2>
           <p className="mt-5 max-w-none text-mid text-sm lg:text-base leading-relaxed">
@@ -377,7 +377,7 @@ function ProcessWorkflow({
                       className={`process-node absolute inset-0 pointer-events-none ${isActive ? 'process-node-active' : ''}`}
                     />
                     <div
-                      className={`btn-chamfer relative z-10 w-14 h-14 flex items-center justify-center border transition-all duration-300 ${
+                      className={`relative z-10 w-14 h-14 flex items-center justify-center border transition-all duration-300 ${
                         isActive
                           ? 'bg-orange border-orange text-white'
                           : 'bg-navy border-navy text-orange group-hover:border-orange group-hover:-translate-y-0.5'
@@ -444,7 +444,7 @@ function ProcessWorkflow({
             <button
               type="button"
               onClick={() => navigate('capabilities')}
-              className="btn-chamfer group bg-orange hover:bg-orange-light text-white font-medium text-sm px-6 py-3.5 flex items-center gap-3 transition-all duration-200 w-fit hover:-translate-y-0.5"
+              className="btn-chamfer group bg-orange hover:bg-orange-light text-white font-medium text-sm tracking-wide px-6 py-3.5 flex items-center gap-3 transition-all duration-200 w-fit hover:-translate-y-0.5"
             >
               View this capability
               <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
@@ -488,14 +488,14 @@ export default function Home({ navigate }: Props) {
             <div className="mt-6 flex flex-wrap gap-4">
               <button
                 onClick={() => navigate('capabilities')}
-                className="btn-chamfer group bg-orange hover:bg-orange-light text-white font-medium text-sm px-8 py-3.5 flex items-center gap-3 transition-all duration-200 shadow-lg shadow-orange/25 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-orange/30"
+                className="btn-chamfer group bg-orange hover:bg-orange-light text-white font-medium text-sm tracking-wide px-8 py-3.5 flex items-center gap-3 transition-all duration-200 hover:-translate-y-0.5"
               >
                 Explore Capabilities
                 <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
               </button>
               <button
                 onClick={() => navigate('quote')}
-                className="btn-chamfer group border border-orange/60 text-orange hover:bg-orange/10 hover:border-orange font-medium text-sm px-8 py-3.5 flex items-center gap-3 transition-all duration-200 glass-dark hover:-translate-y-0.5"
+                className="btn-chamfer group border border-orange/60 text-orange hover:bg-orange/10 hover:border-orange font-medium text-sm tracking-wide px-8 py-3.5 flex items-center gap-3 transition-all duration-200 glass-dark hover:-translate-y-0.5"
               >
                 Request a Quote
                 <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
@@ -585,7 +585,7 @@ export default function Home({ navigate }: Props) {
               </ul>
               <button
                 onClick={() => navigate('about')}
-                className="btn-chamfer group bg-navy hover:bg-navy-light text-white font-medium text-sm px-7 py-3.5 flex items-center gap-3 transition-all duration-200 w-fit shadow-lg shadow-navy/20 hover:-translate-y-0.5"
+                className="btn-chamfer group bg-navy hover:bg-navy-light text-white font-medium text-sm tracking-wide px-7 py-3.5 flex items-center gap-3 transition-all duration-200 w-fit hover:-translate-y-0.5"
               >
                 Learn About Us
                 <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
@@ -635,7 +635,7 @@ export default function Home({ navigate }: Props) {
                 </span>
                 <div className="relative">
                   <div className="caps-card-head flex items-center gap-3 mb-3">
-                    <div className="btn-chamfer caps-icon-badge flex items-center justify-center shrink-0 bg-orange/10 border border-orange/30 text-orange group-hover:bg-orange group-hover:text-white group-hover:border-orange transition-colors duration-300">
+                    <div className="caps-icon-badge flex items-center justify-center shrink-0 bg-orange/10 border border-orange/30 text-orange group-hover:bg-orange group-hover:text-white group-hover:border-orange transition-colors duration-300">
                       {cap.icon}
                     </div>
                     <h3 className="caps-card-title font-bold text-white uppercase group-hover:text-orange transition-colors min-w-0">
@@ -952,7 +952,7 @@ export default function Home({ navigate }: Props) {
             </div>
             <button
               onClick={() => navigate('facilities')}
-              className="btn-chamfer group bg-orange hover:bg-orange-light text-white font-medium text-sm px-7 py-3.5 flex items-center gap-3 transition-all duration-200 w-fit shadow-lg shadow-orange/25 hover:-translate-y-0.5"
+              className="btn-chamfer group bg-orange hover:bg-orange-light text-white font-medium text-sm tracking-wide px-7 py-3.5 flex items-center gap-3 transition-all duration-200 w-fit hover:-translate-y-0.5"
             >
               Tour the Facility
               <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
@@ -1129,7 +1129,7 @@ export default function Home({ navigate }: Props) {
               </div>
               <button
                 onClick={() => navigate('careers')}
-                className="btn-chamfer group bg-orange hover:bg-orange-light text-white font-medium text-sm px-8 py-3.5 flex items-center gap-3 transition-all duration-200 shadow-lg shadow-orange/25 hover:-translate-y-0.5 w-fit"
+                className="btn-chamfer group bg-orange hover:bg-orange-light text-white font-medium text-sm tracking-wide px-8 py-3.5 flex items-center gap-3 transition-all duration-200 hover:-translate-y-0.5 w-fit"
               >
                 Explore Careers
                 <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
@@ -1190,14 +1190,14 @@ export default function Home({ navigate }: Props) {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button
               onClick={() => navigate('quote')}
-              className="btn-chamfer group bg-orange hover:bg-orange-light text-white font-bold text-sm px-10 py-4 flex items-center gap-3 transition-all duration-200 shadow-lg shadow-orange/25 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-orange/30"
+              className="btn-chamfer group bg-orange hover:bg-orange-light text-white font-bold text-sm tracking-wide px-10 py-4 flex items-center gap-3 transition-all duration-200 hover:-translate-y-0.5"
             >
               Submit RFQ
               <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
             </button>
             <button
               onClick={() => navigate('contact')}
-              className="btn-chamfer group border border-white/20 text-white hover:bg-white/5 hover:border-white/40 font-medium text-sm px-10 py-4 flex items-center gap-3 transition-all duration-200 hover:-translate-y-0.5"
+              className="btn-chamfer group border border-white/20 text-white hover:bg-white/5 hover:border-white/40 font-medium text-sm tracking-wide px-10 py-4 flex items-center gap-3 transition-all duration-200 hover:-translate-y-0.5"
             >
               Contact Our Team
               <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
