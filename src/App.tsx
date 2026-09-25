@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect, useLayoutEffect, useState } from 'react'
 import Navigation from './components/Navigation'
 import Footer from './components/Footer'
 import { hrefFor } from './nav'
@@ -94,7 +94,7 @@ function scrollToCurrentTarget() {
 
   window.scrollTo({
     top: 0,
-    behavior: 'smooth',
+    behavior: 'auto',
   })
 }
 
@@ -126,9 +126,8 @@ export default function App() {
     }
   }, [])
 
-  useEffect(() => {
-    const timer = window.setTimeout(scrollToCurrentTarget, 0)
-    return () => window.clearTimeout(timer)
+  useLayoutEffect(() => {
+    scrollToCurrentTarget()
   }, [routeKey])
 
   const renderPage = () => {

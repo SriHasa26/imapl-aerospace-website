@@ -3157,6 +3157,14 @@ body {
     radial-gradient(560px 300px at 92% 90%, rgba(240, 129, 58, 0.05), transparent 55%),
     #0D2038;
 }
+.quality-hero-video {
+  z-index: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .quality-hero-video {
+    display: none;
+  }
+}
 .quality-hero .quality-eyebrow,
 .quality-heading,
 .quality-lede {
@@ -3248,6 +3256,14 @@ body {
     radial-gradient(680px 340px at 8% 10%, rgba(91, 155, 213, 0.1), transparent 60%),
     radial-gradient(560px 300px at 92% 90%, rgba(240, 129, 58, 0.05), transparent 55%),
     #0D2038;
+}
+.facilities-hero-video {
+  z-index: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .facilities-hero-video {
+    display: none;
+  }
 }
 .facilities-hero .facilities-eyebrow,
 .facilities-heading,

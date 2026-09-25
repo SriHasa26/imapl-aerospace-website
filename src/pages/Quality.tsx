@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import type { Page } from '../App'
 import { photoClass } from '../content/imagePresentation'
-import { images } from '../content/assets'
+import { images, videos } from '../content/assets'
 import {
   geP23tf3,
   inspectionEquipment,
@@ -131,6 +131,27 @@ export default function Quality({ navigate }: Props) {
       <section
         className={`quality-hero relative overflow-hidden flex flex-col min-h-[calc(100svh-4.5rem)] ${heroVisible ? 'is-visible' : ''}`}
       >
+        <video
+          className="quality-hero-video absolute inset-0 h-full w-full object-cover"
+          src={videos.quality}
+          autoPlay
+          loop
+          muted
+          playsInline
+          disablePictureInPicture
+          disableRemotePlayback
+          aria-hidden="true"
+          ref={(node) => {
+            if (node) node.playbackRate = 0.5
+          }}
+          onLoadedMetadata={(e) => {
+            e.currentTarget.playbackRate = 0.5
+          }}
+          onPlay={(e) => {
+            e.currentTarget.playbackRate = 0.5
+          }}
+        />
+        <div className="absolute inset-0 bg-navy/70" aria-hidden="true" />
         <div className="relative flex-1 flex flex-col justify-center max-w-[1440px] mx-auto w-full px-6 xl:px-12">
           <SL text="Quality Assurance" />
           <h1 className="quality-heading font-display font-black text-white text-5xl lg:text-7xl uppercase leading-none tracking-tight mb-6 sm:whitespace-nowrap">

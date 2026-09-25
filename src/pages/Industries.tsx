@@ -1,6 +1,7 @@
 import { useEffect, useState, type CSSProperties } from 'react'
 import type { Page } from '../App'
 import { images } from '../content/assets'
+import ContactAnimatedBackground from '../components/ContactAnimatedBackground'
 import { isTechnicalPhoto, photoClass, productWellClass } from '../content/imagePresentation'
 import { industries, namedEntities, prototypeIndustryCards } from '../content/industries'
 import { isPublishable } from '../content/types'
@@ -114,6 +115,7 @@ export default function Industries({ navigate }: Props) {
       <section
         className={`industries-hero relative overflow-hidden flex flex-col min-h-[calc(100svh-4.5rem)] ${heroVisible ? 'is-visible' : ''}`}
       >
+        <ContactAnimatedBackground />
         <div className="industries-hero-ambient" aria-hidden="true" />
         <div className="industries-hero-grid" aria-hidden="true" />
         <div className="industries-hero-scan" aria-hidden="true" />

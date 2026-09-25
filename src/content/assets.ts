@@ -8,6 +8,8 @@ export const videos = {
   heroContinuation: '/videos/video_continuation.mp4',
   capabilities: '/videos/video_cap.mp4',
   products: '/videos/vid_products.mp4',
+  quality: '/videos/video_quality.mp4',
+  facilities: '/videos/video_facilities.mp4',
 } as const
 
 export const images = {

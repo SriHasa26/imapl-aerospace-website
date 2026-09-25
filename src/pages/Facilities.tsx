@@ -1,6 +1,6 @@
 import { useEffect, useState, type CSSProperties } from 'react'
 import type { Page } from '../App'
-import { images } from '../content/assets'
+import { images, videos } from '../content/assets'
 import { isPortraitEquipment, isTechnicalPhoto, photoClass } from '../content/imagePresentation'
 import { description, officialName, publicWorkAreas, shortName } from '../content/company'
 import {
@@ -176,6 +176,27 @@ export default function Facilities({ navigate }: Props) {
       <section
         className={`facilities-hero relative overflow-hidden flex flex-col min-h-[calc(100svh-4.5rem)] ${heroVisible ? 'is-visible' : ''}`}
       >
+        <video
+          className="facilities-hero-video absolute inset-0 h-full w-full object-cover"
+          src={videos.facilities}
+          autoPlay
+          loop
+          muted
+          playsInline
+          disablePictureInPicture
+          disableRemotePlayback
+          aria-hidden="true"
+          ref={(node) => {
+            if (node) node.playbackRate = 0.5
+          }}
+          onLoadedMetadata={(e) => {
+            e.currentTarget.playbackRate = 0.5
+          }}
+          onPlay={(e) => {
+            e.currentTarget.playbackRate = 0.5
+          }}
+        />
+        <div className="absolute inset-0 bg-navy/70" aria-hidden="true" />
         <div className="relative flex-1 flex flex-col justify-center max-w-[1440px] mx-auto w-full px-6 xl:px-12">
           <SL text="Our Facilities" />
           <h1 className="facilities-heading font-display font-black text-white text-5xl lg:text-7xl uppercase leading-none tracking-tight mb-6 sm:whitespace-nowrap">
