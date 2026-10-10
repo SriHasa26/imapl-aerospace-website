@@ -61,7 +61,7 @@ export const capabilities: CapabilityRecord[] = [
   {
     id: "5-axis-machining",
     title: "5-axis machining",
-    description: "5-axis machining of aluminium, titanium, steels, and nickel-based superalloys. Component sizes 3 mm to 1250 mm.",
+    description: "5-axis machining of Aluminium, Titanium, Steels, and Nickel-Based Superalloys. Component sizes 3 mm to 1250 mm.",
     technicalDetails: ["5-axis", "3 mm to 1250 mm"],
     equipment: [],
     materials: ["Aluminium", "Titanium", "Steels", "Nickel-based superalloys"],
