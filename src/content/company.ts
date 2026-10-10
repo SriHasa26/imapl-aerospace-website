@@ -26,7 +26,7 @@ export const officialName: SourcedValue<string> = {
 }
 
 export const shortName: SourcedValue<string> = {
-  value: "IMAPL",
+  value: "IMA",
   sourceType: "LEGACY_WEBSITE",
   sourceRef: LEGACY_SITE,
   verificationStatus: "SOURCE_SUPPORTED",
