@@ -79,7 +79,7 @@ const publicMilestones = prototypeMilestones.filter((milestone) => isPublishable
 const identityCards = [
   publicYears
     ? { val: publicYears, label: 'Years of Operation' }
-    : { val: shortName.value, label: 'Aerospace Manufacturing' },
+    : { val: shortName.value, label: 'Aero Engine Tooling' },
   publicStaffCount
     ? { val: publicStaffCount, label: 'Expert Engineers' }
     : { val: 'MRO', label: 'Tooling Solutions' },
