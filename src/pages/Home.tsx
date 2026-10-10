@@ -220,19 +220,80 @@ const overviewOverlay = [
 
 const overviewList = publicWorkAreas.slice(0, 4)
 
-const homeCapabilities = capabilityPageSections
-  .map((section) => {
-    const composed = composeSection(section.capabilityIds)
-    if (!composed) return undefined
-    return {
-      num: section.id,
-      title: composed.title,
-      desc: composed.desc,
-      items: composed.items.length > 0 ? composed.items : [composed.title],
-      icon: capabilityIcons[section.id],
-    }
-  })
-  .filter((section): section is NonNullable<typeof section> => Boolean(section))
+const homeCapabilities: Array<{
+  num: string
+  title: string
+  desc: string
+  items: string[]
+  icon: ReactNode
+}> = [
+  {
+    num: '01',
+    title: 'CNC MACHINING',
+    desc: '3, 4 and 5-axis CNC machining of aerospace components, with CAD/CAM and process planning under one roof.',
+    items: [
+      '3, 4 and 5-axis CNC machining',
+      'CAD / CAM & process planning',
+      'Product size 3 mm–1250 mm',
+    ],
+    icon: capabilityIcons['01'],
+  },
+  {
+    num: '02',
+    title: 'TOOLING',
+    desc: 'Airframe and aero-engine tooling, including build, strip and maintenance tooling. Tool sizes from 10 mm to 4+ meters, with positional tolerances below 20 microns on diameters over 1 m.',
+    items: [
+      'Tool sizes 10 mm to 4+ meters',
+      'Positional tolerances below 20 microns on >1 m diameters',
+      'Build, strip and maintenance tooling',
+    ],
+    icon: capabilityIcons['02'],
+  },
+  {
+    num: '03',
+    title: 'JIGS & FIXTURES',
+    desc: 'Turning, milling, welding, EDM, and inspection fixtures designed for complex geometries and process stability.',
+    items: [
+      'Milling and turning fixtures',
+      'Welding and EDM fixtures',
+      'Assembly and inspection fixtures',
+    ],
+    icon: capabilityIcons['03'],
+  },
+  {
+    num: '04',
+    title: 'ASSEMBLY',
+    desc: 'Precise assembly to meet functional and performance requirements, supported by dedicated assembly fixtures.',
+    items: [
+      'Assembly fixtures',
+      'Functional and performance requirements',
+    ],
+    icon: capabilityIcons['04'],
+  },
+  {
+    num: '05',
+    title: 'PART MARKING',
+    desc: 'Chemical etching, dot peening, laser marking, and screen printing as specified for the component.',
+    items: [
+      'Laser marking as per customer specification',
+      'Chemical etching and dot peening',
+      'Screen printing',
+    ],
+    icon: capabilityIcons['05'],
+  },
+  {
+    num: '06',
+    title: 'INSPECTION',
+    desc: 'In-process and final inspection, including dimensional and geometric verification, CMM programming, stage inspection, NDT, and pre-dispatch inspection.',
+    items: [
+      'CMM programming and stage inspection',
+      'Dimensional and geometric measurement',
+      'NDT and pre-dispatch inspection',
+    ],
+    icon: capabilityIcons['06'],
+  },
+]
+
 
 const publicIndustries = industryRecords.filter((industry) => isPublishable(industry.verificationStatus))
 
@@ -657,6 +718,7 @@ export default function Home({ navigate }: Props) {
           </div>
         </div>
       </section>
+
 
       {/* ── INDUSTRIES ── */}
       <section className="home-section industries-screen min-h-screen min-h-[100svh] bg-off">
