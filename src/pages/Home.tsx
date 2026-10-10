@@ -480,7 +480,7 @@ export default function Home({ navigate }: Props) {
             <h1 className="font-display font-black text-white uppercase leading-[0.98] tracking-[-0.02em] text-[clamp(2.4rem,5.4vw,5.75rem)] [text-shadow:0_8px_32px_rgba(10,20,38,0.55)]">
               IGNITING<br />
               THE FUTURE<br />
-              <span className="text-orange">OF FLIGHT</span>
+              <span className="text-orange">MANUFACTURING</span>
             </h1>
             <p className="mt-5 max-w-xl text-steel text-base lg:text-lg leading-relaxed [text-shadow:0_2px_10px_rgba(10,20,38,0.65)]">
               {description.value}
