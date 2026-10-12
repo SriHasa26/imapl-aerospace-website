@@ -1,4 +1,4 @@
-import { useEffect, useState, type KeyboardEvent, type MouseEvent } from 'react'
+import { Fragment, useEffect, useState, type KeyboardEvent, type MouseEvent } from 'react'
 import type { NavigateFn, Page, RouteName } from '../App'
 import { images } from '../content/assets'
 import { publicCapabilityNavItems } from '../content/capabilities'
@@ -320,6 +320,14 @@ export default function Navigation({ currentPage, navigate }: Props) {
               {link('Facilities', 'facilities')}
               {link('Resources', 'resources')}
               {link('Careers', 'careers')}
+              <a
+                href="/documents/Terms%20%26%20conditions%20to%20suppliers.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`nav-link text-sm font-medium tracking-wide transition-colors duration-150 whitespace-nowrap ${linkFocus} text-steel hover:text-white`}
+              >
+                Supplier
+              </a>
             </div>
 
             <div className="flex items-center gap-3 justify-self-end">
@@ -466,20 +474,34 @@ export default function Navigation({ currentPage, navigate }: Props) {
               </div>
 
               {mobileLinks.filter(([label]) => label !== 'About').map(([label, page]) => (
-                <a
-                  key={page}
-                  href={hrefFor(page)}
-                  onClick={go(page)}
-                  aria-current={currentPage === page ? 'page' : undefined}
-                  className={`flex w-full items-center justify-between py-3.5 text-sm transition-colors border-b border-border-dark last:border-0 ${linkFocus} ${
-                    currentPage === page ? 'text-orange' : 'text-steel hover:text-white'
-                  }`}
-                >
-                  {label}
-                  <svg viewBox="0 0 16 16" className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <path d="M5 8h6M8 5l3 3-3 3" />
-                  </svg>
-                </a>
+                <Fragment key={page}>
+                  <a
+                    href={hrefFor(page)}
+                    onClick={go(page)}
+                    aria-current={currentPage === page ? 'page' : undefined}
+                    className={`flex w-full items-center justify-between py-3.5 text-sm transition-colors border-b border-border-dark last:border-0 ${linkFocus} ${
+                      currentPage === page ? 'text-orange' : 'text-steel hover:text-white'
+                    }`}
+                  >
+                    {label}
+                    <svg viewBox="0 0 16 16" className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="1.5">
+                      <path d="M5 8h6M8 5l3 3-3 3" />
+                    </svg>
+                  </a>
+                  {label === 'Careers' && (
+                    <a
+                      href="/documents/Terms%20%26%20conditions%20to%20suppliers.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`flex w-full items-center justify-between py-3.5 text-sm transition-colors border-b border-border-dark ${linkFocus} text-steel hover:text-white`}
+                    >
+                      Supplier
+                      <svg viewBox="0 0 16 16" className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="1.5">
+                        <path d="M5 8h6M8 5l3 3-3 3" />
+                      </svg>
+                    </a>
+                  )}
+                </Fragment>
               ))}
               <a
                 href={hrefFor('quote')}
