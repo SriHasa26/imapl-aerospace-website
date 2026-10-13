@@ -295,6 +295,19 @@ const homeCapabilities: Array<{
 ]
 
 
+const homeCapabilityHighlights: Array<{ num: string; title: string; detail?: string }> = [
+  { num: '01', title: 'Manufacturing Engineering', detail: 'Process Engineering · CAD/CAM · Inspection Planning' },
+  { num: '02', title: 'Precision Machining' },
+  { num: '03', title: 'Fabrication' },
+  { num: '04', title: 'Assembly' },
+  { num: '05', title: 'Load Testing' },
+  { num: '06', title: 'Surface Treatments' },
+  { num: '07', title: 'Special Processes' },
+  { num: '08', title: 'Part Marking' },
+  { num: '09', title: 'Packing & Preservation' },
+]
+
+
 const publicIndustries = industryRecords.filter((industry) => isPublishable(industry.verificationStatus))
 
 const industryCardHeadings: Record<string, string> = {
@@ -689,9 +702,12 @@ export default function Home({ navigate }: Props) {
                 <div className="caps-kicker">
                   <SectionLabel text="Manufacturing Capabilities" />
                 </div>
-                <h2 className="caps-heading font-black text-white uppercase leading-[0.95] lg:whitespace-nowrap">
-                  Precision At Every Process
+                <h2 className="caps-heading font-black text-white uppercase leading-[0.95]">
+                  From Engineering Design To Final Delivery
                 </h2>
+                <p className="text-steel leading-relaxed mt-5 max-w-2xl">
+                  End-to-end aerospace manufacturing capabilities combining engineering expertise, precision manufacturing, specialised processes, and rigorous quality control to meet demanding customer requirements.
+                </p>
               </div>
               <button
                 onClick={() => navigate('capabilities')}
@@ -704,7 +720,7 @@ export default function Home({ navigate }: Props) {
           </div>
 
           <div className="caps-fill-grid grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {homeCapabilities.map((cap, i) => (
+            {homeCapabilityHighlights.map((cap, i) => (
               <button
                 type="button"
                 key={cap.num}
@@ -720,22 +736,13 @@ export default function Home({ navigate }: Props) {
                 </span>
                 <div className="relative">
                   <div className="caps-card-head flex items-center gap-3 mb-3">
-                    <div className="caps-icon-badge flex items-center justify-center shrink-0 bg-orange/10 border border-orange/30 text-orange group-hover:bg-orange group-hover:text-white group-hover:border-orange transition-colors duration-300">
-                      {cap.icon}
-                    </div>
                     <h3 className="caps-card-title font-bold text-white uppercase group-hover:text-orange transition-colors min-w-0">
                       {cap.title}
                     </h3>
                   </div>
-                  <p className="caps-card-copy text-steel mb-4">{cap.desc}</p>
-                  <ul className="caps-card-list space-y-1.5">
-                    {cap.items.map(item => (
-                      <li key={item} className="caps-card-item text-steel/70 flex items-center gap-2">
-                        <div className="w-1 h-1 bg-orange/50 shrink-0" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
+                  {cap.detail && (
+                    <p className="caps-card-copy text-steel">{cap.detail}</p>
+                  )}
                 </div>
               </button>
             ))}

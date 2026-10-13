@@ -5,21 +5,16 @@ import { imageFrame, photoClass } from '../content/imagePresentation'
 import LeadershipProfileModal from '../components/LeadershipProfileModal'
 import {
   description,
-  foundingYear,
   leadership,
   mission,
   officialName,
   prototypeMilestones,
   publicWorkAreas,
   shortName,
-  staffCount,
   vision,
-  workAreaDescriptions,
-  workAreaImages,
-  yearsOfExperience,
   type LeadershipPerson,
 } from '../content/company'
-import { isConflicting, type MaybeConflicting, type VerificationStatus } from '../content/types'
+import type { VerificationStatus } from '../content/types'
 
 interface Props { navigate: (page: Page) => void }
 
@@ -54,34 +49,49 @@ const portraitFocus: Record<string, string> = {
   'Beerappa K': 'center 20%',
 }
 
+const workCards: Array<{ title: string; image: ImageKey; description: string }> = [
+  {
+    title: 'Aero Engine Tooling',
+    image: 'productAeroEngineTooling',
+    description: 'Precision tooling solutions for aero-engine assembly, maintenance, and servicing applications.',
+  },
+  {
+    title: 'Precision Aerospace Components',
+    image: 'precisionComponents',
+    description: 'High-precision components manufactured to meet demanding aerospace specifications and quality standards.',
+  },
+  {
+    title: 'MRO Tooling Solutions',
+    image: 'mroTooling',
+    description: 'Specialised tooling and ground support equipment for aircraft maintenance, repair, and overhaul.',
+  },
+  {
+    title: 'Aerospace Assembly Tooling',
+    image: 'assemblyImage',
+    description: 'Custom-built tooling and assembly systems for accurate positioning, alignment, and repeatable assembly operations.',
+  },
+  {
+    title: 'Jigs & Fixtures',
+    image: 'jigsFixtures',
+    description: 'Engineered jigs and fixtures for precision machining, component holding, assembly, and inspection.',
+  },
+  {
+    title: 'Precision Quality & Inspection',
+    image: 'qualityImage',
+    description: 'Dimensional inspection and verification to ensure accuracy, traceability, and compliance with customer requirements.',
+  },
+]
+
 function isPublishable(status: VerificationStatus): boolean {
   return status === 'VERIFIED' || status === 'SOURCE_SUPPORTED'
 }
 
-function publishedValue<T>(field: MaybeConflicting<T>): T | undefined {
-  if (isConflicting(field)) return undefined
-  if (!isPublishable(field.verificationStatus)) return undefined
-  return field.value
-}
-
-const publicFoundingYear = publishedValue(foundingYear)
-const publicStaffCount = publishedValue(staffCount)
-const publicYears = publishedValue(yearsOfExperience)
 const publicMission = isPublishable(mission.verificationStatus) ? mission.value : undefined
 const publicVision = isPublishable(vision.verificationStatus) ? vision.value : undefined
 const publicLeadership = [...leadership.legacyTeam, ...leadership.prototypeTeam].filter((person) =>
   isPublishable(person.verificationStatus),
 )
 const publicMilestones = prototypeMilestones.filter((milestone) => isPublishable(milestone.verificationStatus))
-
-const identityCards = [
-  publicYears
-    ? { val: publicYears, label: 'Years of Operation' }
-    : { val: shortName.value, label: 'Aero Engine Tooling' },
-  publicStaffCount
-    ? { val: publicStaffCount, label: 'Expert Engineers' }
-    : { val: 'MRO', label: 'Tooling Solutions' },
-]
 
 const companySummary = `${officialName.value} (${shortName.value}) is an ${description.value.charAt(0).toLowerCase()}${description.value.slice(1)}`
 
@@ -154,22 +164,15 @@ export default function About({ navigate }: Props) {
         <div className="absolute inset-0 blueprint-grid opacity-20" />
         <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
           <SectionLabel text="About Us" />
-          <h1 className="font-display font-black text-white text-5xl lg:text-7xl uppercase leading-none tracking-tight mb-6 [text-shadow:0_8px_32px_rgba(10,20,38,0.55)]">
-            Engineering<br />Excellence
-            {publicFoundingYear ? (
-              <>
-                <br />
-                <span className="text-cyan">Since {publicFoundingYear}</span>
-              </>
-            ) : (
-              <>
-                <br />
-                <span className="text-cyan">{shortName.value}</span>
-              </>
-            )}
+          <h1 className="font-display font-black text-white text-5xl lg:text-7xl uppercase leading-none tracking-tight mb-3 [text-shadow:0_8px_32px_rgba(10,20,38,0.55)]">
+            Precision Engineering<br />for Aerospace
           </h1>
+          <p className="font-display font-bold text-cyan text-lg lg:text-xl uppercase tracking-[0.08em] mb-6 [text-shadow:0_2px_10px_rgba(10,20,38,0.5)]">
+            Building Excellence Since 2017
+          </p>
           <p className="text-steel max-w-2xl text-lg leading-relaxed [text-shadow:0_2px_10px_rgba(10,20,38,0.5)]">
-            {description.value}
+            Igniting Minds Aerospace delivers precision aerospace tooling, complex components, jigs, fixtures, and
+            MRO tooling solutions for global aerospace and defence customers.
           </p>
         </div>
         <div className="absolute bottom-0 left-0 right-0 z-10 pointer-events-none" aria-hidden="true">
@@ -237,16 +240,22 @@ export default function About({ navigate }: Props) {
             <div>
               <SectionLabel text="Our Story" />
               <h2 className="font-display font-bold text-white text-4xl lg:text-5xl uppercase leading-tight mb-6">
-                Aerospace<br />Engineering
+                Engineering Excellence.<br />Built on Trust.
               </h2>
               <div className="space-y-4 text-steel leading-relaxed">
                 <p>
-                  {officialName.value} is an {description.value.charAt(0).toLowerCase()}
-                  {description.value.slice(1)}
-                  {publicFoundingYear ? ` Founded in ${publicFoundingYear} and headquartered in Bengaluru.` : ''}
+                  Founded in 2017 and headquartered in Bengaluru, Igniting Minds Aerospace (IMA) is an aerospace
+                  manufacturing company specialising in precision tooling, complex aerospace components, jigs,
+                  fixtures, and MRO tooling solutions.
                 </p>
                 <p>
-                  Work areas include {publicWorkAreas.slice(0, 4).map((area) => area.toLowerCase()).join(', ')}.
+                  We partner with global aerospace and defence customers to deliver precision-engineered solutions
+                  that meet demanding quality, performance, and reliability requirements.
+                </p>
+                <p>
+                  Our strength lies in our people, engineering expertise, and commitment to continuous improvement.
+                  As we expand our global footprint and develop advanced manufacturing capabilities, our focus
+                  remains on building lasting partnerships and delivering manufacturing excellence.
                 </p>
               </div>
             </div>
@@ -261,14 +270,6 @@ export default function About({ navigate }: Props) {
                 <div className="about-story-pair-frame">
                   <img src={images.careersGroupImage} alt="Igniting Minds Aerospace employees at the manufacturing facility" className={`${photoClass(images.careersGroupImage, 'photo', 'pair')} about-story-pair-img`} loading="lazy" decoding="async" />
                 </div>
-              </div>
-              <div className="about-story-stats">
-                {identityCards.map(s => (
-                  <div key={s.label} className="bg-navy-mid border border-border-dark p-4">
-                    <div className="font-display font-bold text-cyan text-2xl">{s.val}</div>
-                    <div className="font-mono text-xs text-steel mt-1 tracking-wider">{s.label}</div>
-                  </div>
-                ))}
               </div>
             </div>
           </div>
@@ -313,20 +314,19 @@ export default function About({ navigate }: Props) {
             Engineering &<br />Manufacturing
           </h2>
           <div className="about-work-grid">
-            {publicWorkAreas.map((area) => {
-              const imageKey = workAreaImages[area]
-              const src = imageKey ? images[imageKey] : undefined
+            {workCards.map((card) => {
+              const src = images[card.image]
               return (
-                <div key={area} className="about-work-card">
+                <div key={card.title} className="about-work-card">
                   {src && (
                     <div className={[
                       'about-work-photo',
-                      imageKey && lightWorkPhotos.has(imageKey) ? 'about-work-photo--light' : '',
-                      imageKey && coverWorkPhotos.has(imageKey) ? 'about-work-photo--cover' : 'about-work-photo--contain',
+                      lightWorkPhotos.has(card.image) ? 'about-work-photo--light' : '',
+                      coverWorkPhotos.has(card.image) ? 'about-work-photo--cover' : 'about-work-photo--contain',
                     ].filter(Boolean).join(' ')}>
                       <img
                         src={src}
-                        alt={area}
+                        alt={card.title}
                         className="about-work-photo-img im-photo-hover"
                         loading="lazy"
                         decoding="async"
@@ -334,10 +334,8 @@ export default function About({ navigate }: Props) {
                     </div>
                   )}
                   <div className="p-5 lg:p-6">
-                    <h3 className="font-display font-bold text-navy text-xl uppercase mb-2">{area}</h3>
-                    {workAreaDescriptions[area] && (
-                      <p className="text-mid text-sm leading-relaxed">{workAreaDescriptions[area]}</p>
-                    )}
+                    <h3 className="font-display font-bold text-navy text-xl uppercase mb-2">{card.title}</h3>
+                    <p className="text-mid text-sm leading-relaxed">{card.description}</p>
                   </div>
                 </div>
               )
@@ -352,7 +350,7 @@ export default function About({ navigate }: Props) {
             <div className="about-leaders-heading">
               <SectionLabel text="Leadership Team" />
               <h2 className="font-display font-bold text-white text-4xl lg:text-5xl uppercase leading-tight sm:whitespace-nowrap">
-                Guided by Industry Veterans
+                Leadership Built on Experience
               </h2>
             </div>
             <div className="about-leaders-grid">
@@ -383,7 +381,7 @@ export default function About({ navigate }: Props) {
                       </div>
                     )}
                     <div className="about-leader-copy">
-                      <h3 className="font-display font-bold text-white text-xl uppercase">{person.name}</h3>
+                      <h3 className="font-display font-bold text-white text-xl uppercase">{'displayName' in person ? person.displayName : person.name}</h3>
                       <div className="font-mono text-xs text-cyan uppercase tracking-wider mt-1 mb-2">{person.title}</div>
                       <div className="about-leader-summary font-mono text-xs text-steel">{person.summary}</div>
                       <button
