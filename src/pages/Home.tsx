@@ -309,9 +309,18 @@ const featuredProducts = [
   ...publicFamilies.filter((family) => !productImageSrc(family.image)),
 ].slice(0, 3)
 
+const workflowStageTitles: Record<string, string> = {
+  '01': 'Process Planning',
+  '02': 'STPT',
+  '03': 'Manufacturing',
+  '04': 'ASSEMBLY',
+  '05': 'Final Inspection',
+  '06': 'Packing',
+}
+
 const workflow = homeCapabilities.map((cap) => ({
   step: cap.num,
-  title: cap.title,
+  title: workflowStageTitles[cap.num] ?? cap.title,
   desc: cap.desc,
   items: cap.items,
   icon: cap.icon,
@@ -401,7 +410,7 @@ function ProcessWorkflow({
             From Brief To Finished Part
           </h2>
           <p className="mt-5 max-w-none text-mid text-sm lg:text-base leading-relaxed">
-            Six connected manufacturing stages: From machining through inspection, so every programme moves with a clear path from enquiry to dispatch.
+            Six connected stages: From process planning through packaging, every project moves with a clear path from PO to dispatch.
           </p>
         </div>
         <div className="flex items-center gap-4 shrink-0">
