@@ -318,10 +318,19 @@ const workflowStageTitles: Record<string, string> = {
   '06': 'Packing',
 }
 
+const workflowStageDescriptions: Record<string, string> = {
+  '01': 'Contract Review, Drawing Interpretation, BoM creation, PFC, Stage Modeling, Stage Drawing, Assembly Instructions, Control Plan, Quality Plan, Packing Definition, Fixtures and Gauges planning, Work Instructions, CNC Programming and CMM Programming.',
+  '02': 'Special to Product Tooling that includes - Cutting Tools, Jigs and Fixtures Manufacturing, Gauges Manufacturing and Load Test Tooling.',
+  '03': 'This controls the sequence of manufacturing of all detail parts and acceptance of the same per drawing prior and offer for assembly kitting.',
+  '04': 'Assembly of detail parts per drawing and validate assembly for final acceptance criteria that includes load test / assembly dimension requirements.',
+  '05': 'Prepare final inspection of the product for customer source inspection.',
+  '06': 'Final Packaging of the product inline to customer logistics requirements so the product is delivered in contaminated and damage proof conditions.',
+}
+
 const workflow = homeCapabilities.map((cap) => ({
   step: cap.num,
   title: workflowStageTitles[cap.num] ?? cap.title,
-  desc: cap.desc,
+  desc: workflowStageDescriptions[cap.num] ?? cap.desc,
   items: cap.items,
   icon: cap.icon,
 }))

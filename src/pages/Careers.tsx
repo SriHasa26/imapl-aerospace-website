@@ -31,7 +31,7 @@ function AR({ className = 'w-3.5 h-3.5' }: { className?: string }) {
 }
 
 const portraitFocus: Record<string, string> = {
-  'Chakrapani M': 'center 18%',
+  'Chakrapani Muppalla': 'center 18%',
   'Manjunatha S': 'center 14%',
   'Beerappa K': 'center 20%',
 }

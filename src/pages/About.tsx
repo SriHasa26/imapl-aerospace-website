@@ -13,7 +13,6 @@ import {
   publicWorkAreas,
   shortName,
   staffCount,
-  values,
   vision,
   workAreaDescriptions,
   workAreaImages,
@@ -50,7 +49,7 @@ const lightWorkPhotos = new Set<ImageKey>([
 const coverWorkPhotos = new Set<ImageKey>(['qualityImage'])
 
 const portraitFocus: Record<string, string> = {
-  'Chakrapani M': 'center 18%',
+  'Chakrapani Muppalla': 'center 18%',
   'Manjunatha S': 'center 14%',
   'Beerappa K': 'center 20%',
 }
@@ -70,7 +69,6 @@ const publicStaffCount = publishedValue(staffCount)
 const publicYears = publishedValue(yearsOfExperience)
 const publicMission = isPublishable(mission.verificationStatus) ? mission.value : undefined
 const publicVision = isPublishable(vision.verificationStatus) ? vision.value : undefined
-const publicValues = publishedValue(values)
 const publicLeadership = [...leadership.legacyTeam, ...leadership.prototypeTeam].filter((person) =>
   isPublishable(person.verificationStatus),
 )
@@ -94,9 +92,37 @@ const profileCards = [
   publicVision
     ? { title: 'Our Vision', text: publicVision }
     : { title: 'What We Do', items: publicWorkAreas.slice(0, 3) },
-  publicValues
-    ? { title: 'Our Values', items: publicValues }
-    : { title: 'How We Work', items: publicWorkAreas.slice(3) },
+]
+
+const valuesIntro =
+  'Our Values form the foundation of our Business. They define who we are, what we stand for, and guide how we Operate - both as a Company and as Individuals.'
+
+const valueCards = [
+  {
+    letter: 'I',
+    title: 'Integrity',
+    copy: 'We uphold honesty, transparency, and ethical conduct in all our actions—doing the right thing, always.',
+  },
+  {
+    letter: 'M',
+    title: 'Mutual Respect',
+    copy: 'We build strong relationships through open communication, trust, and respect for each individual’s contributions.',
+  },
+  {
+    letter: 'A',
+    title: 'Accountability',
+    copy: 'We take ownership of our responsibilities and deliver on our commitments with discipline and reliability.',
+  },
+  {
+    letter: 'P',
+    title: 'Pursuit of Excellence',
+    copy: 'We continuously strive for improvement, innovation, and quality in everything we do.',
+  },
+  {
+    letter: 'L',
+    title: 'Learning Mindset',
+    copy: 'We embrace curiosity, feedback, and lifelong learning to adapt, grow, and lead in a changing world.',
+  },
 ]
 
 function useInView() {
@@ -184,6 +210,22 @@ export default function About({ navigate }: Props) {
                 )}
               </article>
             ))}
+
+            <article className="about-profile-card about-profile-card--values">
+              <span className="about-profile-index">03</span>
+              <div className="about-profile-rule" />
+              <h2 className="about-profile-title">Values</h2>
+              <p className="about-profile-copy">{valuesIntro}</p>
+              <div className="about-values-grid">
+                {valueCards.map((value) => (
+                  <div key={value.letter} className="about-values-card">
+                    <span className="about-values-letter">{value.letter}</span>
+                    <h3 className="about-values-title">{value.title}</h3>
+                    <p className="about-values-copy">{value.copy}</p>
+                  </div>
+                ))}
+              </div>
+            </article>
           </div>
         </div>
       </section>
