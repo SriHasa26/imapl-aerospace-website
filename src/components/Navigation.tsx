@@ -321,7 +321,7 @@ export default function Navigation({ currentPage, navigate }: Props) {
               {link('Resources', 'resources')}
               {link('Careers', 'careers')}
               <a
-                href="/documents/Terms%20and%20Conditions%20for%20Suppliers.pdf"
+                href="/documents/Terms and Conditions for Suppliers.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`nav-link text-sm font-medium tracking-wide transition-colors duration-150 whitespace-nowrap ${linkFocus} text-steel hover:text-white`}
@@ -490,7 +490,7 @@ export default function Navigation({ currentPage, navigate }: Props) {
                   </a>
                   {label === 'Careers' && (
                     <a
-                      href="/documents/Terms%20and%20Conditions%20for%20Suppliers.pdf"
+                      href="/documents/Terms and Conditions for Suppliers.pdf"
                       target="_blank"
                       rel="noopener noreferrer"
                       className={`flex w-full items-center justify-between py-3.5 text-sm transition-colors border-b border-border-dark ${linkFocus} text-steel hover:text-white`}
