@@ -187,6 +187,7 @@ export const yearsOfExperience: MaybeConflicting<string> = {
 export interface LeadershipPerson {
   name: string
   title: string
+  displayName?: string
   summary?: string
   biography?: string
   experience?: string
@@ -206,8 +207,9 @@ export const leadership = {
     {
       name: "Chakrapani Muppalla",
       title: "Founder & Managing Director",
+      displayName: "Chakrapani M",
       summary:
-        "Leads Igniting Minds Aerospace with a focus on aerospace tooling, precision manufacturing and long-term capability development. He directs strategic growth and the company's vision to become a preferred supplier in aerospace tooling and component manufacturing, with collaboration and transparency central to how the team works.",
+        "Leads IMA’s strategic growth in aerospace tooling, precision manufacturing, and advanced engineering, building global partnerships and long-term manufacturing capabilities.",
       biography:
         "Chakrapani Muppalla is the Founder and Managing Director of Igniting Minds Aerospace, specialising in precision aerospace tooling, manufacturing, and engineering solutions for global aerospace and defence customers.\n\nDriven by a vision to build world-class manufacturing capabilities from India, he focuses on engineering excellence, customer partnerships, innovation, and developing high-performing teams.\n\nHis leadership extends beyond conventional manufacturing, with a strong interest in advanced aerospace technologies and next-generation engineering solutions. He is committed to expanding IMA’s global presence and building an organisation that combines technical excellence, operational discipline, and long-term value creation.",
       experience:
@@ -230,7 +232,7 @@ export const leadership = {
       name: "Manjunatha S",
       title: "Director – Projects",
       summary:
-        "More than 27 years in aerospace and automotive project management, planning, scheduling and customer programmes. As Director - Projects, his expertise includes resource planning, utilisation, customer engagement and strategic execution in support of operational delivery.",
+        "Brings over 27 years of aerospace and automotive experience, driving project execution, resource planning, and customer programme delivery.",
       biography:
         "Manjunatha S brings over 27 years of experience across the aerospace and automotive industries to Igniting Minds Aerospace. He specialises in project management, resource planning, customer engagement, and execution of complex manufacturing programmes.\n\nAt IMA, he focuses on effective project execution, production planning, resource optimisation, and customer programme delivery, ensuring operational efficiency and consistent performance.\n\nHis experience and industry knowledge contribute to strengthening IMA’s project management capabilities, meeting customer expectations, and supporting the company’s continued growth.",
       experience:
@@ -253,7 +255,7 @@ export const leadership = {
       name: "Beerappa K",
       title: "Director – Finance",
       summary:
-        "More than 18 years in manufacturing-industry finance, including budgeting and forecasting. As Director - Finance, he provides strategic direction in financial planning and forecasting to strengthen financial and operational performance.",
+        "Brings over 18 years of manufacturing finance experience, focusing on financial planning, budgeting, forecasting, and sustainable business growth.",
       biography:
         "Beerappa K brings over 18 years of experience in the manufacturing industry to Igniting Minds Aerospace, with a strong understanding of financial management and the financial challenges of manufacturing operations.\n\nHe oversees financial planning, budgeting, forecasting, and resource management, supporting the company’s financial stability and operational efficiency.\n\nHis focus is on strengthening financial discipline, optimising resource utilisation, and enabling sustainable business growth as IMA expands its global presence.",
       experience:
