@@ -297,6 +297,12 @@ const homeCapabilities: Array<{
 
 const publicIndustries = industryRecords.filter((industry) => isPublishable(industry.verificationStatus))
 
+const industryCardHeadings: Record<string, string> = {
+  "aerospace-manufacturing": "Aero Engine Tooling",
+  "mro": "Aircraft Tooling",
+  "ground-support": "Precision Components",
+}
+
 const publicFamilies = productFamilies.filter((family) => isPublishable(family.verificationStatus))
 const featuredProducts = [
   ...publicFamilies.filter((family) => productImageSrc(family.image)),
@@ -768,7 +774,7 @@ export default function Home({ navigate }: Props) {
                         {ind.workAreas?.[0] ?? 'Aerospace'}
                       </p>
                       <h3 className="font-display font-bold text-white text-lg lg:text-xl uppercase leading-tight">
-                        {ind.industry}
+                        {industryCardHeadings[ind.id] ?? ind.industry}
                       </h3>
                       <p className="text-steel text-sm leading-relaxed mt-2 line-clamp-2">{ind.description}</p>
                       <div className="mt-3 flex items-center gap-2 text-orange group-hover:text-white transition-colors">
@@ -797,7 +803,7 @@ export default function Home({ navigate }: Props) {
                   <div className="absolute inset-0 im-overlay-caption" />
                   <div className="absolute bottom-0 left-0 right-0 p-5 lg:p-6">
                     <h3 className="font-display font-bold text-white text-xl lg:text-2xl uppercase leading-tight">
-                      {ind.industry}
+                      {industryCardHeadings[ind.id] ?? ind.industry}
                     </h3>
                     <p className="font-mono text-[11px] text-orange/90 mt-1 tracking-wider">
                       {ind.workAreas?.[0] ?? 'Aerospace'}
