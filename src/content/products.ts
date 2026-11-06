@@ -3,8 +3,6 @@ import {
   COMPANY_PROFILE_2026,
   LEGACY_PRECISION,
   LEGACY_TOOLING,
-  LEGACY_MACHINING,
-  isPublishable,
   type SourceMeta,
   type VerificationStatus,
 } from "./types"
@@ -31,63 +29,174 @@ export const productFilterHashes: Record<string, ProductFilterCategory> = {
   space: "Space",
 }
 
-const productNavHash: Record<ProductFilterCategory, string> = {
-  Airframe: "#airframe",
-  Engine: "#engine",
-  "UAV Systems": "#uav-systems",
-  GSE: "#gse",
-  Defense: "#defense",
-  Space: "#space",
+export interface ProductLineItem {
+  /** Product name as published on the Products page. */
+  name: string
+  /** Short product-type label shown above the product name. */
+  eyebrow: string
+  /** Catalogue description shown on the product card. */
+  description: string
+  /** Published product family that supplies the item image. */
+  familyId: string
 }
 
-const productNavOrder: ProductFilterCategory[] = [
-  "Airframe",
-  "Engine",
-  "GSE",
-  "UAV Systems",
-  "Defense",
-  "Space",
+export interface ProductCatalogItem {
+  id: string
+  name: string
+  eyebrow: string
+  description: string
+  category: ProductFilterCategory
+  categoryLabel: string
+  image?: ImageKey
+}
+
+export interface ProductLine {
+  /** Filter category the line belongs to. */
+  key: ProductFilterCategory
+  /** Full product-line name shown on the Products page. */
+  title: string
+  /** Short product-line name used in the filter bar and navigation. */
+  label: string
+  /** Page hash used by the navigation and the Products filter. */
+  hash: string
+  /** One-line summary built from published product families. */
+  summary: string
+  image: ImageKey
+  items: ProductLineItem[]
+}
+
+/** The three published product lines, in display order. */
+export const productLines: ProductLine[] = [
+  {
+    key: "Airframe",
+    title: "AIRFRAME",
+    label: "Airframe",
+    hash: "#airframe",
+    summary:
+      "Precision airframe components and the tooling that builds, services, and supports them.",
+    image: "airframeTooling",
+    items: [
+      {
+        name: "Precision Components",
+        eyebrow: "Precision Machining",
+        description:
+          "Precision-machined aerospace components manufactured to customer drawings and specifications.",
+        familyId: "precision-components",
+      },
+      {
+        name: "Structural Components",
+        eyebrow: "Airframe Structures",
+        description:
+          "Machined aluminium structural parts and complex aircraft components.",
+        familyId: "structural-components",
+      },
+      {
+        name: "Airframe Tooling",
+        eyebrow: "Assembly Tooling",
+        description:
+          "Assembly jigs, fixtures, and tooling for aircraft manufacturing and maintenance.",
+        familyId: "airframe-tooling",
+      },
+    ],
+  },
+  {
+    key: "Engine",
+    title: "ENGINE",
+    label: "Engine",
+    hash: "#engine",
+    summary:
+      "Aero-engine components, engine tooling, and movement trolleys for engine build, strip, and maintenance.",
+    image: "productAeroEngineTooling",
+    items: [
+      {
+        name: "Aero-Engine Components",
+        eyebrow: "Engine Components",
+        description:
+          "Precision-machined components for aero-engine applications.",
+        familyId: "aero-engine-components",
+      },
+      {
+        name: "Engine Tooling",
+        eyebrow: "Engine Tooling",
+        description:
+          "Specialised tooling for engine assembly, maintenance, and overhaul.",
+        familyId: "aero-engine-tooling",
+      },
+      {
+        name: "Movement Trolleys",
+        eyebrow: "Engine Handling",
+        description: "Trolleys designed for safe engine and component handling.",
+        familyId: "movement-trolleys",
+      },
+      {
+        name: "Multi-Axis Components",
+        eyebrow: "Multi-Axis Machining",
+        description:
+          "Complex components manufactured using multi-axis CNC machining.",
+        familyId: "multi-axis-components",
+      },
+    ],
+  },
+  {
+    key: "GSE",
+    title: "GROUND SUPPORT EQUIPMENT (GSE)",
+    label: "GSE",
+    hash: "#gse",
+    summary:
+      "Jigs and fixtures, aircraft ground support equipment, and maintenance and service tooling for aircraft operations.",
+    image: "gse",
+    items: [
+      {
+        name: "Jigs & Fixtures",
+        eyebrow: "Positioning & Assembly",
+        description: "Precision positioning and assembly solutions.",
+        familyId: "jigs-fixtures",
+      },
+      {
+        name: "Ground Support Equipment",
+        eyebrow: "Ground Support",
+        description:
+          "Equipment designed to support aircraft servicing and maintenance.",
+        familyId: "gse",
+      },
+      {
+        name: "Handling Equipment",
+        eyebrow: "Component Handling",
+        description:
+          "Specialised equipment for moving and positioning components.",
+        familyId: "lifting-tools",
+      },
+      {
+        name: "MRO Tooling",
+        eyebrow: "Maintenance & Overhaul",
+        description:
+          "Tooling solutions for maintenance, repair, and overhaul operations.",
+        familyId: "mro-tooling",
+      },
+    ],
+  },
 ]
 
-/** Filter-category links that currently have publishable families. Empty hashes remain valid on Products. */
+/** Product-line entries for the Products navigation submenu. */
 export function publicProductNavItems(): Array<{
   label: string
   sub: string
   hash: string
 }> {
-  const publicFamilies = productFamilies.filter((family) =>
-    isPublishable(family.verificationStatus),
-  )
-  return productNavOrder.flatMap((category) => {
-    const families = publicFamilies.filter(
-      (family) => family.filterCategory === category,
-    )
-    if (families.length === 0) return []
-    return [
-      {
-        label: category,
-        sub: families
-          .slice(0, 3)
-          .map((family) => family.name)
-          .join(", "),
-        hash: productNavHash[category],
-      },
-    ]
-  })
+  return productLines.map((line) => ({
+    label: line.label,
+    sub: line.items.map((item) => item.name).join(", "),
+    hash: line.hash,
+  }))
 }
 
-export function publicProductFilterTabs(
-  activeCategory?: string,
-): Array<"All" | ProductFilterCategory> {
-  const publicCategories = new Set(
-    productFamilies
-      .filter((family) => isPublishable(family.verificationStatus))
-      .map((family) => family.filterCategory),
-  )
+export function publicProductFilterTabs(): Array<
+  "All" | ProductFilterCategory
+> {
   const tabs: Array<"All" | ProductFilterCategory> = ["All"]
-  for (const category of productNavOrder) {
-    if (publicCategories.has(category) || activeCategory === category) {
-      tabs.push(category)
+  for (const line of productLines) {
+    if (!tabs.includes(line.key)) {
+      tabs.push(line.key)
     }
   }
   return tabs
@@ -428,28 +537,24 @@ export const productFamilies: ProductFamily[] = [
     currentlyOffered: "UNKNOWN",
     ...familyMeta(COMPANY_PROFILE_2026, "SOURCE_SUPPORTED"),
   },
-  {
-    id: "tig-welding",
-    name: "TIG Welding",
-    category: "Tooling",
-    slug: "tig-welding",
-    filterCategory: "Airframe",
-    shortDescription:
-      "TIG welding for fabrication of aero tooling in carbon steel, stainless steel, high alloys, and aluminium.",
-    description:
-      "End-to-end fabrication of aero tooling by TIG welding, for work that requires stringent international standards in carbon steel, stainless steel, high alloys, and aluminium.",
-    materials: ["Carbon steel", "Stainless steel", "High alloys", "Aluminium"],
-    applications: ["Aero tooling fabrication"],
-    specifications: [{ label: "Process", value: "TIG welding" }],
-    image: "productTigWelding",
-    currentlyOffered: "UNKNOWN",
-    ...familyMeta(
-      LEGACY_MACHINING,
-      "SOURCE_SUPPORTED",
-      "Legacy machining & fabrication page. AWS welder certification is not stored as a verified claim.",
-    ),
-  },
 ]
+
+/** The eleven products shown in the Products catalogue. */
+export const productCatalog: ProductCatalogItem[] = productLines.flatMap(
+  (line) =>
+    line.items.map((item) => {
+      const family = productFamilies.find((entry) => entry.id === item.familyId)
+      return {
+        id: item.familyId,
+        name: item.name,
+        eyebrow: item.eyebrow,
+        description: item.description,
+        category: line.key,
+        categoryLabel: line.label,
+        image: family?.image,
+      }
+    }),
+)
 
 export interface PrototypeSku extends SourceMeta {
   id: string

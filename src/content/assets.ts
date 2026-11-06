@@ -75,7 +75,6 @@ export const images = {
   productPedestals: '/images/products/product-pedestals.jpg',
   productLiftingTools: '/images/products/product-lifting-tools.jpg',
   productTorquingTools: '/images/products/product-torquing-tools.jpg',
-  productTigWelding: '/images/products/product-tig-welding.jpg',
   productIndexingTools: '/images/products/product-indexing-tools.jpg',
   productMovementTrolleys: '/images/products/product-aero-engine-line.jpg',
   productAeroEngineTooling: '/images/products/product-aero-engine-tooling.jpg',
