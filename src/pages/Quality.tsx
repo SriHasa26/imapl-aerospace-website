@@ -54,12 +54,48 @@ const certificationCards = [
 ]
 
 const processSteps = [
-  { step: '01', title: 'DIMENSIONAL INSPECTION', desc: 'Precision measurement of critical dimensions.' },
-  { step: '02', title: 'GEOMETRIC INSPECTION', desc: 'Verification of GD&T and geometric tolerances.' },
-  { step: '03', title: 'CMM PROGRAMMING & INSPECTION', desc: 'Programmed measurement of complex geometries.' },
-  { step: '04', title: 'NON-DESTRUCTIVE TESTING (NDT)', desc: 'Inspection for internal and surface defects.' },
-  { step: '05', title: 'PRE-DISPATCH INSPECTION', desc: 'Final verification of quality and specifications.' },
-  { step: '06', title: 'DEAD WEIGHT LOAD TESTING', desc: 'Load testing of tools, fixtures, and assemblies.' },
+  {
+    step: '01',
+    title: 'DIMENSIONAL INSPECTION',
+    desc: 'Precision measurement of critical dimensions.',
+    image: images.qualityDimensionalInspection,
+    alt: 'Dimensional inspection using precision instruments in QA lab',
+  },
+  {
+    step: '02',
+    title: 'GEOMETRIC INSPECTION',
+    desc: 'Verification of GD&T and geometric tolerances.',
+    image: images.qualityGeometricInspection,
+    alt: 'Mitutoyo Contracer CV-2100 geometric contour measurement setup',
+  },
+  {
+    step: '03',
+    title: 'CMM PROGRAMMING & INSPECTION',
+    desc: 'Programmed measurement of complex geometries.',
+    image: images.qualityCmmInspection,
+    alt: 'Mitutoyo CMM machine inspecting precision aerospace component',
+  },
+  {
+    step: '04',
+    title: 'NON-DESTRUCTIVE TESTING (NDT)',
+    desc: 'Inspection for internal and surface defects.',
+    image: images.qualityNdtInspection,
+    alt: 'Non-destructive testing and penetrant surface flaw inspection',
+  },
+  {
+    step: '05',
+    title: 'PRE-DISPATCH INSPECTION',
+    desc: 'Final verification of quality and specifications.',
+    image: images.qualityPreDispatchInspection,
+    alt: 'Final component verification and quality inspection documentation review',
+  },
+  {
+    step: '06',
+    title: 'DEAD WEIGHT LOAD TESTING',
+    desc: 'Load testing of tools, fixtures, and assemblies.',
+    image: images.qualityLoadTesting,
+    alt: 'Actual dead-weight load-testing setup and calibration blocks',
+  },
 ]
 
 export default function Quality({ navigate }: Props) {
@@ -159,19 +195,19 @@ export default function Quality({ navigate }: Props) {
       {/* Key metrics */}
       <section
         id="quality-metrics"
-        className="bg-off min-h-screen flex items-center"
+        className="bg-off min-h-screen flex items-center py-20 sm:py-24 lg:py-32"
       >
         <div className={`quality-reveal max-w-[1440px] mx-auto px-6 xl:px-12 w-full ${revealed['quality-metrics'] ? 'is-visible' : ''}`}>
           <SL text="QUALITY ASSURANCE" />
           <h2 className="font-display font-bold text-navy text-4xl lg:text-5xl uppercase leading-tight mb-14">
             INSPECTION &amp; TESTING CAPABILITIES
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {capabilityCards.map((card) => (
-              <div key={card.number} className="quality-card quality-card--light p-8">
-                <div className="font-mono text-[11px] text-blue font-semibold mb-4">{card.number}</div>
-                <h3 className="font-display font-bold text-navy text-xl uppercase mb-3">{card.title}</h3>
-                <p className="text-mid text-sm leading-relaxed">{card.desc}</p>
+              <div key={card.number} className="quality-card quality-card--light p-7 sm:p-8 flex flex-col h-full">
+                <div className="font-mono text-[11px] text-blue font-semibold mb-4 tracking-wider">{card.number}</div>
+                <h3 className="font-display font-bold text-navy text-xl uppercase mb-3 min-h-[3.25rem] flex items-start leading-snug">{card.title}</h3>
+                <p className="text-mid text-sm leading-relaxed mt-auto">{card.desc}</p>
               </div>
             ))}
           </div>
@@ -181,7 +217,7 @@ export default function Quality({ navigate }: Props) {
       {/* Certifications / quality processes */}
       <section
         id="quality-certs"
-        className="bg-navy min-h-screen flex items-center"
+        className="bg-navy min-h-screen flex items-center py-20 sm:py-24 lg:py-32"
       >
         <div className={`quality-reveal max-w-[1440px] mx-auto px-6 xl:px-12 w-full ${revealed['quality-certs'] ? 'is-visible' : ''}`}>
           <SL text="CERTIFICATIONS & ACCREDITATIONS" />
@@ -205,19 +241,42 @@ export default function Quality({ navigate }: Props) {
       {/* Quality Process */}
       <section
         id="quality-process"
-        className="bg-off min-h-screen flex items-center"
+        className="bg-off min-h-screen flex items-center py-20 sm:py-24 lg:py-32 pb-24 sm:pb-32 lg:pb-40"
       >
         <div className={`quality-reveal max-w-[1440px] mx-auto px-6 xl:px-12 w-full ${revealed['quality-process'] ? 'is-visible' : ''}`}>
           <SL text="QUALITY PROCESS" />
           <h2 className="font-display font-bold text-navy text-4xl lg:text-5xl uppercase leading-tight mb-14">
             BUILT IN, NOT<br />INSPECTED IN
           </h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {processSteps.map((p) => (
-              <article key={p.step} className="quality-card quality-card--light p-7">
-                <div className="font-mono text-[11px] text-blue font-semibold mb-4">{p.step}</div>
-                <h3 className="font-display font-bold text-navy text-xl uppercase mb-3">{p.title}</h3>
-                <p className="text-mid text-sm leading-relaxed">{p.desc}</p>
+              <article
+                key={p.step}
+                className="quality-card quality-card--light flex flex-col h-full overflow-hidden group"
+              >
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-navy-mid border-b border-border-light/60">
+                  <img
+                    src={p.image}
+                    alt={p.alt}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <div className="absolute top-3 left-3 font-mono text-[11px] text-cyan bg-navy/85 backdrop-blur-xs px-2.5 py-1 uppercase tracking-widest font-semibold border border-cyan/30">
+                    {p.step}
+                  </div>
+                </div>
+                <div className="p-6 sm:p-7 flex flex-col flex-1">
+                  <div className="font-mono text-[11px] text-blue font-semibold uppercase tracking-wider mb-2">
+                    STEP {p.step}
+                  </div>
+                  <h3 className="font-display font-bold text-navy text-xl uppercase mb-3 min-h-[3rem] flex items-start leading-snug">
+                    {p.title}
+                  </h3>
+                  <p className="text-mid text-sm leading-relaxed mt-auto">
+                    {p.desc}
+                  </p>
+                </div>
               </article>
             ))}
           </div>
@@ -225,7 +284,7 @@ export default function Quality({ navigate }: Props) {
       </section>
 
       {/* CTA */}
-      <section className="bg-orange min-h-screen flex items-center">
+      <section className="bg-orange min-h-screen flex items-center py-20 sm:py-24 lg:py-32">
         <div className="max-w-[1440px] mx-auto px-6 xl:px-12 text-center">
           <h2 className="font-display font-bold text-white text-4xl lg:text-5xl uppercase mb-4">QUALITY DOCUMENTATION</h2>
           <p className="text-white/70 max-w-lg mx-auto mb-8">Access IMA’s quality certifications and supporting documentation to support your supplier qualification and compliance requirements.</p>
