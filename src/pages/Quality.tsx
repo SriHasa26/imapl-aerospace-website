@@ -78,7 +78,6 @@ const equipmentRows = publicEquipment.length > 0
     ]
 
 const policyText = publicPolicy?.statement
-  ?? 'In-process and final inspection includes dimensional, geometric, and surface-finish verification and pre-dispatch inspection.'
 
 export default function Quality({ navigate }: Props) {
   return (
@@ -96,12 +95,14 @@ export default function Quality({ navigate }: Props) {
             <span>/</span>
             <span className="text-cyan">Quality</span>
           </div>
-          <SL text="Quality Assurance" />
+          <SL text="QUALITY ASSURANCE" />
           <h1 className="font-display font-black text-white text-5xl lg:text-7xl uppercase leading-none tracking-tight mb-6">
-            Inspection.<br />Verification.
+            <span className="block">PRECISION.</span>
+            <span className="block">QUALITY.</span>
+            <span className="block">TRACEABILITY.</span>
           </h1>
           <p className="text-steel max-w-2xl text-lg leading-relaxed">
-            Inspection, load testing, and part marking as described on the legacy quality pages.
+            Quality controls built around aerospace requirements, from in-process inspection to final verification and dispatch.
           </p>
         </div>
       </section>
@@ -111,13 +112,19 @@ export default function Quality({ navigate }: Props) {
         <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
           <div className="max-w-3xl">
             <div className="font-mono text-[9px] text-white/50 uppercase tracking-widest mb-4">
-              {publicPolicy ? 'Quality Policy Statement' : 'Inspection Process'}
+              {publicPolicy ? 'Quality Policy Statement' : 'INSPECTION PROCESS'}
             </div>
-            <blockquote className="font-display font-bold text-white text-2xl lg:text-3xl uppercase leading-snug">
-              {`"${policyText}"`}
-            </blockquote>
-            {publicPolicy && (
-              <div className="mt-6 font-mono text-[10px] text-white/60">— {publicPolicy.attribution}</div>
+            {publicPolicy ? (
+              <>
+                <blockquote className="font-display font-bold text-white text-2xl lg:text-3xl uppercase leading-snug">
+                  {`"${policyText}"`}
+                </blockquote>
+                <div className="mt-6 font-mono text-[10px] text-white/60">— {publicPolicy.attribution}</div>
+              </>
+            ) : (
+              <p className="text-white/70 text-lg leading-relaxed">
+                In-process and final inspections verify dimensional accuracy, geometric tolerances, surface finish, and compliance with customer specifications.
+              </p>
             )}
           </div>
         </div>
