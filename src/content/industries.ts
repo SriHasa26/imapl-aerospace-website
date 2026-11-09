@@ -30,8 +30,9 @@ export const industries: IndustryRecord[] = [
   {
     id: "mro",
     industry: "MRO",
-    description: "MRO tooling is listed on the legacy overview and tooling pages. Prototype MRO/aftermarket program claims are not included here.",
-    workAreas: ["MRO Tooling"],
+    subheading: "Maintenance, Repair & Overhaul Tooling",
+    description: "IMA manufactures specialised tooling and support equipment for aircraft and aero-engine maintenance, repair, overhaul, and servicing operations.",
+    workAreas: ["Aircraft Maintenance Tooling", "Aero-Engine Tooling", "Specialised Fixtures & Support Equipment"],
     image: "mroTooling",
     sourceType: "LEGACY_WEBSITE",
     sourceRef: "https://imapl.co.in/overview",
