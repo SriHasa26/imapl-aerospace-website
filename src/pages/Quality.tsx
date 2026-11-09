@@ -9,7 +9,6 @@ import {
   prototypeCertificationCards,
   prototypeQualityPolicy,
   prototypeQualityProcesses,
-  qualityMetricsPrototype,
 } from '../content/quality'
 import { isPublishable } from '../content/types'
 
@@ -32,7 +31,6 @@ const publicInspection = isPublishable(inspectionProcesses.verificationStatus) ?
 const publicLoadTesting = isPublishable(loadTesting.verificationStatus) ? loadTesting.methods : []
 const publicPartMarking = isPublishable(partMarking.verificationStatus) ? partMarking.methods : []
 const publicEquipment = inspectionEquipment.filter((item) => isPublishable(item.verificationStatus))
-const publicMetrics = isPublishable(qualityMetricsPrototype.verificationStatus) ? qualityMetricsPrototype.items : []
 const publicCerts = prototypeCertificationCards.filter((cert) => isPublishable(cert.verificationStatus))
 const publicProcesses = prototypeQualityProcesses.filter((process) => isPublishable(process.verificationStatus))
 const publicPolicy = isPublishable(prototypeQualityPolicy.verificationStatus) ? prototypeQualityPolicy : undefined
@@ -44,16 +42,28 @@ const processCards = [
   publicPartMarking.length > 0 ? { code: 'Part Marking', name: 'Marking to customer specification', details: publicPartMarking.map((method) => ['Method', method] as const) } : undefined,
 ].filter((card): card is NonNullable<typeof card> => Boolean(card))
 
-const identityMetrics = [
-  { val: 'Inspect', label: 'Dimensional', sub: publicInspection[0] ?? 'Inspection' },
-  { val: 'Geometry', label: 'Verification', sub: publicInspection[1] ?? 'Inspection' },
-  { val: 'Load', label: 'Testing', sub: publicLoadTesting[0] ?? 'Load testing' },
-  { val: 'Mark', label: 'Part Marking', sub: publicPartMarking[0] ?? 'Part marking' },
+const capabilityCards = [
+  {
+    number: '01',
+    title: 'DIMENSIONAL INSPECTION',
+    desc: 'Precision measurement and dimensional verification against engineering drawings.',
+  },
+  {
+    number: '02',
+    title: 'GEOMETRIC VERIFICATION',
+    desc: 'Verification of geometric tolerances and critical component features.',
+  },
+  {
+    number: '03',
+    title: 'LOAD TESTING',
+    desc: 'Dead-weight load testing against specified acceptance criteria.',
+  },
+  {
+    number: '04',
+    title: 'PART MARKING',
+    desc: 'Chemical etching and component identification as per customer requirements.',
+  },
 ]
-
-const metricCards = publicMetrics.length > 0
-  ? publicMetrics.map((item) => ({ val: item, label: 'Quality metric', sub: 'Production data' }))
-  : identityMetrics
 
 const processSteps = publicProcesses.length > 0
   ? publicProcesses
@@ -133,12 +143,16 @@ export default function Quality({ navigate }: Props) {
       {/* Key metrics */}
       <section className="bg-off py-20">
         <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-border-light">
-            {metricCards.map(stat => (
-              <div key={stat.label + stat.val} className="bg-off p-8 lg:p-10">
-                <div className="font-display font-black text-blue text-4xl lg:text-5xl mb-2">{stat.val}</div>
-                <div className="font-mono text-[10px] text-navy uppercase tracking-widest">{stat.label}</div>
-                <div className="font-mono text-[9px] text-mid/60 mt-1">{stat.sub}</div>
+          <SL text="QUALITY ASSURANCE" />
+          <h2 className="font-display font-bold text-navy text-4xl lg:text-5xl uppercase leading-tight mb-12">
+            INSPECTION &amp; TESTING CAPABILITIES
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {capabilityCards.map(card => (
+              <div key={card.number} className="bg-white border border-border-light shadow-sm p-8 flex flex-col">
+                <div className="font-mono text-[11px] text-blue font-semibold mb-4">{card.number}</div>
+                <h3 className="font-display font-bold text-navy text-xl uppercase mb-3">{card.title}</h3>
+                <p className="text-mid text-sm leading-relaxed">{card.desc}</p>
               </div>
             ))}
           </div>
