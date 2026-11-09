@@ -6,7 +6,6 @@ import {
   inspectionProcesses,
   loadTesting,
   partMarking,
-  prototypeCertificationCards,
   prototypeQualityPolicy,
   prototypeQualityProcesses,
 } from '../content/quality'
@@ -31,16 +30,14 @@ const publicInspection = isPublishable(inspectionProcesses.verificationStatus) ?
 const publicLoadTesting = isPublishable(loadTesting.verificationStatus) ? loadTesting.methods : []
 const publicPartMarking = isPublishable(partMarking.verificationStatus) ? partMarking.methods : []
 const publicEquipment = inspectionEquipment.filter((item) => isPublishable(item.verificationStatus))
-const publicCerts = prototypeCertificationCards.filter((cert) => isPublishable(cert.verificationStatus))
 const publicProcesses = prototypeQualityProcesses.filter((process) => isPublishable(process.verificationStatus))
 const publicPolicy = isPublishable(prototypeQualityPolicy.verificationStatus) ? prototypeQualityPolicy : undefined
 const showGeP23tf3 = isPublishable(geP23tf3.verificationStatus)
 
-const processCards = [
-  publicInspection.length > 0 ? { code: 'Inspection', name: 'In-process and final inspection', details: publicInspection.map((method) => ['Method', method] as const) } : undefined,
-  publicLoadTesting.length > 0 ? { code: 'Load Testing', name: 'Aerospace tools, fixtures, and assemblies', details: publicLoadTesting.map((method) => ['Method', method] as const) } : undefined,
-  publicPartMarking.length > 0 ? { code: 'Part Marking', name: 'Marking to customer specification', details: publicPartMarking.map((method) => ['Method', method] as const) } : undefined,
-].filter((card): card is NonNullable<typeof card> => Boolean(card))
+const certificationCards = [
+  { title: 'AS9100 Rev D', description: 'Aerospace Quality Management System' },
+  { title: 'ISO 9001', description: 'Quality Management System' },
+]
 
 const capabilityCards = [
   {
@@ -162,58 +159,21 @@ export default function Quality({ navigate }: Props) {
       {/* Certifications / quality processes */}
       <section className="bg-navy py-24">
         <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
-          <SL text={publicCerts.length > 0 ? 'Certifications & Accreditations' : 'Quality Processes'} />
+          <SL text="CERTIFICATIONS & ACCREDITATIONS" />
           <h2 className="font-display font-bold text-white text-4xl lg:text-5xl uppercase leading-tight mb-14">
-            {publicCerts.length > 0 ? (
-              <>
-                Globally Recognized<br />Standards
-              </>
-            ) : (
-              <>
-                Inspection &<br />Part Marking
-              </>
-            )}
+            COMMITTED TO QUALITY STANDARDS
           </h2>
-          <div className="grid lg:grid-cols-2 gap-px bg-border-dark">
-            {(publicCerts.length > 0 ? publicCerts.map((cert) => ({
-              code: cert.code,
-              name: cert.name,
-              details: [
-                ['Certifying Body', cert.body],
-                ['Scope', cert.scope],
-                ['Next Renewal', cert.renewal],
-              ] as Array<readonly [string, string]>,
-              year: cert.year,
-            })) : processCards.map((card) => ({
-              code: card.code,
-              name: card.name,
-              details: card.details,
-              year: undefined as string | undefined,
-            }))).map(cert => (
-              <div key={cert.code} className="bg-navy-mid p-8 hover:bg-navy-light transition-colors">
-                <div className="flex items-start justify-between gap-4 mb-5">
-                  <div>
-                    <div className="font-display font-bold text-cyan text-3xl uppercase">{cert.code}</div>
-                    <div className="font-mono text-[10px] text-steel mt-1 tracking-wider">{cert.name}</div>
-                  </div>
-                  {cert.year && (
-                    <div className="border border-cyan/30 px-3 py-2 text-center shrink-0">
-                      <div className="font-mono text-[8px] text-steel uppercase tracking-wider">Issued</div>
-                      <div className="font-mono text-[11px] text-cyan mt-0.5">{cert.year}</div>
-                    </div>
-                  )}
-                </div>
-                <div className="space-y-2.5">
-                  {cert.details.map(([k, v]) => (
-                    <div key={`${k}-${v}`} className="flex items-start gap-3">
-                      <div className="font-mono text-[9px] text-steel/60 uppercase tracking-wider w-24 shrink-0 pt-0.5">{k}</div>
-                      <div className="font-mono text-[11px] text-white">{v}</div>
-                    </div>
-                  ))}
-                </div>
+          <div className="grid lg:grid-cols-2 gap-6">
+            {certificationCards.map((cert) => (
+              <div key={cert.title} className="bg-navy-mid border border-border-dark p-8 hover:bg-navy-light transition-colors">
+                <div className="font-display font-bold text-cyan text-3xl uppercase">{cert.title}</div>
+                <div className="font-mono text-[11px] text-steel mt-2 tracking-wider">{cert.description}</div>
               </div>
             ))}
           </div>
+          <p className="text-steel max-w-3xl text-base leading-relaxed mt-10">
+            Our quality systems support process consistency, product conformity, traceability, and continuous improvement across aerospace manufacturing operations.
+          </p>
         </div>
       </section>
 
