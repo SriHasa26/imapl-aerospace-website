@@ -227,14 +227,14 @@ export default function Quality({ navigate }: Props) {
       {/* CTA */}
       <section className="bg-orange min-h-screen flex items-center">
         <div className="max-w-[1440px] mx-auto px-6 xl:px-12 text-center">
-          <h2 className="font-display font-bold text-white text-4xl lg:text-5xl uppercase mb-4">Quality Documentation</h2>
-          <p className="text-white/70 max-w-lg mx-auto mb-8">Use the quote form to request quality information. Certificate files are not published here.</p>
-          <div className="flex items-center justify-center gap-4">
+          <h2 className="font-display font-bold text-white text-4xl lg:text-5xl uppercase mb-4">QUALITY DOCUMENTATION</h2>
+          <p className="text-white/70 max-w-lg mx-auto mb-8">Access IMA’s quality certifications and supporting documentation to support your supplier qualification and compliance requirements.</p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button onClick={() => navigate('quote')} className="btn-chamfer group bg-white text-orange hover:bg-off font-bold text-sm tracking-wide px-8 py-4 flex items-center gap-2 transition-all duration-200 hover:-translate-y-0.5">
-              Request Documents <AR className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
+              Request Quality Documents <AR className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
             </button>
             <button onClick={() => navigate('contact')} className="btn-chamfer border border-white/30 text-white hover:bg-white/10 hover:border-white/60 font-medium text-sm tracking-wide px-8 py-4 transition-all duration-200 hover:-translate-y-0.5">
-              Contact Us
+              Contact Quality Team
             </button>
           </div>
         </div>
