@@ -40,9 +40,10 @@ export const industries: IndustryRecord[] = [
   },
   {
     id: "ground-support",
-    industry: "Ground Support",
-    description: "Aerospace ground support equipment categories listed on the legacy tooling page: On-Wing Support Equipment, Tripod Jacks, Axle Jacks, Tow Bars, Nacelle Tooling, and Aircraft Access Platforms.",
-    workAreas: ["Ground Support Equipment", "Nacelle Tooling", "Aircraft Access Platforms"],
+    industry: "Ground Support Equipment",
+    subheading: "Aircraft Support & Handling Solutions",
+    description: "IMA manufactures specialised ground support equipment and tooling to support aircraft maintenance, servicing, and handling operations.",
+    workAreas: ["On-Wing Support Equipment", "Tripod Jacks & Axle Jacks", "Tow Bars", "Nacelle Tooling", "Aircraft Access Platforms"],
     image: "gse",
     sourceType: "LEGACY_WEBSITE",
     sourceRef: LEGACY_TOOLING,
