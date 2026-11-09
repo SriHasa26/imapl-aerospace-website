@@ -39,7 +39,7 @@ const industrySections = (publicPrototypeCards.length > 0 ? publicPrototypeCards
   return {
     id: String(index + 1).padStart(2, '0'),
     title: item.industry,
-    sub: workAreas[0] ?? 'Aerospace',
+    sub: item.subheading ?? workAreas[0] ?? 'Aerospace',
     desc: item.description,
     programs: workAreas,
     chips,
@@ -77,7 +77,7 @@ export default function Industries({ navigate }: Props) {
       {industrySections.map((ind, i) => (
         <section key={ind.id} className={`py-24 ${i % 2 === 0 ? 'bg-off' : 'bg-navy'}`}>
           <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
-            <div className={`grid lg:grid-cols-2 gap-16 items-start ${i % 2 !== 0 ? 'lg:[&>*:first-child]:order-2' : ''}`}>
+            <div className={`grid lg:grid-cols-2 gap-16 ${i === 0 ? 'items-center' : 'items-start'} ${i % 2 !== 0 ? 'lg:[&>*:first-child]:order-2' : ''}`}>
               {/* Image */}
               <div className="relative">
                 <div className="aspect-[4/3] overflow-hidden bg-navy">

@@ -9,6 +9,7 @@ import { type SourceMeta } from "./types"
 export interface IndustryRecord extends SourceMeta {
   id: string
   industry: string
+  subheading?: string
   description: string
   image?: ImageKey
   workAreas?: string[]
@@ -17,9 +18,10 @@ export interface IndustryRecord extends SourceMeta {
 export const industries: IndustryRecord[] = [
   {
     id: "aerospace-manufacturing",
-    industry: "Aerospace manufacturing",
-    description: "Legacy positioning covers aero-engine tooling, precision aerospace components, and MRO tooling.",
-    workAreas: ["Aero Engine Tooling", "Precision Aerospace Components", "MRO Tooling"],
+    industry: "Aerospace Manufacturing",
+    subheading: "Precision Engineering & Tooling",
+    description: "IMA supports aerospace manufacturers with precision-engineered tooling and components for aircraft structures, aero-engines, and assembly applications.",
+    workAreas: ["Aero-Engine Tooling", "Precision Aerospace Components", "Airframe Tooling & Structural Components"],
     image: "manufacturingImage",
     sourceType: "LEGACY_WEBSITE",
     sourceRef: "https://imapl.co.in/overview",
