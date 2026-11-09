@@ -288,7 +288,7 @@ export default function RequestQuote({ navigate }: Props) {
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-navy flex items-center justify-center px-6 pt-20 pb-20">
+      <div className="min-h-screen bg-canvas flex items-center justify-center px-6 pt-20 pb-20">
         <div className="max-w-lg w-full text-center">
           <div className="w-16 h-16 border border-cyan flex items-center justify-center mx-auto mb-8">
             <svg viewBox="0 0 24 24" className="w-8 h-8 text-cyan" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -345,7 +345,7 @@ export default function RequestQuote({ navigate }: Props) {
   }
 
   return (
-    <div className="bg-navy min-h-screen">
+    <div className="bg-canvas min-h-screen">
       <section className="relative pt-32 pb-12 border-b border-border-dark">
         <div className="absolute inset-0 blueprint-grid opacity-30" />
         <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
@@ -361,7 +361,7 @@ export default function RequestQuote({ navigate }: Props) {
         </div>
       </section>
 
-      <div className="border-b border-border-dark bg-navy-mid" role="navigation" aria-label="RFQ steps">
+      <div className="border-b border-border-dark bg-canvas-mid" role="navigation" aria-label="RFQ steps">
         <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
           <div className="flex items-stretch overflow-x-auto">
             {stepLabels.map((item) => {
@@ -375,7 +375,7 @@ export default function RequestQuote({ navigate }: Props) {
                   disabled={!complete && !current}
                   aria-current={current ? 'step' : undefined}
                       className={`flex items-center gap-3 px-4 sm:px-6 py-4 border-r border-border-dark shrink-0 min-h-14 transition-colors focus-visible:outline focus-visible:outline-1 focus-visible:outline-cyan ${
-                    current ? 'bg-blue' : complete ? 'hover:bg-navy-light cursor-pointer' : 'opacity-40 cursor-default'
+                    current ? 'bg-blue' : complete ? 'hover:bg-canvas-raised cursor-pointer' : 'opacity-40 cursor-default'
                   }`}
                 >
                   <div className={`w-6 h-6 flex items-center justify-center text-xs font-mono font-semibold border ${
@@ -683,7 +683,7 @@ export default function RequestQuote({ navigate }: Props) {
                 },
               ].map((section) => (
                 <div key={section.title} className="border border-border-dark">
-                  <div className="bg-navy-mid px-5 sm:px-6 py-3 flex items-center justify-between gap-4 border-b border-border-dark">
+                  <div className="bg-canvas-mid px-5 sm:px-6 py-3 flex items-center justify-between gap-4 border-b border-border-dark">
                     <div className="font-mono text-[10px] text-steel uppercase tracking-widest">{section.title}</div>
                     <button
                       type="button"

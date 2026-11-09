@@ -57,7 +57,7 @@ export function formatFileSize(bytes: number) {
 }
 
 export const fieldClass =
-  'w-full min-h-12 bg-navy border border-border-dark px-4 py-3 text-sm text-white placeholder-steel/50 focus:outline-none focus-visible:border-cyan focus-visible:ring-1 focus-visible:ring-cyan transition-colors'
+  'w-full min-h-12 bg-canvas border border-border-dark px-4 py-3 text-sm text-white placeholder-steel/50 focus:outline-none focus-visible:border-cyan focus-visible:ring-1 focus-visible:ring-cyan transition-colors'
 export const labelClass =
   'font-mono text-[9px] text-steel uppercase tracking-widest block mb-2'
 export const errorClass = 'mt-1.5 font-mono text-[10px] text-red-400'

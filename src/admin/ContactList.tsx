@@ -88,7 +88,7 @@ export default function AdminContactList() {
           <div className="overflow-x-auto border border-border-dark">
             <table className="w-full text-left text-sm min-w-[720px]">
               <caption className="sr-only">Contact submissions</caption>
-              <thead className="bg-navy-mid font-mono text-[9px] uppercase tracking-widest text-steel">
+              <thead className="bg-canvas-mid font-mono text-[9px] uppercase tracking-widest text-steel">
                 <tr>
                   <th className="px-4 py-3 font-medium">Name</th>
                   <th className="px-4 py-3 font-medium">Company</th>
@@ -101,7 +101,7 @@ export default function AdminContactList() {
               </thead>
               <tbody className="divide-y divide-border-dark">
                 {rows.map((row) => (
-                  <tr key={row.id} className="hover:bg-navy-mid/60">
+                  <tr key={row.id} className="hover:bg-canvas-mid/60">
                     <td className="px-4 py-3">
                       <AdminLink href={adminHref('contact', row.id)} className="text-cyan hover:text-white">
                         {display(row.full_name)}

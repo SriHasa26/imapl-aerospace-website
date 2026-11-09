@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { Page } from '../App'
-import { images } from '../content/assets'
+import { images, photoObjectClass } from '../content/assets'
 import { publicWorkAreas, shortName } from '../content/company'
 import {
   isPublicArticle,
@@ -66,7 +66,7 @@ export default function Resources({ navigate }: Props) {
   return (
     <div>
       {/* Hero */}
-      <section className="relative pt-32 pb-20 bg-navy overflow-hidden">
+      <section className="relative pt-32 pb-20 bg-canvas overflow-hidden">
         <div className="absolute inset-0 blueprint-grid opacity-50" />
         <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
           <div className="font-mono text-[9px] text-steel uppercase tracking-widest mb-6 flex items-center gap-2">
@@ -88,7 +88,7 @@ export default function Resources({ navigate }: Props) {
       </section>
 
       {/* Tab filter */}
-      <section className="bg-navy-mid border-b border-border-dark">
+      <section className="bg-canvas-mid border-b border-border-dark">
         <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
           <div className="flex items-center gap-0 overflow-x-auto">
             {tabs.map(tab => (
@@ -96,7 +96,7 @@ export default function Resources({ navigate }: Props) {
                 key={tab}
                 onClick={() => setActiveTab(tab)}
                 className={`shrink-0 font-mono text-[9px] uppercase tracking-widest px-5 py-4 border-r border-border-dark transition-colors ${
-                  activeTab === tab ? 'text-cyan bg-navy-light' : 'text-steel hover:text-white hover:bg-navy-light'
+                  activeTab === tab ? 'text-cyan bg-canvas-raised' : 'text-steel hover:text-white hover:bg-canvas-raised'
                 }`}
               >
                 {tab}
@@ -107,14 +107,14 @@ export default function Resources({ navigate }: Props) {
       </section>
 
       {/* Resource grid */}
-      <section className="bg-navy py-16">
+      <section className="bg-canvas py-16">
         <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
           {articleCards.length > 0 && (
             <div className="grid lg:grid-cols-3 gap-px bg-border-dark">
               {articleCards.map((item, i) => (
                 <div
                   key={item.title}
-                  className={`bg-navy-mid text-left ${i === 0 && activeTab === 'All' ? 'lg:col-span-2 lg:row-span-2' : ''}`}
+                  className={`bg-canvas-mid text-left ${i === 0 && activeTab === 'All' ? 'lg:col-span-2 lg:row-span-2' : ''}`}
                 >
                   <div className={i === 0 && activeTab === 'All' ? 'p-10' : 'p-6'}>
                     <div className="font-mono text-[8px] text-cyan border border-cyan/30 px-2 py-1 uppercase tracking-wider inline-block mb-4">
@@ -137,13 +137,13 @@ export default function Resources({ navigate }: Props) {
               {noticeCards.map((item, i) => (
                 <div
                   key={item.title}
-                  className={`bg-navy-mid text-left ${i === 0 && activeTab === 'All' ? 'lg:col-span-2 lg:row-span-2' : ''}`}
+                  className={`bg-canvas-mid text-left ${i === 0 && activeTab === 'All' ? 'lg:col-span-2 lg:row-span-2' : ''}`}
                 >
-                  <div className={`overflow-hidden relative ${i === 0 && activeTab === 'All' ? 'aspect-[16/7]' : 'aspect-video'}`}>
+                  <div className={`overflow-hidden relative bg-navy ${i === 0 && activeTab === 'All' ? 'aspect-[16/9]' : 'aspect-video'}`}>
                     <img
                       src={item.img}
                       alt={item.title}
-                      className="w-full h-full object-cover opacity-60"
+                      className={`w-full h-full ${photoObjectClass(item.img)} opacity-60`}
                     />
                     <div className="absolute top-3 left-3 font-mono text-[8px] text-cyan border border-cyan/30 px-2 py-1 bg-navy/70 uppercase tracking-wider">
                       {item.type}
@@ -176,7 +176,7 @@ export default function Resources({ navigate }: Props) {
                     <a
                       key={'id' in dl ? dl.id : dl.name}
                       href={'href' in dl ? dl.href : undefined}
-                      className="bg-navy-mid p-6 text-left flex items-start gap-4 hover:bg-navy-light transition-colors group"
+                      className="bg-canvas-mid p-6 text-left flex items-start gap-4 hover:bg-canvas-raised transition-colors group"
                     >
                       <div className="w-10 h-12 border border-border-dark flex items-center justify-center shrink-0 group-hover:border-cyan transition-colors">
                         <svg viewBox="0 0 24 24" className="w-5 h-5 text-steel group-hover:text-cyan transition-colors" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -196,7 +196,7 @@ export default function Resources({ navigate }: Props) {
                   {unpublishedCatalog.length > 0 ? unpublishedCatalog.map(dl => (
                     <div
                       key={dl.id}
-                      className="bg-navy-mid p-6 text-left flex items-start gap-4"
+                      className="bg-canvas-mid p-6 text-left flex items-start gap-4"
                     >
                       <div className="w-10 h-12 border border-border-dark flex items-center justify-center shrink-0">
                         <svg viewBox="0 0 24 24" className="w-5 h-5 text-steel" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -211,7 +211,7 @@ export default function Resources({ navigate }: Props) {
                       </div>
                     </div>
                   )) : (
-                    <div className="bg-navy-mid p-8 sm:col-span-2 lg:col-span-3">
+                    <div className="bg-canvas-mid p-8 sm:col-span-2 lg:col-span-3">
                       <h3 className="font-display font-bold text-white text-xl uppercase mb-2">No published downloads</h3>
                       <p className="text-steel text-sm leading-relaxed">
                         Certificate PDFs, brochures, and technical files are not available on this site yet. No download link is provided.

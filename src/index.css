@@ -1,10 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap');
 @import 'tailwindcss';
 
+@custom-variant light (&:where(html.light, html.light *));
+
 @theme {
   --color-navy: #070D1C;
   --color-navy-mid: #0D1629;
   --color-navy-light: #101D35;
+  --color-canvas: #070D1C;
+  --color-canvas-mid: #0D1629;
+  --color-canvas-raised: #101D35;
+  --color-heading: #070D1C;
+  --color-fg: #FFFFFF;
   --color-blue: #003580;
   --color-blue-light: #0050B3;
   --color-blue-dark: #002260;
@@ -95,3 +102,83 @@ body {
 
 .anim-fade-up  { animation: fadeUp 0.7s ease both; }
 .anim-fade-in  { animation: fadeIn 0.5s ease both; }
+
+html.light {
+  color-scheme: light;
+  --color-canvas: #F5F7FB;
+  --color-canvas-mid: #FFFFFF;
+  --color-canvas-raised: #E8EEF6;
+  --color-fg: #0B1220;
+  --color-steel: #4B5C73;
+  --color-off: #FFFFFF;
+  --color-off-dark: #EEF2F8;
+  --color-mid: #334155;
+  --color-border-dark: #D0D7E6;
+  --color-surface: #FFFFFF;
+}
+
+html.light body {
+  background: var(--color-canvas);
+  color: var(--color-fg);
+}
+
+html.light ::-webkit-scrollbar-track { background: var(--color-canvas); }
+html.light ::-webkit-scrollbar-thumb { background: var(--color-border-dark); }
+html.light ::-webkit-scrollbar-thumb:hover { background: var(--color-blue); }
+
+html.light .text-navy,
+html.light .hover\:text-navy:hover,
+html.light .focus\:text-navy:focus {
+  color: var(--color-heading);
+}
+
+html.light .text-white {
+  color: var(--color-fg);
+}
+html.light .text-white\/70 { color: color-mix(in srgb, var(--color-fg) 70%, transparent); }
+html.light .text-white\/60 { color: color-mix(in srgb, var(--color-fg) 60%, transparent); }
+html.light .text-white\/50 { color: color-mix(in srgb, var(--color-fg) 50%, transparent); }
+
+html.light .hover\:text-white:hover,
+html.light .focus-visible\:text-white:focus-visible {
+  color: var(--color-fg);
+}
+
+html.light .group:hover .group-hover\:text-white {
+  color: var(--color-fg);
+}
+
+html.light :is(.bg-blue, .bg-blue-light).text-white,
+html.light :is(.bg-blue, .bg-blue-light) .text-white,
+html.light :is(.bg-blue, .bg-blue-light) .text-white\/70,
+html.light :is(.bg-blue, .bg-blue-light) .text-white\/60,
+html.light :is(.bg-blue, .bg-blue-light) .text-white\/50 {
+  color: #fff;
+}
+
+html.light :is(.bg-blue, .bg-blue-light) .text-white\/70 { color: rgb(255 255 255 / 0.7); }
+html.light :is(.bg-blue, .bg-blue-light) .text-white\/60 { color: rgb(255 255 255 / 0.6); }
+html.light :is(.bg-blue, .bg-blue-light) .text-white\/50 { color: rgb(255 255 255 / 0.5); }
+
+html.light .bg-navy.text-white,
+html.light .bg-navy .text-white,
+html.light .hover\:bg-navy-light:hover.text-white {
+  color: #fff;
+}
+
+html.light .absolute .text-white,
+html.light .absolute.text-white {
+  color: #fff;
+}
+html.light .absolute .text-white\/80 { color: rgb(255 255 255 / 0.8); }
+html.light .absolute .text-white\/0 { color: rgb(255 255 255 / 0); }
+html.light .group:hover .absolute .group-hover\:text-white\/80 {
+  color: rgb(255 255 255 / 0.8);
+}
+
+html.light .border-white\/20 { border-color: var(--color-border-dark); }
+html.light .border-white\/30 { border-color: var(--color-border-dark); }
+html.light .hover\:bg-white\/10:hover,
+html.light .hover\:bg-white\/5:hover {
+  background-color: color-mix(in srgb, var(--color-heading) 6%, transparent);
+}

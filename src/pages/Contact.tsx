@@ -128,7 +128,7 @@ export default function Contact({ navigate }: Props) {
 
   return (
     <div>
-      <section className="relative pt-32 pb-20 bg-navy overflow-hidden">
+      <section className="relative pt-32 pb-20 bg-canvas overflow-hidden">
         <div className="absolute inset-0 blueprint-grid opacity-50" />
         <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
           <div className="font-mono text-[9px] text-steel uppercase tracking-widest mb-6 flex items-center gap-2">
@@ -156,7 +156,7 @@ export default function Contact({ navigate }: Props) {
         </div>
       </section>
 
-      <section className="bg-navy py-20">
+      <section className="bg-canvas py-20">
         <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
           <div className="grid lg:grid-cols-3 gap-12">
             <div className="space-y-10">
@@ -384,7 +384,7 @@ export default function Contact({ navigate }: Props) {
         </div>
       </section>
 
-      <section className="bg-navy-mid border-t border-border-dark h-64 relative overflow-hidden">
+      <section className="bg-canvas-mid border-t border-border-dark h-64 relative overflow-hidden">
         <div className="absolute inset-0 blueprint-grid opacity-60" />
         <div className="absolute inset-0 flex items-center justify-center px-6">
           <div className="text-center">

@@ -186,7 +186,7 @@ export default function App() {
 
   if (view.kind === 'admin') {
     return (
-      <div className="min-h-screen bg-navy">
+      <div className="min-h-screen bg-canvas">
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:absolute focus:z-[60] focus:top-2 focus:left-2 focus:bg-cyan focus:text-navy focus:px-4 focus:py-2 focus:font-medium"
@@ -203,7 +203,7 @@ export default function App() {
   const currentPage = view.page
 
   return (
-    <div className="min-h-screen bg-navy">
+    <div className="min-h-screen bg-canvas">
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only focus:absolute focus:z-[60] focus:top-2 focus:left-2 focus:bg-cyan focus:text-navy focus:px-4 focus:py-2 focus:font-medium"

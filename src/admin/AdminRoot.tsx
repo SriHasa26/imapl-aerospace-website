@@ -31,7 +31,7 @@ export default function AdminRoot({ route }: { route: AdminRoute }) {
 
   if (!ready) {
     return (
-      <div className="min-h-screen bg-navy flex items-center justify-center">
+      <div className="min-h-screen bg-canvas flex items-center justify-center">
         <p className="text-steel text-sm">Loading…</p>
       </div>
     )
@@ -40,7 +40,7 @@ export default function AdminRoot({ route }: { route: AdminRoute }) {
   if (route.section === 'login') {
     if (session && isAdmin) {
       return (
-        <div className="min-h-screen bg-navy flex items-center justify-center">
+        <div className="min-h-screen bg-canvas flex items-center justify-center">
           <p className="text-steel text-sm">Loading…</p>
         </div>
       )
@@ -54,7 +54,7 @@ export default function AdminRoot({ route }: { route: AdminRoute }) {
 
   if (!isAdmin) {
     return (
-      <div className="min-h-screen bg-navy flex items-center justify-center px-6">
+      <div className="min-h-screen bg-canvas flex items-center justify-center px-6">
         <p className="text-steel text-sm text-center">This account is not authorized for administration.</p>
       </div>
     )

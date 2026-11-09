@@ -15,7 +15,7 @@ export default function NotFound({ navigate }: Props) {
 
   return (
     <div>
-      <section className="relative pt-32 pb-28 bg-navy overflow-hidden min-h-[70vh] flex items-center">
+      <section className="relative pt-32 pb-28 bg-canvas overflow-hidden min-h-[70vh] flex items-center">
         <div className="absolute inset-0 blueprint-grid opacity-50" />
         <div className="relative max-w-[1440px] mx-auto w-full px-6 xl:px-12">
           <div className="flex items-center gap-3 mb-4">

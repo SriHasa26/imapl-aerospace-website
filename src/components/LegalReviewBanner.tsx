@@ -4,7 +4,7 @@ interface Props {
 
 export default function LegalReviewBanner({ children }: Props) {
   return (
-    <aside className="border border-cyan/30 bg-navy-mid p-5 sm:p-6 mb-10" role="note">
+    <aside className="border border-cyan/30 bg-canvas-mid p-5 sm:p-6 mb-10" role="note">
       <div className="font-mono text-[9px] text-cyan uppercase tracking-widest mb-2">Legal review required</div>
       <p className="text-steel text-sm leading-relaxed">{children}</p>
     </aside>

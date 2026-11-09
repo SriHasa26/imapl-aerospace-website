@@ -35,7 +35,7 @@ export default function AdminLogin() {
   }
 
   return (
-    <div className="min-h-screen bg-navy flex items-center justify-center px-6 py-16">
+    <div className="min-h-screen bg-canvas flex items-center justify-center px-6 py-16">
       <div id="main-content" className="w-full max-w-md">
         <div className="flex justify-center mb-8">
           <img src={images.brandLogo} alt={images.brandLogoAlt} className="h-10 w-auto" />

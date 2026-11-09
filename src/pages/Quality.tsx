@@ -1,5 +1,5 @@
 import type { Page } from '../App'
-import { images } from '../content/assets'
+import { images, photoObjectClass } from '../content/assets'
 import {
   geP23tf3,
   inspectionEquipment,
@@ -80,10 +80,10 @@ export default function Quality({ navigate }: Props) {
   return (
     <div>
       {/* Hero */}
-      <section className="relative pt-32 pb-20 bg-navy overflow-hidden">
+      <section className="relative pt-32 pb-20 bg-canvas overflow-hidden">
         <div className="absolute inset-0 blueprint-grid opacity-50" />
         <div className="absolute inset-0">
-          <img src={images.qualityHeroImage} alt="Quality inspection equipment" className="w-full h-full object-cover opacity-[0.08]" />
+          <img src={images.qualityHeroImage} alt="Quality inspection equipment" className={`w-full h-full ${photoObjectClass(images.qualityHeroImage, 'bleed')} opacity-[0.12]`} />
           <div className="absolute inset-0 bg-gradient-to-b from-navy/40 to-navy" />
         </div>
         <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
@@ -147,7 +147,7 @@ export default function Quality({ navigate }: Props) {
       </section>
 
       {/* Certifications / quality processes */}
-      <section className="bg-navy py-24">
+      <section className="bg-canvas py-24">
         <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
           <SL text="CERTIFICATIONS & ACCREDITATIONS" />
           <h2 className="font-display font-bold text-white text-4xl lg:text-5xl uppercase leading-tight mb-14">
@@ -155,7 +155,7 @@ export default function Quality({ navigate }: Props) {
           </h2>
           <div className="grid lg:grid-cols-2 gap-6">
             {certificationCards.map((cert) => (
-              <div key={cert.title} className="bg-navy-mid border border-border-dark p-8 hover:bg-navy-light transition-colors">
+              <div key={cert.title} className="bg-canvas-mid border border-border-dark p-8 hover:bg-canvas-raised transition-colors">
                 <div className="font-display font-bold text-cyan text-3xl uppercase">{cert.title}</div>
                 <div className="font-mono text-[11px] text-steel mt-2 tracking-wider">{cert.description}</div>
               </div>
@@ -187,7 +187,7 @@ export default function Quality({ navigate }: Props) {
       </section>
 
       {/* Equipment */}
-      <section className="bg-navy py-24">
+      <section className="bg-canvas py-24">
         <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
@@ -222,8 +222,8 @@ export default function Quality({ navigate }: Props) {
                 </div>
               )}
             </div>
-            <div className="relative aspect-square overflow-hidden">
-              <img src={images.qualityTeamImage} alt="Inspection team at Igniting Minds Aerospace" className="w-full h-full object-cover opacity-75" />
+            <div className="relative aspect-[16/10] overflow-hidden bg-navy">
+              <img src={images.qualityTeamImage} alt="Inspection team at Igniting Minds Aerospace" className={`w-full h-full ${photoObjectClass(images.qualityTeamImage)} opacity-75`} />
               <div className="absolute inset-0 bg-gradient-to-tl from-navy/60 to-transparent" />
             </div>
           </div>

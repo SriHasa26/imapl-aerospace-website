@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import type { Page } from '../App'
+import { photoObjectClass } from '../content/assets'
 import {
   productFilterHashes,
   productFamilies,
@@ -48,7 +49,7 @@ export default function Products({ navigate, hash = '' }: Props) {
   return (
     <div>
       {/* Hero */}
-      <section className="relative pt-32 pb-20 bg-navy overflow-hidden">
+      <section className="relative pt-32 pb-20 bg-canvas overflow-hidden">
         <div className="absolute inset-0 blueprint-grid opacity-50" />
         <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
           <div className="font-mono text-[9px] text-steel uppercase tracking-widest mb-6 flex items-center gap-2">
@@ -67,7 +68,7 @@ export default function Products({ navigate, hash = '' }: Props) {
       </section>
 
       {/* Filter bar */}
-      <section className="bg-navy-mid border-b border-border-dark">
+      <section className="bg-canvas-mid border-b border-border-dark">
         <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
           <div className="flex items-center gap-0 overflow-x-auto">
             {categories.map(cat => (
@@ -75,7 +76,7 @@ export default function Products({ navigate, hash = '' }: Props) {
                 key={cat}
                 onClick={() => setActiveCat(cat)}
                 className={`shrink-0 font-mono text-[9px] uppercase tracking-widest px-5 py-4 border-r border-border-dark transition-colors ${
-                  activeCat === cat ? 'text-cyan bg-navy-light' : 'text-steel hover:text-white hover:bg-navy-light'
+                  activeCat === cat ? 'text-cyan bg-canvas-raised' : 'text-steel hover:text-white hover:bg-canvas-raised'
                 }`}
               >
                 {cat}
@@ -86,7 +87,7 @@ export default function Products({ navigate, hash = '' }: Props) {
       </section>
 
       {/* Product grid */}
-      <section className="bg-navy py-16">
+      <section className="bg-canvas py-16">
         <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-px bg-border-dark">
             {filtered.map(product => {
@@ -97,14 +98,14 @@ export default function Products({ navigate, hash = '' }: Props) {
                 <button
                   key={product.id}
                   onClick={() => navigate('quote')}
-                  className="bg-navy-mid text-left group hover:bg-navy-light transition-colors duration-200"
+                  className="bg-canvas-mid text-left group hover:bg-canvas-raised transition-colors duration-200"
                 >
-                  <div className="aspect-[4/3] overflow-hidden bg-navy relative">
+                  <div className="aspect-[16/10] overflow-hidden bg-navy relative">
                     {img && (
                       <img
                         src={img}
                         alt={product.name}
-                        className="w-full h-full object-cover opacity-75 group-hover:opacity-95 group-hover:scale-105 transition-all duration-500"
+                        className={`w-full h-full ${photoObjectClass(img)} opacity-75 group-hover:opacity-95 group-hover:scale-105 transition-all duration-500`}
                       />
                     )}
                     <div className="absolute top-3 left-3 font-mono text-[8px] text-cyan border border-cyan/30 px-2 py-1 bg-navy/70 uppercase tracking-wider">

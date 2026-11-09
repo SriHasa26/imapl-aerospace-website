@@ -32,7 +32,7 @@ export default function Footer({ navigate }: Props) {
   }
 
   return (
-    <footer className="bg-[#040810] border-t border-border-dark">
+    <footer className="bg-[#040810] light:bg-white border-t border-border-dark">
       <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
 
         <div className="py-10 border-b border-border-dark flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">

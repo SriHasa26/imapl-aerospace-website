@@ -1,5 +1,5 @@
 import type { Page } from '../App'
-import { images } from '../content/assets'
+import { images, photoObjectClass } from '../content/assets'
 import {
   capabilities,
   capabilityPageSections,
@@ -70,7 +70,7 @@ export default function Capabilities({ navigate }: Props) {
   return (
     <div>
       {/* Hero */}
-      <section className="relative pt-32 pb-20 bg-navy overflow-hidden">
+      <section className="relative pt-32 pb-20 bg-canvas overflow-hidden">
         <div className="absolute inset-0 blueprint-grid opacity-50" />
         <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
           <div className="font-mono text-[9px] text-steel uppercase tracking-widest mb-6 flex items-center gap-2">
@@ -89,11 +89,11 @@ export default function Capabilities({ navigate }: Props) {
       </section>
 
       {/* Quick nav */}
-      <section className="bg-navy-mid border-b border-border-dark">
+      <section className="bg-canvas-mid border-b border-border-dark">
         <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
           <div className="flex items-center gap-0 overflow-x-auto">
             {caps.map(c => (
-              <a key={c.id} href={`#${c.anchorId}`} className="shrink-0 font-mono text-[9px] text-steel hover:text-cyan uppercase tracking-widest px-4 py-4 border-r border-border-dark hover:bg-navy-light transition-colors">
+              <a key={c.id} href={`#${c.anchorId}`} className="shrink-0 font-mono text-[9px] text-steel hover:text-cyan uppercase tracking-widest px-4 py-4 border-r border-border-dark hover:bg-canvas-raised transition-colors">
                 {c.id} {c.title.split(' ').slice(0, 2).join(' ')}
               </a>
             ))}
@@ -106,7 +106,7 @@ export default function Capabilities({ navigate }: Props) {
         <section
           key={cap.id}
           id={cap.anchorId}
-          className={`py-24 scroll-mt-24 ${i % 2 === 0 ? 'bg-navy' : 'bg-off'}`}
+          className={`py-24 scroll-mt-24 ${i % 2 === 0 ? 'bg-canvas' : 'bg-off'}`}
         >
           <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
             <div className={`grid lg:grid-cols-2 gap-16 items-start ${i % 2 !== 0 ? 'lg:[&>*:first-child]:order-2' : ''}`}>
@@ -125,7 +125,7 @@ export default function Capabilities({ navigate }: Props) {
                 {cap.specs.length > 0 && (
                   <div className={`border ${i % 2 === 0 ? 'border-border-dark' : 'border-border-light'} mb-8`}>
                     {cap.specs.map(([k, v], j) => (
-                      <div key={k} className={`flex items-start gap-4 px-4 py-3 ${j % 2 === 0 ? (i % 2 === 0 ? 'bg-navy-mid' : 'bg-off-dark') : ''} border-b last:border-0 ${i % 2 === 0 ? 'border-border-dark' : 'border-border-light'}`}>
+                      <div key={k} className={`flex items-start gap-4 px-4 py-3 ${j % 2 === 0 ? (i % 2 === 0 ? 'bg-canvas-mid' : 'bg-off-dark') : ''} border-b last:border-0 ${i % 2 === 0 ? 'border-border-dark' : 'border-border-light'}`}>
                         <div className={`font-mono text-[10px] uppercase tracking-wider w-32 shrink-0 ${i % 2 === 0 ? 'text-steel/60' : 'text-mid/60'}`}>{k}</div>
                         <div className={`font-mono text-[11px] ${i % 2 === 0 ? 'text-white' : 'text-navy'}`}>{v}</div>
                       </div>
@@ -153,12 +153,12 @@ export default function Capabilities({ navigate }: Props) {
               </div>
 
               <div className="relative">
-                <div className="aspect-[4/3] overflow-hidden bg-navy">
+                <div className="aspect-[16/10] overflow-hidden bg-navy">
                   {cap.img && (
                     <img
                       src={cap.img}
                       alt={cap.title}
-                      className="w-full h-full object-cover opacity-80 hover:scale-105 transition-transform duration-700"
+                      className={`w-full h-full ${photoObjectClass(cap.img)} opacity-80 hover:scale-105 transition-transform duration-700`}
                     />
                   )}
                 </div>
@@ -171,7 +171,7 @@ export default function Capabilities({ navigate }: Props) {
       ))}
 
       {/* CTA */}
-      <section className="bg-navy py-20 blueprint-grid">
+      <section className="bg-canvas py-20 blueprint-grid">
         <div className="max-w-[1440px] mx-auto px-6 xl:px-12 text-center">
           <h2 className="font-display font-bold text-white text-5xl uppercase mb-4">Ready to Manufacture?</h2>
           <p className="text-steel max-w-lg mx-auto mb-8">Submit your drawings and specifications for a technical and commercial proposal.</p>

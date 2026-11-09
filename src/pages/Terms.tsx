@@ -17,7 +17,7 @@ export default function Terms({ navigate }: Props) {
 
   return (
     <div>
-      <section className="relative pt-32 pb-16 bg-navy overflow-hidden">
+      <section className="relative pt-32 pb-16 bg-canvas overflow-hidden">
         <div className="absolute inset-0 blueprint-grid opacity-50" />
         <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
           <div className="font-mono text-[9px] text-steel uppercase tracking-widest mb-6 flex items-center gap-2">
@@ -38,7 +38,7 @@ export default function Terms({ navigate }: Props) {
         </div>
       </section>
 
-      <section className="bg-navy pb-24">
+      <section className="bg-canvas pb-24">
         <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
           <div className="max-w-3xl space-y-12 text-steel leading-relaxed">
             <LegalReviewBanner>

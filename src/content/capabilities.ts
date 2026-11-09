@@ -126,6 +126,7 @@ export const capabilities: CapabilityRecord[] = [
     technicalDetails: ["Assembly fixtures"],
     equipment: [],
     materials: [],
+    image: "weldDetailImage",
     sourceType: "LEGACY_WEBSITE",
     sourceRef: LEGACY_TOOLING,
     verificationStatus: "SOURCE_SUPPORTED",

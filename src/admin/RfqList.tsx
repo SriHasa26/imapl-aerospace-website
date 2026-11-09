@@ -90,7 +90,7 @@ export default function AdminRfqList() {
           <div className="overflow-x-auto border border-border-dark">
             <table className="w-full text-left text-sm min-w-[960px]">
               <caption className="sr-only">RFQ submissions</caption>
-              <thead className="bg-navy-mid font-mono text-[9px] uppercase tracking-widest text-steel">
+              <thead className="bg-canvas-mid font-mono text-[9px] uppercase tracking-widest text-steel">
                 <tr>
                   <th className="px-4 py-3 font-medium">RFQ ID</th>
                   <th className="px-4 py-3 font-medium">Company</th>
@@ -106,7 +106,7 @@ export default function AdminRfqList() {
               </thead>
               <tbody className="divide-y divide-border-dark">
                 {rows.map((row) => (
-                  <tr key={row.id} className="hover:bg-navy-mid/60">
+                  <tr key={row.id} className="hover:bg-canvas-mid/60">
                     <td className="px-4 py-3 font-mono text-[11px]">
                       <AdminLink href={adminHref('rfq', row.id)} className="text-cyan hover:text-white">
                         {row.id.slice(0, 8)}

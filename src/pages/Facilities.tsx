@@ -1,5 +1,5 @@
 import type { Page } from '../App'
-import { images } from '../content/assets'
+import { images, photoObjectClass } from '../content/assets'
 import { description, officialName, publicWorkAreas, shortName } from '../content/company'
 import {
   facilities,
@@ -94,8 +94,8 @@ export default function Facilities({ navigate }: Props) {
   return (
     <div>
       {/* Hero */}
-      <section className="relative pt-20 overflow-hidden min-h-[70vh] flex items-end">
-        <img src={images.facilityImage} alt="Igniting Minds Aerospace manufacturing facility" className="absolute inset-0 w-full h-full object-cover opacity-25" />
+      <section className="relative pt-20 overflow-hidden min-h-[70vh] flex items-end bg-navy">
+        <img src={images.facilityImage} alt="Igniting Minds Aerospace manufacturing facility" className={`absolute inset-0 w-full h-full ${photoObjectClass(images.facilityImage, 'bleed')} opacity-15`} />
         <div className="absolute inset-0 blueprint-grid opacity-30" />
         <div className="absolute inset-0 bg-gradient-to-b from-navy/60 via-navy/40 to-navy" />
         <div className="relative max-w-[1440px] mx-auto w-full px-6 xl:px-12 pb-20 pt-32">
@@ -160,7 +160,7 @@ export default function Facilities({ navigate }: Props) {
       </section>
 
       {/* Bay by bay / photo tour */}
-      <section className="bg-navy py-24">
+      <section className="bg-canvas py-24">
         <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-6 h-px bg-cyan" />
@@ -181,17 +181,17 @@ export default function Facilities({ navigate }: Props) {
           <div className="space-y-px">
             {photoTour.map((bay, i) => (
               <div key={bay.num} className={`grid lg:grid-cols-2 gap-0 group ${i % 2 === 0 ? '' : 'lg:[&>*:first-child]:order-2'}`}>
-                <div className="aspect-video overflow-hidden relative">
+                <div className="aspect-video overflow-hidden relative bg-navy">
                   <img
                     src={bay.img}
                     alt={bay.name}
-                    className="w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-700"
+                    className={`w-full h-full ${photoObjectClass(bay.img)} opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-700`}
                   />
                   <div className="absolute top-4 left-4 font-mono text-[9px] text-cyan uppercase tracking-widest border border-cyan/30 px-2 py-1 bg-navy/70 backdrop-blur">
                     {publicBays.length > 0 ? `Bay ${bay.num}` : bay.num}
                   </div>
                 </div>
-                <div className="bg-navy-mid p-10 lg:p-14 flex flex-col justify-center">
+                <div className="bg-canvas-mid p-10 lg:p-14 flex flex-col justify-center">
                   {bay.meta && (
                     <div className="font-mono text-[9px] text-steel uppercase tracking-widest mb-2">{bay.meta}</div>
                   )}
@@ -272,7 +272,7 @@ export default function Facilities({ navigate }: Props) {
       )}
 
       {/* CTA */}
-      <section className="bg-navy py-20">
+      <section className="bg-canvas py-20">
         <div className="max-w-[1440px] mx-auto px-6 xl:px-12 text-center">
           <h2 className="font-display font-bold text-white text-4xl uppercase mb-4">Schedule a Facility Visit</h2>
           <p className="text-steel max-w-md mx-auto mb-8">

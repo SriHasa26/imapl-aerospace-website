@@ -56,7 +56,7 @@ export default function AdminDashboard() {
             <ul className="divide-y divide-border-dark border border-border-dark">
               {data.recentContacts.map((row) => (
                 <li key={row.id}>
-                  <AdminLink href={adminHref('contact', row.id)} className="block p-4 hover:bg-navy-mid">
+                  <AdminLink href={adminHref('contact', row.id)} className="block p-4 hover:bg-canvas-mid">
                     <div className="flex flex-wrap items-center gap-2 mb-1">
                       <span className="text-white text-sm">{display(row.full_name)}</span>
                       <StatusBadge value={row.status} />
@@ -77,7 +77,7 @@ export default function AdminDashboard() {
             <ul className="divide-y divide-border-dark border border-border-dark">
               {data.recentRfqs.map((row) => (
                 <li key={row.id}>
-                  <AdminLink href={adminHref('rfq', row.id)} className="block p-4 hover:bg-navy-mid">
+                  <AdminLink href={adminHref('rfq', row.id)} className="block p-4 hover:bg-canvas-mid">
                     <div className="flex flex-wrap items-center gap-2 mb-1">
                       <span className="text-white text-sm">{display(row.company)}</span>
                       <StatusBadge value={row.status} />

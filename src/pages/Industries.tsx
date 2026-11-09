@@ -1,5 +1,5 @@
 import type { Page } from '../App'
-import { images } from '../content/assets'
+import { images, photoObjectClass } from '../content/assets'
 import { industries, namedEntities, prototypeIndustryCards } from '../content/industries'
 import { isPublishable } from '../content/types'
 
@@ -52,7 +52,7 @@ export default function Industries({ navigate }: Props) {
   return (
     <div>
       {/* Hero */}
-      <section className="relative pt-32 pb-20 bg-navy overflow-hidden">
+      <section className="relative pt-32 pb-20 bg-canvas overflow-hidden">
         <div className="absolute inset-0 blueprint-grid opacity-50" />
         <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
           <div className="font-mono text-[9px] text-steel uppercase tracking-widest mb-6 flex items-center gap-2">
@@ -75,17 +75,17 @@ export default function Industries({ navigate }: Props) {
 
       {/* Industry detail sections */}
       {industrySections.map((ind, i) => (
-        <section key={ind.id} className={`py-24 ${i % 2 === 0 ? 'bg-off' : 'bg-navy'}`}>
+        <section key={ind.id} className={`py-24 ${i % 2 === 0 ? 'bg-off' : 'bg-canvas'}`}>
           <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
             <div className={`grid lg:grid-cols-2 gap-16 ${i === 0 ? 'items-center' : 'items-start'} ${i % 2 !== 0 ? 'lg:[&>*:first-child]:order-2' : ''}`}>
               {/* Image */}
               <div className="relative">
-                <div className="aspect-[4/3] overflow-hidden bg-navy">
+                <div className="aspect-[16/10] overflow-hidden bg-navy">
                   {ind.img && (
                     <img
                       src={ind.img}
                       alt={ind.alt}
-                      className={`w-full h-full object-cover transition-transform duration-700 hover:scale-105 ${i % 2 === 0 ? 'opacity-85' : 'opacity-70'}`}
+                      className={`w-full h-full ${photoObjectClass(ind.img)} transition-transform duration-700 hover:scale-105 ${i % 2 === 0 ? 'opacity-85' : 'opacity-70'}`}
                     />
                   )}
                   {i % 2 !== 0 && <div className="absolute inset-0 bg-gradient-to-r from-navy/40 to-transparent" />}

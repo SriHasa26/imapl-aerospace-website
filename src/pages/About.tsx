@@ -1,5 +1,5 @@
 import type { Page } from '../App'
-import { images } from '../content/assets'
+import { images, photoObjectClass } from '../content/assets'
 import {
   description,
   foundingYear,
@@ -85,10 +85,10 @@ export default function About({ navigate }: Props) {
   return (
     <div>
       {/* Hero */}
-      <section className="relative pt-32 pb-20 bg-navy overflow-hidden">
+      <section className="relative pt-32 pb-20 bg-canvas overflow-hidden">
         <div className="absolute inset-0 blueprint-grid opacity-50" />
         <div className="absolute inset-0">
-          <img src={images.aboutHeroImage} alt="Igniting Minds Aerospace team" className="w-full h-full object-cover opacity-[0.1]" />
+          <img src={images.aboutHeroImage} alt="Igniting Minds Aerospace team" className={`w-full h-full ${photoObjectClass(images.aboutHeroImage, 'bleed')} opacity-[0.12]`} />
           <div className="absolute inset-0 bg-gradient-to-b from-navy/40 to-navy" />
         </div>
         <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
@@ -144,7 +144,7 @@ export default function About({ navigate }: Props) {
       </section>
 
       {/* Story */}
-      <section className="bg-navy py-24">
+      <section className="bg-canvas py-24">
         <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
           <div className="grid lg:grid-cols-2 gap-16 items-start">
             <div>
@@ -163,8 +163,8 @@ export default function About({ navigate }: Props) {
               </div>
             </div>
             <div className="relative">
-              <div className="aspect-[4/3] overflow-hidden">
-                <img src={images.aboutHeritageImage} alt="Igniting Minds Aerospace manufacturing facility" className="w-full h-full object-cover opacity-70" />
+              <div className="aspect-[16/10] overflow-hidden bg-navy">
+                <img src={images.aboutHeritageImage} alt="Igniting Minds Aerospace manufacturing facility" className={`w-full h-full ${photoObjectClass(images.aboutHeritageImage)} opacity-70`} />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy/60 to-transparent" />
               </div>
               <div className="absolute bottom-6 left-6 right-6 grid grid-cols-2 gap-3">
@@ -211,7 +211,7 @@ export default function About({ navigate }: Props) {
       )}
 
       {/* Work areas occupy the former leadership layout. Names stay in the content model. */}
-      <section id="leadership" className="bg-navy py-24 scroll-mt-24">
+      <section id="leadership" className="bg-canvas py-24 scroll-mt-24">
         <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
           <SectionLabel text={publicLeadership.length > 0 ? 'Leadership Team' : 'Our Work'} />
           <h2 className="font-display font-bold text-white text-4xl lg:text-5xl uppercase leading-tight mb-14">

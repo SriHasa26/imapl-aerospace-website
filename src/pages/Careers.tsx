@@ -1,6 +1,6 @@
 import type { Page } from '../App'
 import UnconfirmedNote from '../components/UnconfirmedNote'
-import { images } from '../content/assets'
+import { images, photoObjectClass } from '../content/assets'
 import {
   isConfirmedOpening,
   legacyRoles,
@@ -50,10 +50,10 @@ export default function Careers({ navigate }: Props) {
   return (
     <div>
       {/* Hero */}
-      <section className="relative pt-32 pb-20 bg-navy overflow-hidden">
+      <section className="relative pt-32 pb-20 bg-canvas overflow-hidden">
         <div className="absolute inset-0 blueprint-grid opacity-50" />
         <div className="absolute inset-0">
-          <img src={images.careersImage} alt="Igniting Minds Aerospace team" className="w-full h-full object-cover opacity-[0.1]" />
+          <img src={images.careersImage} alt="Igniting Minds Aerospace team" className={`w-full h-full ${photoObjectClass(images.careersImage, 'bleed')} opacity-[0.12]`} />
           <div className="absolute inset-0 bg-gradient-to-b from-navy/40 to-navy" />
         </div>
         <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
@@ -108,15 +108,15 @@ export default function Careers({ navigate }: Props) {
                 ))}
               </div>
             </div>
-            <div className="aspect-[4/3] overflow-hidden">
-              <img src={images.careersCultureImage} alt="Team culture at Igniting Minds Aerospace" className="w-full h-full object-cover" />
+            <div className="aspect-[16/10] overflow-hidden bg-navy">
+              <img src={images.careersCultureImage} alt="Team culture at Igniting Minds Aerospace" className={`w-full h-full ${photoObjectClass(images.careersCultureImage)}`} />
             </div>
           </div>
         </div>
       </section>
 
       {/* Work areas / benefits */}
-      <section className="bg-navy py-24">
+      <section className="bg-canvas py-24">
         <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-6 h-px bg-cyan" />
@@ -129,7 +129,7 @@ export default function Careers({ navigate }: Props) {
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-border-dark">
             {(publicBenefits.length > 0 ? publicBenefits : workAreaCards).map(b => (
-              <div key={b.title} className="bg-navy-mid p-8 hover:bg-navy-light transition-colors">
+              <div key={b.title} className="bg-canvas-mid p-8 hover:bg-canvas-raised transition-colors">
                 <div className="w-2 h-2 bg-cyan mb-5" />
                 <h3 className="font-display font-bold text-white text-xl uppercase mb-3">{b.title}</h3>
                 <p className="text-steel text-sm leading-relaxed">{b.desc}</p>

@@ -1,5 +1,6 @@
 import type { MouseEvent, ReactNode } from 'react'
 import { images } from '../content/assets'
+import ThemeToggle from '../components/ThemeToggle'
 import { fieldClass, labelClass } from '../form'
 import { shouldSpaNavigate } from '../nav'
 import { adminHref, goAdmin, type AdminRoute } from './routes'
@@ -68,8 +69,8 @@ export function AdminShell({
   }
 
   return (
-    <div className="min-h-screen bg-navy text-white">
-      <header className="border-b border-border-dark bg-navy-mid">
+    <div className="min-h-screen bg-canvas text-white">
+      <header className="border-b border-border-dark bg-canvas-mid">
         <div className="max-w-[1440px] mx-auto px-4 sm:px-6 xl:px-12 py-4 flex flex-col lg:flex-row lg:items-center gap-4">
           <AdminLink href={adminHref('dashboard')} className="flex items-center gap-3 shrink-0">
             <img src={images.brandLogo} alt={images.brandLogoAlt} className="h-8 w-auto" />
@@ -81,6 +82,7 @@ export function AdminShell({
             {item('rfq', 'RFQ', adminHref('rfq'))}
           </nav>
           <div className="lg:ml-auto flex flex-wrap items-center gap-3">
+            <ThemeToggle />
             <span className="text-sm text-steel break-all">{email}</span>
             <button
               type="button"

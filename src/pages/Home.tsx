@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import type { Page } from '../App'
-import { images } from '../content/assets'
+import { images, photoObjectClass } from '../content/assets'
 import {
   capabilities as capabilityRecords,
   capabilityPageSections,
@@ -271,7 +271,7 @@ export default function Home({ navigate }: Props) {
           <img
             src={images.heroImage}
             alt="Igniting Minds Aerospace manufacturing facility"
-            className="w-full h-full object-cover opacity-[0.13]"
+            className={`w-full h-full ${photoObjectClass(images.heroImage, 'bleed')} opacity-[0.13]`}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-navy/20 via-transparent to-navy" />
         </div>
@@ -360,11 +360,11 @@ export default function Home({ navigate }: Props) {
         <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="relative">
-              <div className="aspect-[4/3] overflow-hidden bg-navy">
+              <div className="aspect-[16/10] overflow-hidden bg-navy">
                 <img
                   src={images.manufacturingImage}
                   alt="Igniting Minds Aerospace manufacturing team"
-                  className="w-full h-full object-cover opacity-90 hover:scale-105 transition-transform duration-700"
+                  className={`w-full h-full ${photoObjectClass(images.manufacturingImage)} opacity-90 hover:scale-105 transition-transform duration-700`}
                 />
               </div>
               {/* Technical overlay */}
@@ -389,10 +389,10 @@ export default function Home({ navigate }: Props) {
                 Engineering Excellence<br />
                 <span className="text-blue">At Every Scale</span>
               </h2>
-              <p className="text-mid leading-relaxed mb-6">
+              <p className="text-mid text-lg leading-relaxed mb-6">
                 {companySummary}
               </p>
-              <p className="text-mid leading-relaxed mb-8">
+              <p className="text-mid text-lg leading-relaxed mb-8">
                 Work areas include aero-engine tooling, precision aerospace components, MRO tooling, and integrated engineering and manufacturing.
               </p>
               <ul className="space-y-3 mb-10">
@@ -420,7 +420,7 @@ export default function Home({ navigate }: Props) {
       </section>
 
       {/* ── CAPABILITIES ── */}
-      <section className="bg-navy py-24">
+      <section className="bg-canvas py-24">
         <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
           <div ref={revealCaps.ref} className={`reveal ${revealCaps.visible ? 'visible' : ''}`}>
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14">
@@ -444,7 +444,7 @@ export default function Home({ navigate }: Props) {
               <button
                 type="button"
                 key={cap.num}
-                className={`bg-navy-mid p-8 hover:bg-navy-light transition-colors duration-300 group text-left reveal ${revealCaps.visible ? 'visible' : ''}`}
+                className={`bg-canvas-mid p-8 hover:bg-canvas-raised transition-colors duration-300 group text-left reveal ${revealCaps.visible ? 'visible' : ''}`}
                 style={{ transitionDelay: `${i * 80}ms` }}
                 onClick={() => navigate('capabilities')}
               >
@@ -494,19 +494,19 @@ export default function Home({ navigate }: Props) {
               <button
                 key={ind.id}
                 onClick={() => navigate('industries')}
-                className={`relative overflow-hidden aspect-[4/3] text-left group reveal ${revealIndustries.visible ? 'visible' : ''}`}
+                className={`relative overflow-hidden aspect-[16/10] text-left group reveal ${revealIndustries.visible ? 'visible' : ''}`}
                 style={{ transitionDelay: `${i * 80}ms` }}
               >
                 <img
                   src={ind.image ? images[ind.image] : images.manufacturingImage}
                   alt={ind.industry}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  className={`absolute inset-0 w-full h-full ${photoObjectClass(ind.image ? images[ind.image] : images.manufacturingImage)} transition-transform duration-700 group-hover:scale-105`}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/50 to-transparent" />
                 <div className="absolute inset-0 bg-navy/20 group-hover:bg-navy/10 transition-colors" />
                 <div className="absolute bottom-0 left-0 right-0 p-6">
                   <h3 className="font-display font-bold text-white text-2xl uppercase leading-tight">{ind.industry}</h3>
-                  <p className="font-mono text-[10px] text-cyan/80 mt-1 tracking-wider">{ind.workAreas?.[0] ?? 'Aerospace'}</p>
+                  <p className="font-mono text-xs text-cyan/80 mt-1 tracking-wider">{ind.workAreas?.[0] ?? 'Aerospace'}</p>
                   <div className="mt-3 flex items-center gap-2 text-white/0 group-hover:text-white/80 transition-colors">
                     <span className="font-mono text-[10px] uppercase tracking-wider">Learn more</span>
                     <ArrowRight className="w-3 h-3" />
@@ -519,7 +519,7 @@ export default function Home({ navigate }: Props) {
       </section>
 
       {/* ── FEATURED PRODUCTS ── */}
-      <section className="bg-navy py-24 overflow-hidden">
+      <section className="bg-canvas py-24 overflow-hidden">
         <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14">
             <div>
@@ -544,13 +544,13 @@ export default function Home({ navigate }: Props) {
                 <button
                   key={product.id}
                   onClick={() => navigate('products')}
-                  className="bg-navy-mid text-left group hover:bg-navy-light transition-colors duration-300"
+                  className="bg-canvas-mid text-left group hover:bg-canvas-raised transition-colors duration-300"
                 >
                   <div className="aspect-[16/9] overflow-hidden bg-navy">
                     <img
                       src={img}
                       alt={product.name}
-                      className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+                      className={`w-full h-full ${photoObjectClass(img)} opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500`}
                     />
                   </div>
                   <div className="p-7">
@@ -610,7 +610,7 @@ export default function Home({ navigate }: Props) {
       </section>
 
       {/* ── QUALITY ── */}
-      <section className="bg-navy py-24">
+      <section className="bg-canvas py-24">
         <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
@@ -637,11 +637,11 @@ export default function Home({ navigate }: Props) {
               </button>
             </div>
             <div className="relative">
-              <div className="aspect-square overflow-hidden">
+              <div className="aspect-[16/10] overflow-hidden bg-navy">
                 <img
                   src={images.qualityImage}
                   alt="Precision inspection equipment"
-                  className="w-full h-full object-cover opacity-75"
+                  className={`w-full h-full ${photoObjectClass(images.qualityImage)} opacity-75`}
                 />
                 <div className="absolute inset-0 bg-gradient-to-tl from-navy/60 via-transparent to-transparent" />
               </div>
@@ -660,11 +660,11 @@ export default function Home({ navigate }: Props) {
       </section>
 
       {/* ── FACILITY ── */}
-      <section className="relative py-32 overflow-hidden">
+      <section className="relative py-32 overflow-hidden bg-navy">
         <img
           src={images.facilityImage}
           alt="Igniting Minds Aerospace manufacturing facility"
-          className="absolute inset-0 w-full h-full object-cover opacity-20"
+          className={`absolute inset-0 w-full h-full ${photoObjectClass(images.facilityImage, 'bleed')} opacity-15`}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/80 to-navy/40" />
         <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
@@ -696,7 +696,7 @@ export default function Home({ navigate }: Props) {
       </section>
 
       {/* ── MANUFACTURING IDENTITY ── */}
-      <section className="bg-navy-mid py-24 border-y border-border-dark">
+      <section className="bg-canvas-mid py-24 border-y border-border-dark">
         <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
@@ -718,7 +718,7 @@ export default function Home({ navigate }: Props) {
             </div>
 
             {/* SVG World map placeholder */}
-            <div className="relative bg-navy border border-border-dark p-8 aspect-[16/9]">
+            <div className="relative bg-canvas border border-border-dark p-8 aspect-[16/9]">
               <div className="font-mono text-[9px] text-steel uppercase tracking-widest mb-4">Manufacturing</div>
               {/* Simplified world grid */}
               <svg viewBox="0 0 400 200" className="w-full h-full opacity-60">
@@ -774,13 +774,13 @@ export default function Home({ navigate }: Props) {
               <button
                 key={product.id}
                 onClick={() => navigate('resources')}
-                className="text-left bg-navy group overflow-hidden hover:ring-1 hover:ring-cyan/30 transition-all"
+                className="text-left bg-canvas group overflow-hidden hover:ring-1 hover:ring-cyan/30 transition-all"
               >
-                <div className="aspect-[16/7] overflow-hidden relative">
+                <div className="aspect-[16/9] overflow-hidden relative">
                   <img
                     src={productImageSrc(product.image) ?? images.precisionComponents}
                     alt={product.name}
-                    className="w-full h-full object-cover opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-500"
+                    className={`w-full h-full ${photoObjectClass(productImageSrc(product.image) ?? images.precisionComponents)} opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-500`}
                   />
                   <div className="absolute top-4 left-4 font-mono text-[9px] text-cyan uppercase tracking-widest border border-cyan/30 px-2 py-1 bg-navy/60 backdrop-blur">
                     {product.category}
@@ -808,7 +808,7 @@ export default function Home({ navigate }: Props) {
       </section>
 
       {/* ── LATEST NEWS ── */}
-      <section className="bg-navy py-24" ref={revealNews.ref}>
+      <section className="bg-canvas py-24" ref={revealNews.ref}>
         <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14">
             <div>
@@ -829,7 +829,7 @@ export default function Home({ navigate }: Props) {
               <button
                 key={article.title}
                 onClick={() => navigate('resources')}
-                className={`bg-navy-mid text-left p-8 hover:bg-navy-light transition-colors group reveal ${revealNews.visible ? 'visible' : ''}`}
+                className={`bg-canvas-mid text-left p-8 hover:bg-canvas-raised transition-colors group reveal ${revealNews.visible ? 'visible' : ''}`}
                 style={{ transitionDelay: `${i * 100}ms` }}
               >
                 <div className="flex items-center gap-3 mb-4">
@@ -881,7 +881,7 @@ export default function Home({ navigate }: Props) {
       </section>
 
       {/* ── FINAL CTA ── */}
-      <section className="bg-navy py-28 blueprint-grid">
+      <section className="bg-canvas py-28 blueprint-grid">
         <div className="max-w-[1440px] mx-auto px-6 xl:px-12 text-center">
           <div className="font-mono text-[9px] text-cyan uppercase tracking-[0.22em] mb-6">Ready to Work Together?</div>
           <h2 className="font-display font-black text-white text-5xl lg:text-7xl xl:text-8xl uppercase leading-none tracking-tight mb-6">

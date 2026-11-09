@@ -1,5 +1,6 @@
 import { useEffect, useState, type KeyboardEvent, type MouseEvent } from 'react'
 import type { NavigateFn, Page, RouteName } from '../App'
+import ThemeToggle from './ThemeToggle'
 import { images } from '../content/assets'
 import { publicCapabilityNavItems } from '../content/capabilities'
 import { publicProductNavItems } from '../content/products'
@@ -116,7 +117,7 @@ export default function Navigation({ currentPage, navigate }: Props) {
         aria-label="Primary"
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? 'bg-navy/95 backdrop-blur border-b border-border-dark shadow-lg shadow-black/30'
+            ? 'bg-canvas/95 backdrop-blur border-b border-border-dark shadow-lg shadow-black/30'
             : 'bg-transparent'
         }`}
       >
@@ -180,7 +181,7 @@ export default function Navigation({ currentPage, navigate }: Props) {
 
                 {megaMenu === 'capabilities' && (
                   <div id="capabilities-menu" className="absolute top-full left-1/2 -translate-x-1/2 w-[520px] pt-3">
-                    <div className="bg-navy-mid border border-border-dark shadow-2xl shadow-black/50">
+                    <div className="bg-canvas-mid border border-border-dark shadow-2xl shadow-black/50">
                     <div className="p-5">
                       <div className="font-mono text-[9px] text-steel uppercase tracking-[0.22em] mb-4 pb-3 border-b border-border-dark">
                         Manufacturing Capabilities
@@ -191,7 +192,7 @@ export default function Navigation({ currentPage, navigate }: Props) {
                             key={item.label}
                             href={hrefFor('capabilities', item.hash)}
                             onClick={go('capabilities', item.hash)}
-                            className={`bg-navy-mid text-left p-3.5 hover:bg-navy-light transition-colors group ${linkFocus}`}
+                            className={`bg-canvas-mid text-left p-3.5 hover:bg-canvas-raised transition-colors group ${linkFocus}`}
                           >
                             <div className="text-[13px] font-medium text-white group-hover:text-cyan group-focus-visible:text-cyan transition-colors leading-tight">
                               {item.label}
@@ -260,7 +261,7 @@ export default function Navigation({ currentPage, navigate }: Props) {
 
                 {megaMenu === 'products' && (
                     <div id="products-menu" className="absolute top-full left-1/2 -translate-x-1/2 w-[520px] pt-3">
-                      <div className="bg-navy-mid border border-border-dark shadow-2xl shadow-black/50">                    <div className="p-5">
+                      <div className="bg-canvas-mid border border-border-dark shadow-2xl shadow-black/50">                    <div className="p-5">
                       <div className="font-mono text-[9px] text-steel uppercase tracking-[0.22em] mb-4 pb-3 border-b border-border-dark">
                         Product Lines
                       </div>
@@ -270,7 +271,7 @@ export default function Navigation({ currentPage, navigate }: Props) {
                             key={item.label}
                             href={hrefFor('products', item.hash)}
                             onClick={go('products', item.hash)}
-                            className={`bg-navy-mid text-left p-3.5 hover:bg-navy-light transition-colors group ${linkFocus}`}
+                            className={`bg-canvas-mid text-left p-3.5 hover:bg-canvas-raised transition-colors group ${linkFocus}`}
                           >
                             <div className="text-[13px] font-medium text-white group-hover:text-cyan group-focus-visible:text-cyan transition-colors leading-tight">
                               {item.label}
@@ -305,6 +306,7 @@ export default function Navigation({ currentPage, navigate }: Props) {
             </div>
 
             <div className="flex items-center gap-3">
+              <ThemeToggle />
               <a
                 href={hrefFor('contact')}
                 onClick={go('contact')}
@@ -352,7 +354,7 @@ export default function Navigation({ currentPage, navigate }: Props) {
         </div>
 
         {mobileOpen && (
-          <div id="mobile-navigation" className="lg:hidden bg-navy-mid border-t border-border-dark">
+          <div id="mobile-navigation" className="lg:hidden bg-canvas-mid border-t border-border-dark">
             <div className="px-6 py-4">
               <a
                 href={hrefFor('about')}
