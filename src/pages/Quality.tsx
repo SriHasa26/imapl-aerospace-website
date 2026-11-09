@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react'
 import type { Page } from '../App'
-import { photoClass } from '../content/imagePresentation'
 import { images, videos } from '../content/assets'
 import {
-  geP23tf3,
-  inspectionEquipment,
   loadTesting,
   partMarking,
 } from '../content/quality'
@@ -27,8 +24,6 @@ function AR({ className = 'w-3.5 h-3.5' }: { className?: string }) {
 
 const publicLoadTesting = isPublishable(loadTesting.verificationStatus) ? loadTesting.methods : []
 const publicPartMarking = isPublishable(partMarking.verificationStatus) ? partMarking.methods : []
-const publicEquipment = inspectionEquipment.filter((item) => isPublishable(item.verificationStatus))
-const showGeP23tf3 = isPublishable(geP23tf3.verificationStatus)
 
 const capabilityCards = [
   {
@@ -67,16 +62,6 @@ const processSteps = [
   { step: '06', title: 'DEAD WEIGHT LOAD TESTING', desc: 'Load testing of tools, fixtures, and assemblies.' },
 ]
 
-const equipmentRows = publicEquipment.length > 0
-  ? publicEquipment.map((item) => [item.name, item.details[0] ?? ''] as const)
-  : [
-      ...publicLoadTesting.map((method) => [method, 'Load testing'] as const),
-      ...publicPartMarking.map((method) => [method, showGeP23tf3 ? 'Including GE P23TF3' : 'Part marking'] as const),
-    ]
-
-const labImage = images.inspectionContracer
-const labImageAlt = 'MITUTOYO Contracer CV-2100'
-
 export default function Quality({ navigate }: Props) {
   const [heroVisible, setHeroVisible] = useState(false)
   const [revealed, setRevealed] = useState<Record<string, boolean>>({})
@@ -89,7 +74,7 @@ export default function Quality({ navigate }: Props) {
     const revealId = window.requestAnimationFrame(() => setHeroVisible(true))
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const ids = ['quality-metrics', 'quality-certs', 'quality-process', 'quality-lab']
+    const ids = ['quality-metrics', 'quality-certs', 'quality-process']
     if (reduceMotion || !('IntersectionObserver' in window)) {
       setRevealed(Object.fromEntries(ids.map((id) => [id, true])))
       return () => window.cancelAnimationFrame(revealId)
@@ -235,61 +220,6 @@ export default function Quality({ navigate }: Props) {
                 <p className="text-mid text-sm leading-relaxed">{p.desc}</p>
               </article>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Metrology equipment */}
-      <section
-        id="quality-lab"
-        className="bg-navy min-h-screen flex items-center"
-      >
-        <div className={`quality-reveal max-w-[1440px] mx-auto px-6 xl:px-12 w-full ${revealed['quality-lab'] ? 'is-visible' : ''}`}>
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            <div>
-              <SL text="Metrology Equipment" />
-              <h2 className="font-display font-bold text-white text-4xl uppercase leading-tight mb-6">
-                {publicEquipment.length > 0 ? (
-                  <>State-of-the-Art<br />Verification Lab</>
-                ) : (
-                  <>Load Testing &amp;<br />Part Marking</>
-                )}
-              </h2>
-              <p className="text-steel leading-relaxed mb-8">
-                {publicEquipment.length > 0
-                  ? 'Coordinate measuring and inspection systems used for dimensional verification.'
-                  : 'Load testing and part-marking methods. Named instruments are not presented as the current fleet.'}
-              </p>
-              {equipmentRows.length > 0 && (
-                <div className="space-y-3">
-                  {equipmentRows.map(([eq, spec]) => (
-                    <div key={eq} className="flex items-start gap-4 border-b border-border-dark pb-3">
-                      <div className="w-1.5 h-1.5 bg-cyan mt-2 shrink-0" />
-                      <div>
-                        <div className="text-sm font-medium text-white">{eq}</div>
-                        <div className="font-mono text-xs text-steel mt-0.5">{spec}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-            <div className="industries-figure relative">
-              <div className="industries-figure-well im-media-product">
-                <img
-                  src={labImage}
-                  alt={labImageAlt}
-                  className={`${photoClass(labImage, 'photo', 'landscape')} industries-figure-img`}
-                  loading="lazy"
-                  decoding="async"
-                />
-              </div>
-              <div className="industries-figure-overlay" />
-              <div className="industries-figure-corner industries-figure-corner--tl" />
-              <div className="industries-figure-corner industries-figure-corner--tr" />
-              <div className="industries-figure-corner industries-figure-corner--bl" />
-              <div className="industries-figure-corner industries-figure-corner--br" />
-            </div>
           </div>
         </div>
       </section>
