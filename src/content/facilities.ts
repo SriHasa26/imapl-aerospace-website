@@ -273,3 +273,193 @@ export const facilities = {
   prototypeExpansion,
   images: facilityPhotoKeys,
 }
+
+export interface FacilityLocationSummary {
+  id: string
+  number: string
+  name: string
+  city: string
+  country: string
+  badge: string
+  role: string
+  summary: string
+  highlights: string[]
+  anchorId: string
+}
+
+export const strategicLocations: FacilityLocationSummary[] = [
+  {
+    id: "bengaluru",
+    number: "01",
+    name: "01 — BENGALURU, INDIA",
+    city: "Bengaluru",
+    country: "India",
+    badge: "Primary Manufacturing Hub",
+    role: "Corporate Headquarters & Advanced Manufacturing Center",
+    summary:
+      "Center for multi-axis CNC machining, precision aero-engine tooling, MRO support equipment, and quality metrology across two specialized facilities in Peenya and Thigalarapalya.",
+    highlights: [
+      "Peenya Industrial Area & Thigalarapalya",
+      "Multi-Axis CNC Machining & Aero Tooling",
+      "Climate-Controlled CMM Metrology Lab",
+    ],
+    anchorId: "bengaluru",
+  },
+  {
+    id: "ajman",
+    number: "02",
+    name: "02 — AJMAN, UAE",
+    city: "Ajman",
+    country: "UAE",
+    badge: "Middle East Operations",
+    role: "Regional Business Operations & Engineering Liaison",
+    summary:
+      "Strategic regional presence supporting aerospace engineering liaison, customer technical support, tooling logistics, and commercial airline operations across the Middle East.",
+    highlights: [
+      "Ajman, United Arab Emirates",
+      "Regional Aerospace Tooling & GSE Support",
+      "International Technical & Logistics Liaison",
+    ],
+    anchorId: "ajman",
+  },
+]
+
+export interface FacilityFeatureBay {
+  num: string
+  label: string
+  name: string
+  image: ImageKey
+  detail: string
+  position?: string
+  equipment?: string[]
+}
+
+export const bengaluruBays: FacilityFeatureBay[] = [
+  {
+    num: "01",
+    label: "CNC Machining Bay",
+    name: "Multi-Axis CNC Machining Bay",
+    image: "facilityCncBayImage",
+    position: "object-[center_55%]",
+    detail:
+      "Equipped with advanced multi-axis vertical and horizontal CNC machining centers configured for high-precision components in aerospace-grade aluminium, stainless steels, and high-temperature alloys.",
+    equipment: ["Cosmos CVM800", "Mitsubishi VMC", "Hurco VM20i / VM10i", "Philips 5-Axis PVM1050 / PVM1150", "Tsugami Turning Centers"],
+  },
+  {
+    num: "02",
+    label: "Tooling & Assembly Bay",
+    name: "Aero-Engine & MRO Tooling Assembly",
+    image: "facilityMroToolingImage",
+    position: "object-center",
+    detail:
+      "Dedicated bay for the precision fabrication, fitting, and structural assembly of aero-engine maintenance tooling, airframe fixtures, transport trolleys, and ground support equipment (GSE).",
+    equipment: ["Engine Stands", "Jigs & Fixtures", "Lifting Tools", "Movement Trolleys", "Torquing & Indexing Tools"],
+  },
+  {
+    num: "03",
+    label: "Quality Metrology Lab",
+    name: "Climate-Controlled Metrology Laboratory",
+    image: "qualityImage",
+    position: "object-[center_42%]",
+    detail:
+      "High-precision inspection facility operating coordinate measuring machines, contour measurement, and precision height gauges to verify tight aerospace tolerances and GD&T requirements.",
+    equipment: ["Mitutoyo CRYSTA-Apex S7106 CMM", "Trimos VT1000MA", "Mitutoyo Contracer CV-2100", "Accurate Model VPP 2515 MAZ"],
+  },
+  {
+    num: "04",
+    label: "Engineering & Process Control",
+    name: "Process-Controlled Manufacturing & Review",
+    image: "facilityGalleryImage",
+    position: "object-center",
+    detail:
+      "Integrated engineering reviews, CAM programming, digital job routing, and rigorous in-process verification ensuring full adherence to aerospace customer specifications and quality protocols.",
+    equipment: ["CAD/CAM Stations", "Digital Job Routing", "First-Article Inspection", "Process Quality Controls"],
+  },
+]
+
+export const bengaluruAddresses = [
+  {
+    label: "Corporate Office & Primary Manufacturing",
+    lines: [
+      "#73, 6th Main, 3rd Phase",
+      "Peenya Industrial Area",
+      "Bengaluru, Karnataka 560058, India",
+    ],
+    focus: "Multi-axis CNC machining, tooling fabrication, CMM metrology inspection, and administration.",
+  },
+  {
+    label: "Welding & Special Process Operations",
+    lines: [
+      "46/47/48/49, Sri Raghavendra Industrial Estate",
+      "Thigalarapalya Main Road",
+      "Bengaluru, Karnataka 560058, India",
+    ],
+    focus: "TIG welding, specialized aerospace fabrication, assembly, and process operations.",
+  },
+]
+
+export const bengaluruEquipmentGroups = [
+  {
+    category: "Multi-Axis CNC Machining Centers",
+    items: [
+      "Cosmos CVM800 (3 / 4 Axis)",
+      "Mitsubishi VMC (500 × 1000 × 600 mm)",
+      "Hurco VM20i & VM10i Vertical Machining Centers",
+      "Philips PVM1050 5-Axis Machining Centers",
+      "Philips PVM1150 5-Axis Machining Centers",
+      "PDC2232 5-Axis Double Column Machining Center",
+    ],
+  },
+  {
+    category: "Precision Turning & Swiss-Style Lathes",
+    items: [
+      "Tsugami VA3 Machining Center",
+      "Tsugami M08J Turning Center",
+      "Askar Spinner 22 CNC Lathe",
+      "Hyundai Wia LV8508R Vertical Turning Center",
+    ],
+  },
+  {
+    category: "Metrology & Quality Inspection",
+    items: [
+      "MITUTOYO CRYSTA-Apex S7106 CMM (1.7 μm class, temperature compensation)",
+      "TRIMOS VT1000MA Height Gauge (1016 mm range / 1278 mm extension)",
+      "MITUTOYO Contracer CV-2100 Contour Measuring Instrument",
+      "ACCURATE Model VPP 2515 MAZ Vision Measuring System",
+    ],
+  },
+  {
+    category: "Assembly, Welding & Load Testing",
+    items: [
+      "TIG Welding Stations & Fixturing",
+      "Dead Weight Load Testing System",
+      "Digital Crane Scale Proof Load Testing",
+      "Precision Assembly & Torquing Stations",
+    ],
+  },
+]
+
+export const ajmanOfficeDetails = {
+  label: "UAE Office — Middle East Operations",
+  location: "Ajman, United Arab Emirates",
+  role: "Business Operations & Regional Technical Liaison",
+  overview:
+    "IMA's Ajman facility provides strategic regional support for commercial airlines, MRO operators, and defense organizations across the United Arab Emirates and the Middle East.",
+  services: [
+    {
+      title: "Regional Technical Liaison",
+      description:
+        "Direct engineering coordination, requirement evaluation, and technical consultation for airlines and aerospace operators in the GCC region.",
+    },
+    {
+      title: "Aerospace Tooling & GSE Support",
+      description:
+        "Technical coordination for airframe and aero-engine tooling, engine transport stands, and ground support equipment requirements.",
+    },
+    {
+      title: "Logistics & Supply Chain Management",
+      description:
+        "Coordinated international logistics linking regional aerospace demands with high-precision manufacturing and rapid dispatch from Bengaluru.",
+    },
+  ],
+}

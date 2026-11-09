@@ -81,7 +81,6 @@ const portraitPhotos = new Set<string>([
 
 const portraitEquipment = new Set<string>([
   images.qualityGaugeImage,
-  images.facilityCncBayImage,
 ])
 
 const peopleScenePhotos = new Set<string>([
@@ -284,7 +283,7 @@ export function photoClass(
   }
 
   if (src === images.facilityCncBayImage) {
-    return `${base} object-contain object-center bg-navy`
+    return `${base} object-cover object-[center_55%]`
   }
 
   return `${base} object-cover object-center`

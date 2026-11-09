@@ -89,6 +89,13 @@ export const images = {
   fixtureWelding: '/images/tooling/fixture-welding.jpg',
   fixtureTurning: '/images/tooling/fixture-turning.jpg',
   aluminiumLongComponent: '/images/products/product-aluminium-long.jpg',
+
+  precisionComponentsHighRes: '/images/products/precision-components.png',
+  multiAxisComponentsHighRes: '/images/products/multi-axis-components.png',
+  aeroEngineToolingHighRes: '/images/products/aero-engine-tooling.png',
+  mroToolingHighRes: '/images/products/mro-tooling.png',
+  jigsFixturesHighRes: '/images/products/jigs-fixtures.png',
+  gseHighRes: '/images/products/gse.png',
 } as const
 
 export type ImageKey = keyof typeof images

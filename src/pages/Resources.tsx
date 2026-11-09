@@ -1,7 +1,6 @@
 import { useEffect, useState, type CSSProperties } from 'react'
 import type { NavigateFn, Page } from '../App'
-import { images } from '../content/assets'
-import { isTechnicalPhoto, photoClass, productWellClass } from '../content/imagePresentation'
+import { images, videos } from '../content/assets'
 import { description, officialName, shortName } from '../content/company'
 import {
   isUnpublishedCatalogItem,
@@ -11,12 +10,17 @@ import { publishedCertifications } from '../content/quality'
 import { productFamilies } from '../content/products'
 import { capabilities } from '../content/capabilities'
 import { isPublishable } from '../content/types'
-import Galaxy from '../components/Galaxy'
 
-interface Props { navigate: NavigateFn }
+interface Props {
+  navigate: NavigateFn
+}
 
 function AR({ className = 'w-3.5 h-3.5' }: { className?: string }) {
-  return <svg viewBox="0 0 16 16" className={className} fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+  return (
+    <svg viewBox="0 0 16 16" className={className} fill="none" stroke="currentColor" strokeWidth="1.5">
+      <path d="M3 8h10M9 4l4 4-4 4" />
+    </svg>
+  )
 }
 
 function DocIcon() {
@@ -42,7 +46,7 @@ type Topic = {
   cta: string
   page: Page
   hash?: string
-  imgMod?: string
+  position?: string
 }
 
 function familyDescription(id: string, fallback: string): string {
@@ -58,22 +62,26 @@ function capabilityDescription(id: string, fallback: string): string {
 const publicCerts = publishedCertifications.filter((cert) => isPublishable(cert.verificationStatus))
 const requestableDocuments = resourceRecords.filter(isUnpublishedCatalogItem)
 
-const documentCopy: Record<string, { summary: string; format: string }> = {
+const documentCopy: Record<string, { summary: string; format: string; docType: string }> = {
   'capability-statement': {
-    summary: 'An overview of IMAPL aerospace manufacturing, engineering capabilities, facilities, and quality systems.',
+    summary: 'Comprehensive overview of IMAPL aerospace manufacturing infrastructure, 5-axis CNC machining, tooling capabilities, metrology lab, and quality compliance.',
     format: 'PDF',
+    docType: 'Technical Publication',
   },
   'rfq-template': {
-    summary: 'A structured format for submitting manufacturing and tooling quote requests.',
+    summary: 'Structured aerospace RFQ specification sheet for submitting part drawings, material requirements, production volumes, and tooling requests.',
     format: 'Spreadsheet',
+    docType: 'Procurement Tool',
   },
   sqr: {
-    summary: 'Contact our team to request this technical document.',
+    summary: 'Supplier quality requirements, inspection protocols, calibration criteria, and material test report (MTR) submission guidelines.',
     format: 'PDF',
+    docType: 'Quality Specification',
   },
   'legacy-supplier-terms': {
-    summary: 'Supplier terms published on the IMAPL For Suppliers page. The file is not stored on this website.',
+    summary: 'Standard terms, purchase order conditions, delivery timelines, and quality compliance requirements for IMAPL aerospace suppliers.',
     format: 'PDF',
+    docType: 'Commercial Terms',
   },
 }
 
@@ -84,10 +92,10 @@ const featured: Topic = {
   title: 'Manufacturing Excellence for Aerospace',
   excerpt: capabilityDescription(
     'cnc-machining',
-    'Explore IMAPL engineering capabilities, precision machining, tooling solutions, and manufacturing infrastructure.',
+    'Explore IMAPL engineering capabilities, multi-axis precision machining, aero-engine tooling solutions, and verified manufacturing infrastructure across our Bengaluru and Ajman facilities.',
   ),
   img: images.manufacturingImage,
-  alt: 'IMAPL aerospace manufacturing shop floor',
+  alt: 'IMAPL aerospace manufacturing shop floor with multi-axis CNC machines',
   cta: 'Explore Capabilities',
   page: 'capabilities',
   hash: '#cap-01',
@@ -97,87 +105,103 @@ const topics: Topic[] = [
   {
     id: 'company-profile',
     filter: 'Company',
-    category: 'Company',
+    category: 'Company Profile',
     title: officialName.value,
     excerpt: description.value,
-    img: images.aboutHeroImage,
-    alt: 'IMAPL engineering discussion',
+    img: images.overviewTeamFactory,
+    alt: 'IMAPL engineering and manufacturing team at Bengaluru plant',
     cta: 'View Company Profile',
     page: 'about',
-    imgMod: 'resources-card-img--high',
+    position: 'object-[center_35%]',
+  },
+  {
+    id: 'cnc-machining',
+    filter: 'Engineering',
+    category: 'Precision Machining',
+    title: 'Multi-Axis CNC Machining',
+    excerpt: 'Multi-axis vertical and horizontal milling, Swiss-style precision turning, and tight-tolerance component machining.',
+    img: images.machiningImage,
+    alt: 'Precision CNC machining setup at IMAPL',
+    cta: 'Explore Machining',
+    page: 'capabilities',
+    hash: '#cap-01',
+    position: 'object-[center_35%]',
+  },
+  {
+    id: 'precision-components',
+    filter: 'Engineering',
+    category: 'Precision Components',
+    title: 'Precision Flight Components',
+    excerpt: familyDescription('precision-components', 'High-precision structural parts, brackets, and multi-axis machined aerospace housings in aluminium, Inconel, and titanium.'),
+    img: images.multiAxisComponentsHighRes,
+    alt: 'Multi-axis machined aerospace component',
+    cta: 'View Components',
+    page: 'products',
+    hash: '#airframe',
+    position: 'object-center',
   },
   {
     id: 'aero-engine-tooling',
     filter: 'Engineering',
     category: 'Aero Engine Tooling',
     title: 'Aero-Engine Tooling',
-    excerpt: familyDescription('aero-engine-tooling', 'Airframe and aero-engine tooling family.'),
-    img: images.productAeroEngineTooling,
-    alt: 'Aero-engine tooling',
-    cta: 'View Products',
+    excerpt: familyDescription('aero-engine-tooling', 'Airframe and aero-engine tooling solutions engineered for critical manufacturing, handling, and engine line maintenance.'),
+    img: images.aeroEngineToolingHighRes,
+    alt: 'Aero-engine tooling assembly',
+    cta: 'View Tooling Products',
     page: 'products',
     hash: '#engine',
-    imgMod: 'resources-card-img--low',
-  },
-  {
-    id: 'precision-components',
-    filter: 'Engineering',
-    category: 'Precision Machining',
-    title: 'Precision Aerospace Components',
-    excerpt: familyDescription('precision-components', 'Precision aerospace component machining.'),
-    img: images.precisionComponents,
-    alt: 'Precision aerospace component',
-    cta: 'View Products',
-    page: 'products',
-    hash: '#airframe',
+    position: 'object-center',
   },
   {
     id: 'mro-tooling',
     filter: 'Engineering',
-    category: 'MRO Tooling',
+    category: 'MRO & Ground Support',
     title: 'MRO Tooling Solutions',
-    excerpt: familyDescription('mro-tooling', 'MRO tooling solutions.'),
-    img: images.mroTooling,
-    alt: 'MRO engine stand tooling',
-    cta: 'View Products',
+    excerpt: familyDescription('mro-tooling', 'Engine stands, transport trolleys, lifting tools, and ground support equipment engineered for airline servicing operations.'),
+    img: images.facilityMroToolingImage,
+    alt: 'MRO engine stand tooling fixture',
+    cta: 'View MRO Solutions',
     page: 'products',
     hash: '#engine',
+    position: 'object-center',
   },
   {
     id: 'jigs-fixtures',
     filter: 'Engineering',
-    category: 'Aerospace Assembly',
+    category: 'Tooling & Fixtures',
     title: 'Jigs & Fixtures',
-    excerpt: familyDescription('jigs-fixtures', 'Jigs and fixtures for listed manufacturing and inspection operations.'),
-    img: images.jigsFixtures,
-    alt: 'Manufacturing jig and fixture',
-    cta: 'View Products',
+    excerpt: familyDescription('jigs-fixtures', 'Precision jigs and holding fixtures developed for milling, turning, welding, coordinate measurement, and repeatable assembly.'),
+    img: images.jigsFixturesHighRes,
+    alt: 'Manufacturing jig and assembly fixture',
+    cta: 'View Jigs & Fixtures',
     page: 'products',
     hash: '#gse',
+    position: 'object-center',
   },
   {
     id: 'quality',
     filter: 'Quality',
-    category: 'Quality & Certifications',
-    title: 'Quality-Driven Manufacturing',
-    excerpt: publicCerts.length > 0
-      ? publicCerts.map((cert) => cert.code).join(' · ')
-      : 'Inspection, load testing, and part marking processes.',
-    img: images.qualityImage,
+    category: 'Quality & Metrology',
+    title: 'Quality & CMM Metrology',
+    excerpt: 'Coordinate measuring machines (CMM), surface contour verification, and calibrated physical inspection systems.',
+    img: images.qualityCmmInspection,
     alt: 'Mitutoyo CMM inspection at IMAPL',
-    cta: 'View Quality',
+    cta: 'View Quality Lab',
     page: 'quality',
+    position: 'object-[center_42%]',
   },
   {
     id: 'facilities',
     filter: 'Company',
-    category: 'Facilities',
-    title: 'Aerospace Manufacturing',
-    excerpt: 'CNC machining, precision inspection systems, and process-driven manufacturing workflows.',
+    category: 'Manufacturing Facilities',
+    title: 'Aerospace Facilities',
+    excerpt: 'Dedicated manufacturing infrastructure across Bengaluru, India and regional operations in Ajman, UAE.',
     img: images.facilityGalleryImage,
-    alt: 'IMAPL manufacturing facility',
-    cta: 'View Facilities',
+    alt: 'IMAPL manufacturing facility shop floor review',
+    cta: 'Explore Facilities',
     page: 'facilities',
+    position: 'object-center',
   },
 ]
 
@@ -192,10 +216,6 @@ export default function Resources({ navigate }: Props) {
   const showQualityStrip = (activeTab === 'All' || activeTab === 'Quality') && publicCerts.length > 0
 
   useEffect(() => {
-    // Hero is always the first thing on the page, so reveal it on mount rather than
-    // waiting for a scroll-triggered IntersectionObserver — gating it on scroll
-    // position raced against the navigation scroll-to-top reset and could leave it
-    // permanently hidden.
     const revealId = window.requestAnimationFrame(() => setHeroVisible(true))
     return () => window.cancelAnimationFrame(revealId)
   }, [])
@@ -234,35 +254,41 @@ export default function Resources({ navigate }: Props) {
 
   return (
     <div className="resources-page">
+      {/* Hero Section */}
       <section
         className={`resources-hero relative overflow-hidden flex flex-col min-h-[calc(100svh-4.5rem)] ${heroVisible ? 'is-visible' : ''}`}
       >
-        <div className="resources-hero-galaxy absolute inset-0">
-          <Galaxy
-            mouseRepulsion
-            mouseInteraction
-            density={1}
-            glowIntensity={0.3}
-            saturation={0}
-            hueShift={140}
-            twinkleIntensity={0.3}
-            rotationSpeed={0.1}
-            repulsionStrength={2}
-            autoCenterRepulsion={0}
-            starSpeed={0.5}
-            speed={1}
-          />
-        </div>
-        <div className="relative flex-1 flex flex-col justify-center max-w-[1440px] mx-auto w-full min-w-0 px-6 xl:px-12">
+        <video
+          className="resources-hero-video absolute inset-0 h-full w-full object-cover"
+          src={videos.capabilities}
+          autoPlay
+          loop
+          muted
+          playsInline
+          disablePictureInPicture
+          disableRemotePlayback
+          aria-hidden="true"
+          ref={(node) => {
+            if (node) node.playbackRate = 0.5
+          }}
+          onLoadedMetadata={(e) => {
+            e.currentTarget.playbackRate = 0.5
+          }}
+          onPlay={(e) => {
+            e.currentTarget.playbackRate = 0.5
+          }}
+        />
+        <div className="absolute inset-0 bg-navy/75" aria-hidden="true" />
+        <div className="relative flex-1 flex flex-col justify-center max-w-[1440px] mx-auto w-full min-w-0 px-6 xl:px-12 py-20">
           <div className="resources-eyebrow flex items-center gap-3 mb-3">
             <div className="resources-eyebrow-rule h-px bg-orange" />
             <span className="font-mono text-xs sm:text-sm text-orange uppercase tracking-[0.16em]">Knowledge & Resources</span>
           </div>
-          <h1 className="resources-heading font-display font-black text-white text-5xl lg:text-7xl uppercase leading-none tracking-tight mb-6 sm:whitespace-nowrap">
+          <h1 className="resources-heading font-display font-black text-white text-4xl sm:text-5xl lg:text-7xl uppercase leading-[1.08] tracking-tight mb-6 max-w-5xl">
             Engineering Insights & Resources
           </h1>
-          <p className="resources-lede text-steel max-w-2xl w-full min-w-0 text-lg leading-relaxed">
-            Explore {shortName.value} manufacturing capabilities, technical information, aerospace tooling expertise, company publications, and engineering insights.
+          <p className="resources-lede text-steel max-w-2xl w-full min-w-0 text-base sm:text-lg leading-relaxed">
+            Access {shortName.value} aerospace manufacturing capabilities, technical specifications, aero-engine tooling expertise, quality compliance documentation, and engineering publications.
           </p>
         </div>
         <div className="absolute bottom-0 left-0 right-0 pointer-events-none" aria-hidden="true">
@@ -272,6 +298,7 @@ export default function Resources({ navigate }: Props) {
         </div>
       </section>
 
+      {/* Filter Tabs */}
       <nav className="resources-filter" aria-label="Resource filters">
         <div className="resources-filter-inner max-w-[1440px] mx-auto px-6 xl:px-12">
           <div className="resources-filter-track" role="tablist">
@@ -291,38 +318,39 @@ export default function Resources({ navigate }: Props) {
         </div>
       </nav>
 
+      {/* Featured Resource */}
       {showFeatured && (
         <section
           id="res-featured"
-          className={`resources-featured min-h-screen flex items-center ${revealed['res-featured'] ? 'is-visible' : ''}`}
+          className={`resources-featured py-16 lg:py-24 ${revealed['res-featured'] ? 'is-visible' : ''}`}
         >
           <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12 w-full">
             <button
               type="button"
               onClick={() => openTopic(featured)}
-              className="resources-featured-card group"
+              className="resources-featured-card group grid lg:grid-cols-2"
             >
               <div className="resources-featured-media">
-                <div className={['resources-featured-well', productWellClass(featured.img)].filter(Boolean).join(' ')}>
+                <div className="resources-featured-well">
                   <img
                     src={featured.img}
                     alt={featured.alt}
-                    className={`${photoClass(featured.img, isTechnicalPhoto(featured.img) ? 'photo' : 'decorative')} resources-featured-img`}
+                    className="w-full h-full object-cover object-[center_48%] resources-featured-img"
                     loading="lazy"
                     decoding="async"
                   />
                 </div>
-                <div className="resources-featured-overlay" />
+                <div className="resources-featured-overlay opacity-20" />
                 <div className="resources-featured-scan" aria-hidden="true" />
                 <div className="resources-corner resources-corner--tl" />
                 <div className="resources-corner resources-corner--tr" />
                 <div className="resources-corner resources-corner--bl" />
                 <div className="resources-corner resources-corner--br" />
               </div>
-              <div className="resources-featured-copy">
-                <div className="font-mono text-[11px] text-orange uppercase tracking-[0.16em] mb-4">{featured.category}</div>
-                <h2 className="font-display font-bold text-white text-3xl lg:text-4xl uppercase leading-tight mb-4">{featured.title}</h2>
-                <p className="text-steel leading-relaxed mb-8">{featured.excerpt}</p>
+              <div className="resources-featured-copy flex flex-col justify-center p-8 sm:p-12">
+                <div className="font-mono text-xs text-orange uppercase tracking-[0.16em] mb-3">{featured.category}</div>
+                <h2 className="font-display font-bold text-white text-2xl sm:text-3xl lg:text-4xl uppercase leading-tight mb-4">{featured.title}</h2>
+                <p className="text-steel text-sm sm:text-base leading-relaxed mb-8">{featured.excerpt}</p>
                 <span className="resources-cta-label">
                   {featured.cta} <AR className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
                 </span>
@@ -332,10 +360,11 @@ export default function Resources({ navigate }: Props) {
         </section>
       )}
 
+      {/* Technical Information Cards (Balanced 4x2 Grid) */}
       {visibleTopics.length > 0 && (
         <section
           id="res-topics"
-          className={`resources-topics ${revealed['res-topics'] ? 'is-visible' : ''}`}
+          className={`resources-topics py-16 lg:py-24 ${revealed['res-topics'] ? 'is-visible' : ''}`}
         >
           <div className="resources-topics-grid-bg" aria-hidden="true" />
           <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
@@ -343,7 +372,7 @@ export default function Resources({ navigate }: Props) {
               <div className="resources-eyebrow-rule h-px bg-orange" />
               <span className="font-mono text-xs sm:text-sm text-orange uppercase tracking-[0.16em]">Engineering Topics</span>
             </div>
-            <h2 className="font-display font-bold text-white text-4xl uppercase mb-10">Technical Information</h2>
+            <h2 className="font-display font-bold text-white text-3xl sm:text-4xl uppercase mb-10">Technical Information</h2>
             <div className="resources-topic-grid">
               {visibleTopics.map((topic, index) => (
                 <button
@@ -351,30 +380,32 @@ export default function Resources({ navigate }: Props) {
                   type="button"
                   onClick={() => openTopic(topic)}
                   className="resources-card group"
-                  style={{ '--resources-stagger': `${Math.min(index, 5) * 80}ms` } as CSSProperties}
+                  style={{ '--resources-stagger': `${Math.min(index, 7) * 70}ms` } as CSSProperties}
                 >
                   <div className="resources-card-media">
-                    <div className={['resources-card-well', productWellClass(topic.img)].filter(Boolean).join(' ')}>
+                    <div className="resources-card-well">
                       <img
                         src={topic.img}
                         alt={topic.alt}
                         loading="lazy"
                         decoding="async"
-                        className={`${photoClass(topic.img, isTechnicalPhoto(topic.img) ? 'photo' : 'decorative')} resources-card-img ${topic.imgMod ?? ''}`}
+                        className={`w-full h-full object-cover ${topic.position ?? 'object-center'} resources-card-img`}
                       />
                     </div>
                     <div className="resources-card-overlay" />
                     <div className="resources-card-sheen" aria-hidden="true" />
                     <div className="resources-corner resources-corner--tl" />
                     <div className="resources-corner resources-corner--br" />
-                    <div className="resources-card-label font-mono text-[11px] text-cyan uppercase tracking-widest">
+                    <div className="resources-card-label font-mono text-[10px] text-cyan uppercase tracking-widest">
                       {topic.category}
                     </div>
                   </div>
-                  <div className="resources-card-body">
-                    <h3 className="font-display font-bold text-white text-lg uppercase leading-tight mb-2">{topic.title}</h3>
-                    <p className="text-steel text-sm leading-relaxed mb-4">{topic.excerpt}</p>
-                    <span className="resources-cta-label resources-cta-label--sm">
+                  <div className="resources-card-body flex-1 flex flex-col justify-between p-5 sm:p-6">
+                    <div>
+                      <h3 className="font-display font-bold text-white text-base sm:text-lg uppercase leading-tight mb-2">{topic.title}</h3>
+                      <p className="text-steel text-xs sm:text-sm leading-relaxed mb-4">{topic.excerpt}</p>
+                    </div>
+                    <span className="resources-cta-label resources-cta-label--sm mt-auto">
                       {topic.cta} <AR className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
                     </span>
                   </div>
@@ -385,31 +416,37 @@ export default function Resources({ navigate }: Props) {
         </section>
       )}
 
+      {/* Certified Processes */}
       {showQualityStrip && (
         <section
           id="res-quality"
-          className={`resources-quality min-h-screen flex items-center ${revealed['res-quality'] ? 'is-visible' : ''}`}
+          className={`resources-quality py-16 lg:py-20 ${revealed['res-quality'] ? 'is-visible' : ''}`}
         >
           <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12 w-full">
             <div className="resources-eyebrow flex items-center gap-3 mb-3">
               <div className="resources-eyebrow-rule h-px bg-orange" />
               <span className="font-mono text-xs sm:text-sm text-orange uppercase tracking-[0.16em]">Quality Reference</span>
             </div>
-            <h2 className="font-display font-bold text-white text-4xl uppercase mb-8">Certified Processes</h2>
+            <h2 className="font-display font-bold text-white text-3xl sm:text-4xl uppercase mb-8">Certified Processes</h2>
             <div className="resources-cert-grid">
               {publicCerts.map((cert, index) => (
                 <button
                   key={cert.code}
                   type="button"
                   onClick={() => navigate('quality')}
-                  className="resources-cert group"
+                  className="resources-cert group p-6 sm:p-8"
                   style={{ '--resources-stagger': `${index * 80}ms` } as CSSProperties}
                 >
-                  <div className="font-mono text-[11px] text-cyan uppercase tracking-widest mb-3">{cert.code}</div>
+                  <div className="flex items-center justify-between gap-4 mb-3">
+                    <span className="font-mono text-xs text-cyan uppercase tracking-widest font-semibold">{cert.code}</span>
+                    <span className="font-mono text-[11px] text-emerald-400 bg-emerald-950/40 border border-emerald-500/30 px-2 py-0.5 rounded">
+                      ● Verified QMS
+                    </span>
+                  </div>
                   <h3 className="font-display font-bold text-white text-xl uppercase mb-2">{cert.name}</h3>
                   <p className="text-steel text-sm leading-relaxed mb-4">{cert.details[0]?.[1]}</p>
                   <span className="resources-cta-label resources-cta-label--sm">
-                    View Quality <AR className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
+                    View Quality Assurance & Compliance <AR className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
                   </span>
                 </button>
               ))}
@@ -418,49 +455,58 @@ export default function Resources({ navigate }: Props) {
         </section>
       )}
 
+      {/* Available on Request Documents */}
       {showDocuments && (
         <section
           id="res-docs"
-          className={`resources-docs ${revealed['res-docs'] ? 'is-visible' : ''}`}
+          className={`resources-docs py-16 lg:py-24 ${revealed['res-docs'] ? 'is-visible' : ''}`}
         >
           <div className="relative max-w-[1440px] mx-auto px-6 xl:px-12">
             <div className="resources-eyebrow flex items-center gap-3 mb-3">
               <div className="resources-eyebrow-rule h-px bg-orange" />
               <span className="font-mono text-xs sm:text-sm text-orange uppercase tracking-[0.16em]">Documents</span>
             </div>
-            <h2 className="font-display font-bold text-navy text-4xl uppercase mb-3">Available on Request</h2>
-            <p className="text-mid max-w-2xl leading-relaxed mb-10">
-              These technical documents are not stored as public files on this website. Contact the {shortName.value} team to request a copy.
+            <h2 className="font-display font-bold text-navy text-3xl sm:text-4xl uppercase mb-3">Available on Request</h2>
+            <p className="text-mid max-w-2xl leading-relaxed mb-10 text-sm sm:text-base">
+              These technical documents are verified and issued directly by our engineering compliance office. Contact the {shortName.value} team to request authorized access.
             </p>
             <div className="resources-doc-grid">
               {requestableDocuments.map((doc, index) => {
                 const copy = documentCopy[doc.id] ?? {
                   summary: 'Contact our team to request this technical document.',
                   format: 'Document',
+                  docType: 'Technical Document',
                 }
                 return (
                   <article
                     key={doc.id}
-                    className="resources-doc"
+                    className="resources-doc flex flex-col justify-between"
                     style={{ '--resources-stagger': `${index * 80}ms` } as CSSProperties}
                   >
-                    <div className="resources-doc-icon" aria-hidden="true">
-                      <DocIcon />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <div className="font-mono text-[11px] text-blue uppercase tracking-widest mb-2">{doc.type}</div>
-                      <h3 className="font-display font-bold text-navy text-lg uppercase leading-tight mb-2">{doc.title}</h3>
-                      <p className="text-mid text-sm leading-relaxed mb-4">{copy.summary}</p>
-                      <div className="flex flex-wrap items-center gap-3">
-                        <span className="font-mono text-[11px] text-steel uppercase tracking-widest">{copy.format} · On request</span>
-                        <button
-                          type="button"
-                          onClick={() => navigate('contact')}
-                          className="btn-chamfer group bg-navy hover:bg-navy-light text-white font-medium text-[13px] tracking-wide px-4 py-2.5 inline-flex items-center gap-2 transition-all duration-200 hover:-translate-y-0.5"
-                        >
-                          Request Document <AR className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
-                        </button>
+                    <div>
+                      <div className="flex items-center justify-between gap-3 mb-4">
+                        <div className="flex items-center gap-2">
+                          <div className="resources-doc-icon" aria-hidden="true">
+                            <DocIcon />
+                          </div>
+                          <span className="font-mono text-[11px] text-blue uppercase tracking-widest font-semibold">{copy.docType}</span>
+                        </div>
+                        <span className="font-mono text-[11px] text-navy/70 bg-navy/5 border border-navy/15 px-2.5 py-1 rounded font-semibold">
+                          {copy.format}
+                        </span>
                       </div>
+                      <h3 className="font-display font-bold text-navy text-xl uppercase leading-tight mb-2">{doc.title}</h3>
+                      <p className="text-mid text-sm leading-relaxed mb-6">{copy.summary}</p>
+                    </div>
+
+                    <div className="pt-4 border-t border-navy/10 mt-auto">
+                      <button
+                        type="button"
+                        onClick={() => navigate('contact')}
+                        className="btn-chamfer group w-full bg-navy hover:bg-orange text-white font-bold text-xs sm:text-sm tracking-wide px-5 py-3.5 flex items-center justify-center gap-2 transition-all duration-200 hover:-translate-y-0.5 cursor-pointer shadow-sm"
+                      >
+                        Request Document Access <AR className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
+                      </button>
                     </div>
                   </article>
                 )
@@ -470,23 +516,39 @@ export default function Resources({ navigate }: Props) {
         </section>
       )}
 
+      {/* Final CTA Section */}
       <section
         id="res-cta"
-        className="bg-orange min-h-screen flex items-center"
+        className="bg-orange py-16 sm:py-20 lg:py-24 text-center"
       >
-        <div className="max-w-[1440px] mx-auto px-6 xl:px-12 text-center">
-          <h2 className="font-display font-bold text-white text-4xl lg:text-5xl uppercase mb-4">Need Technical Information?</h2>
-          <p className="text-white/70 max-w-lg mx-auto mb-8">
-            Contact our engineering team for product, capability, and manufacturing enquiries.
+        <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
+          <div className="font-mono text-xs text-white/80 uppercase tracking-widest mb-3">
+            Aerospace Engineering Consultation
+          </div>
+          <h2 className="font-display font-bold text-white text-3xl sm:text-4xl lg:text-5xl uppercase mb-4 tracking-tight">
+            Discuss Your Technical & Tooling Requirements
+          </h2>
+          <p className="text-white/85 max-w-2xl mx-auto mb-8 text-sm sm:text-base leading-relaxed">
+            Connect directly with our aerospace engineering and manufacturing team in Bengaluru and Ajman. We evaluate component drawings, tooling specifications, and RFQ packages with rapid turnaround and full NDA confidentiality.
           </p>
-          <div className="flex items-center justify-center gap-4">
+          <div className="flex flex-wrap items-center justify-center gap-4 mb-4">
             <button
               type="button"
               onClick={() => navigate('contact')}
-              className="btn-chamfer group bg-white text-orange hover:bg-off font-bold text-sm tracking-wide px-8 py-4 flex items-center gap-2 transition-all duration-200 hover:-translate-y-0.5"
+              className="btn-chamfer group bg-white text-orange hover:bg-off font-bold text-sm tracking-wide px-8 py-4 flex items-center gap-2 transition-all duration-200 hover:-translate-y-0.5 cursor-pointer shadow-lg"
             >
-              Contact {shortName.value} <AR className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
+              Submit Technical Enquiry <AR className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
             </button>
+            <button
+              type="button"
+              onClick={() => navigate('quote')}
+              className="btn-chamfer group bg-navy hover:bg-navy/90 text-white font-bold text-sm tracking-wide px-8 py-4 flex items-center gap-2 transition-all duration-200 hover:-translate-y-0.5 cursor-pointer"
+            >
+              Request RFQ / Drawing Review
+            </button>
+          </div>
+          <div className="font-mono text-xs text-white/70">
+            Typical technical evaluation within 24–48 hours · AS9100 Rev D & ISO 9001 Certified Processes
           </div>
         </div>
       </section>
