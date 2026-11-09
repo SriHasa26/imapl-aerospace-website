@@ -3,11 +3,9 @@ import { images } from '../content/assets'
 import {
   geP23tf3,
   inspectionEquipment,
-  inspectionProcesses,
   loadTesting,
   partMarking,
   prototypeQualityPolicy,
-  prototypeQualityProcesses,
 } from '../content/quality'
 import { isPublishable } from '../content/types'
 
@@ -26,11 +24,9 @@ function AR() {
   return <svg viewBox="0 0 16 16" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
 }
 
-const publicInspection = isPublishable(inspectionProcesses.verificationStatus) ? inspectionProcesses.methods : []
 const publicLoadTesting = isPublishable(loadTesting.verificationStatus) ? loadTesting.methods : []
 const publicPartMarking = isPublishable(partMarking.verificationStatus) ? partMarking.methods : []
 const publicEquipment = inspectionEquipment.filter((item) => isPublishable(item.verificationStatus))
-const publicProcesses = prototypeQualityProcesses.filter((process) => isPublishable(process.verificationStatus))
 const publicPolicy = isPublishable(prototypeQualityPolicy.verificationStatus) ? prototypeQualityPolicy : undefined
 const showGeP23tf3 = isPublishable(geP23tf3.verificationStatus)
 
@@ -62,20 +58,14 @@ const capabilityCards = [
   },
 ]
 
-const processSteps = publicProcesses.length > 0
-  ? publicProcesses
-  : [
-      ...publicInspection.map((method, index) => ({
-        step: String(index + 1).padStart(2, '0'),
-        title: method,
-        desc: 'In-process and final inspection.',
-      })),
-      ...publicLoadTesting.map((method, index) => ({
-        step: String(publicInspection.length + index + 1).padStart(2, '0'),
-        title: method,
-        desc: 'Load testing of aerospace tools, fixtures, and assemblies.',
-      })),
-    ].slice(0, 6)
+const processSteps = [
+  { step: '01', title: 'DIMENSIONAL INSPECTION', desc: 'Precision measurement of critical dimensions.' },
+  { step: '02', title: 'GEOMETRIC INSPECTION', desc: 'Verification of GD&T and geometric tolerances.' },
+  { step: '03', title: 'CMM PROGRAMMING & INSPECTION', desc: 'Programmed measurement of complex geometries.' },
+  { step: '04', title: 'NON-DESTRUCTIVE TESTING (NDT)', desc: 'Inspection for internal and surface defects.' },
+  { step: '05', title: 'PRE-DISPATCH INSPECTION', desc: 'Final verification of quality and specifications.' },
+  { step: '06', title: 'DEAD WEIGHT LOAD TESTING', desc: 'Load testing of tools, fixtures, and assemblies.' },
+]
 
 const equipmentRows = publicEquipment.length > 0
   ? publicEquipment.map((item) => [item.name, item.details[0] ?? ''] as const)
@@ -180,9 +170,9 @@ export default function Quality({ navigate }: Props) {
       {/* Quality Process */}
       <section className="bg-off py-24">
         <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
-          <SL text="Quality Process" />
+          <SL text="QUALITY PROCESS" />
           <h2 className="font-display font-bold text-navy text-4xl lg:text-5xl uppercase leading-tight mb-14">
-            Built In, Not<br />Inspected In
+            BUILT IN, NOT<br />INSPECTED IN
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-border-light">
             {processSteps.map(p => (
