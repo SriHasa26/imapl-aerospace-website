@@ -346,7 +346,7 @@ export const productFamilies: ProductFamily[] = [
   {
     id: "movement-trolleys",
     name: "Movement Trolleys",
-    category: "Aero Engine Tooling",
+    category: "Aero-Engine Tooling",
     slug: "movement-trolleys",
     filterCategory: "Engine",
     shortDescription: "Movement trolleys for aerospace tooling and equipment.",
@@ -443,7 +443,7 @@ export const productFamilies: ProductFamily[] = [
   {
     id: "pedestals",
     name: "Pedestals",
-    category: "Aero Engine Tooling",
+    category: "Aero-Engine Tooling",
     slug: "pedestals",
     filterCategory: "Engine",
     shortDescription:
@@ -459,7 +459,7 @@ export const productFamilies: ProductFamily[] = [
   {
     id: "lifting-tools",
     name: "Lifting Tools",
-    category: "Aero Engine Tooling",
+    category: "Aero-Engine Tooling",
     slug: "lifting-tools",
     filterCategory: "Engine",
     shortDescription:
@@ -475,7 +475,7 @@ export const productFamilies: ProductFamily[] = [
   {
     id: "brackets",
     name: "Brackets",
-    category: "Aero Engine Tooling",
+    category: "Aero-Engine Tooling",
     slug: "brackets",
     filterCategory: "Engine",
     shortDescription:
@@ -491,7 +491,7 @@ export const productFamilies: ProductFamily[] = [
   {
     id: "indexing-tools",
     name: "Indexing Tools",
-    category: "Aero Engine Tooling",
+    category: "Aero-Engine Tooling",
     slug: "indexing-tools",
     filterCategory: "Engine",
     shortDescription:
@@ -507,7 +507,7 @@ export const productFamilies: ProductFamily[] = [
   {
     id: "torquing-tools",
     name: "Torquing Tools",
-    category: "Aero Engine Tooling",
+    category: "Aero-Engine Tooling",
     slug: "torquing-tools",
     filterCategory: "Engine",
     shortDescription:
