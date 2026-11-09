@@ -5,13 +5,8 @@ import { images, videos } from '../content/assets'
 import {
   geP23tf3,
   inspectionEquipment,
-  inspectionProcesses,
   loadTesting,
   partMarking,
-  publishedCertifications,
-  prototypeQualityPolicy,
-  prototypeQualityProcesses,
-  qualityMetricsPrototype,
 } from '../content/quality'
 import { isPublishable } from '../content/types'
 
@@ -30,46 +25,47 @@ function AR({ className = 'w-3.5 h-3.5' }: { className?: string }) {
   return <svg viewBox="0 0 16 16" className={className} fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
 }
 
-const publicInspection = isPublishable(inspectionProcesses.verificationStatus) ? inspectionProcesses.methods : []
 const publicLoadTesting = isPublishable(loadTesting.verificationStatus) ? loadTesting.methods : []
 const publicPartMarking = isPublishable(partMarking.verificationStatus) ? partMarking.methods : []
 const publicEquipment = inspectionEquipment.filter((item) => isPublishable(item.verificationStatus))
-const publicMetrics = isPublishable(qualityMetricsPrototype.verificationStatus) ? qualityMetricsPrototype.items : []
-const publicCerts = publishedCertifications.filter((cert) => isPublishable(cert.verificationStatus))
-const publicPolicy = isPublishable(prototypeQualityPolicy.verificationStatus) ? prototypeQualityPolicy : undefined
 const showGeP23tf3 = isPublishable(geP23tf3.verificationStatus)
 
-const processCards = [
-  publicInspection.length > 0 ? { code: 'Inspection', name: 'In-process and final inspection', details: publicInspection.map((method) => ['Method', method] as const) } : undefined,
-  publicLoadTesting.length > 0 ? { code: 'Load Testing', name: 'Aerospace tools, fixtures, and assemblies', details: publicLoadTesting.map((method) => ['Method', method] as const) } : undefined,
-  publicPartMarking.length > 0 ? { code: 'Part Marking', name: 'Marking to customer specification', details: publicPartMarking.map((method) => ['Method', method] as const) } : undefined,
-].filter((card): card is NonNullable<typeof card> => Boolean(card))
-
-const identityMetrics = [
-  { val: 'Inspect', label: 'Dimensional', sub: publicInspection[0] ?? 'Inspection' },
-  { val: 'Geometry', label: 'Verification', sub: publicInspection[1] ?? 'Inspection' },
-  { val: 'Load', label: 'Testing', sub: publicLoadTesting[0] ?? 'Load testing' },
-  { val: 'Mark', label: 'Part Marking', sub: publicPartMarking[0] ?? 'Part marking' },
+const capabilityCards = [
+  {
+    number: '01',
+    title: 'DIMENSIONAL INSPECTION',
+    desc: 'Precision measurement and dimensional verification against engineering drawings.',
+  },
+  {
+    number: '02',
+    title: 'GEOMETRIC VERIFICATION',
+    desc: 'Verification of geometric tolerances and critical component features.',
+  },
+  {
+    number: '03',
+    title: 'LOAD TESTING',
+    desc: 'Dead-weight load testing against specified acceptance criteria.',
+  },
+  {
+    number: '04',
+    title: 'PART MARKING',
+    desc: 'Chemical etching and component identification as per customer requirements.',
+  },
 ]
 
-const metricCards = publicMetrics.length > 0
-  ? publicMetrics.map((item) => ({ val: item, label: 'Quality metric', sub: 'Production data' }))
-  : identityMetrics
+const certificationCards = [
+  { title: 'AS9100 Rev D', description: 'Aerospace Quality Management System' },
+  { title: 'ISO 9001', description: 'Quality Management System' },
+]
 
-const processSteps = prototypeQualityProcesses.filter((process) => isPublishable(process.verificationStatus)).length > 0
-  ? prototypeQualityProcesses.filter((process) => isPublishable(process.verificationStatus))
-  : [
-      ...publicInspection.map((method, index) => ({
-        step: String(index + 1).padStart(2, '0'),
-        title: method,
-        desc: 'In-process and final inspection.',
-      })),
-      ...publicLoadTesting.map((method, index) => ({
-        step: String(publicInspection.length + index + 1).padStart(2, '0'),
-        title: method,
-        desc: 'Load testing of aerospace tools, fixtures, and assemblies.',
-      })),
-    ].slice(0, 6)
+const processSteps = [
+  { step: '01', title: 'DIMENSIONAL INSPECTION', desc: 'Precision measurement of critical dimensions.' },
+  { step: '02', title: 'GEOMETRIC INSPECTION', desc: 'Verification of GD&T and geometric tolerances.' },
+  { step: '03', title: 'CMM PROGRAMMING & INSPECTION', desc: 'Programmed measurement of complex geometries.' },
+  { step: '04', title: 'NON-DESTRUCTIVE TESTING (NDT)', desc: 'Inspection for internal and surface defects.' },
+  { step: '05', title: 'PRE-DISPATCH INSPECTION', desc: 'Final verification of quality and specifications.' },
+  { step: '06', title: 'DEAD WEIGHT LOAD TESTING', desc: 'Load testing of tools, fixtures, and assemblies.' },
+]
 
 const equipmentRows = publicEquipment.length > 0
   ? publicEquipment.map((item) => [item.name, item.details[0] ?? ''] as const)
@@ -77,9 +73,6 @@ const equipmentRows = publicEquipment.length > 0
       ...publicLoadTesting.map((method) => [method, 'Load testing'] as const),
       ...publicPartMarking.map((method) => [method, showGeP23tf3 ? 'Including GE P23TF3' : 'Part marking'] as const),
     ]
-
-const policyText = publicPolicy?.statement
-  ?? 'In-process and final inspection includes dimensional, geometric, and surface-finish verification and pre-dispatch inspection.'
 
 const labImage = images.inspectionContracer
 const labImageAlt = 'MITUTOYO Contracer CV-2100'
@@ -153,23 +146,22 @@ export default function Quality({ navigate }: Props) {
         />
         <div className="absolute inset-0 bg-navy/70" aria-hidden="true" />
         <div className="relative flex-1 flex flex-col justify-center max-w-[1440px] mx-auto w-full px-6 xl:px-12">
-          <SL text="Quality Assurance" />
-          <h1 className="quality-heading font-display font-black text-white text-5xl lg:text-7xl uppercase leading-none tracking-tight mb-6 sm:whitespace-nowrap">
-            Inspection &amp; Verification
+          <SL text="QUALITY ASSURANCE" />
+          <h1 className="quality-heading font-display font-black text-white text-5xl lg:text-7xl uppercase leading-none tracking-tight mb-6">
+            <span className="block">PRECISION.</span>
+            <span className="block">QUALITY.</span>
+            <span className="block">TRACEABILITY.</span>
           </h1>
           <p className="quality-lede text-steel max-w-2xl text-lg leading-relaxed mb-8">
-            AS9100 Rev D and ISO 9001 certified processes — dimensional inspection, load testing, and part marking.
+            Quality controls built around aerospace requirements, from in-process inspection to final verification and dispatch.
           </p>
           <blockquote className="quality-lede border-l-2 border-orange pl-5 max-w-2xl">
             <div className="font-mono text-xs text-orange uppercase tracking-widest mb-2">
-              {publicPolicy ? 'Quality Policy Statement' : 'Inspection Process'}
+              INSPECTION PROCESS
             </div>
             <p className="text-white text-base sm:text-lg leading-relaxed">
-              {`"${policyText}"`}
+              In-process and final inspections verify dimensional accuracy, geometric tolerances, surface finish, and compliance with customer specifications.
             </p>
-            {publicPolicy && (
-              <div className="mt-3 font-mono text-xs text-steel">— {publicPolicy.attribution}</div>
-            )}
           </blockquote>
         </div>
         <div className="absolute bottom-0 left-0 right-0 pointer-events-none" aria-hidden="true">
@@ -185,16 +177,16 @@ export default function Quality({ navigate }: Props) {
         className="bg-off min-h-screen flex items-center"
       >
         <div className={`quality-reveal max-w-[1440px] mx-auto px-6 xl:px-12 w-full ${revealed['quality-metrics'] ? 'is-visible' : ''}`}>
-          <SL text="Key Metrics" />
+          <SL text="QUALITY ASSURANCE" />
           <h2 className="font-display font-bold text-navy text-4xl lg:text-5xl uppercase leading-tight mb-14">
-            Quality By The Numbers
+            INSPECTION &amp; TESTING CAPABILITIES
           </h2>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
-            {metricCards.map((stat) => (
-              <div key={stat.label + stat.val} className="quality-card quality-card--light p-8 text-center">
-                <div className="font-display font-black text-blue text-4xl lg:text-5xl mb-2">{stat.val}</div>
-                <div className="font-mono text-xs text-navy uppercase tracking-widest">{stat.label}</div>
-                <div className="font-mono text-xs text-mid mt-1">{stat.sub}</div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {capabilityCards.map((card) => (
+              <div key={card.number} className="quality-card quality-card--light p-8">
+                <div className="font-mono text-[11px] text-blue font-semibold mb-4">{card.number}</div>
+                <h3 className="font-display font-bold text-navy text-xl uppercase mb-3">{card.title}</h3>
+                <p className="text-mid text-sm leading-relaxed">{card.desc}</p>
               </div>
             ))}
           </div>
@@ -207,33 +199,21 @@ export default function Quality({ navigate }: Props) {
         className="bg-navy min-h-screen flex items-center"
       >
         <div className={`quality-reveal max-w-[1440px] mx-auto px-6 xl:px-12 w-full ${revealed['quality-certs'] ? 'is-visible' : ''}`}>
-          <SL text={publicCerts.length > 0 ? 'Certifications & Accreditations' : 'Quality Processes'} />
+          <SL text="CERTIFICATIONS & ACCREDITATIONS" />
           <h2 className="font-display font-bold text-white text-4xl lg:text-5xl uppercase leading-tight mb-14">
-            {publicCerts.length > 0 ? (
-              <>Globally Recognized<br />Standards</>
-            ) : (
-              <>Inspection &amp;<br />Part Marking</>
-            )}
+            COMMITTED TO QUALITY STANDARDS
           </h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {(publicCerts.length > 0
-              ? publicCerts.map((cert) => ({ code: cert.code, name: cert.name, details: cert.details }))
-              : processCards.map((card) => ({ code: card.code, name: card.name, details: card.details }))
-            ).map((cert) => (
-              <div key={cert.code} className="quality-card quality-card--dark p-7">
-                <div className="font-display font-bold text-cyan text-3xl uppercase mb-1">{cert.code}</div>
-                <div className="font-mono text-xs text-steel mb-5 tracking-wider">{cert.name}</div>
-                <div className="space-y-2.5 border-t border-border-dark pt-4">
-                  {cert.details.map(([k, v]) => (
-                    <div key={`${k}-${v}`} className="flex items-start gap-3">
-                      <div className="font-mono text-[11px] text-steel uppercase tracking-wider w-20 shrink-0 pt-0.5">{k}</div>
-                      <div className="font-mono text-[11px] text-white">{v}</div>
-                    </div>
-                  ))}
-                </div>
+          <div className="grid lg:grid-cols-2 gap-5">
+            {certificationCards.map((cert) => (
+              <div key={cert.title} className="quality-card quality-card--dark p-7">
+                <div className="font-display font-bold text-cyan text-3xl uppercase">{cert.title}</div>
+                <div className="font-mono text-xs text-steel mt-2 tracking-wider">{cert.description}</div>
               </div>
             ))}
           </div>
+          <p className="text-steel max-w-3xl text-base leading-relaxed mt-10">
+            Our quality systems support process consistency, product conformity, traceability, and continuous improvement across aerospace manufacturing operations.
+          </p>
         </div>
       </section>
 
@@ -243,9 +223,9 @@ export default function Quality({ navigate }: Props) {
         className="bg-off min-h-screen flex items-center"
       >
         <div className={`quality-reveal max-w-[1440px] mx-auto px-6 xl:px-12 w-full ${revealed['quality-process'] ? 'is-visible' : ''}`}>
-          <SL text="Quality Process" />
+          <SL text="QUALITY PROCESS" />
           <h2 className="font-display font-bold text-navy text-4xl lg:text-5xl uppercase leading-tight mb-14">
-            Built In, Not<br />Inspected In
+            BUILT IN, NOT<br />INSPECTED IN
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {processSteps.map((p) => (
