@@ -1,12 +1,6 @@
 import type { Page } from '../App'
 import { images, photoObjectClass } from '../content/assets'
-import {
-  geP23tf3,
-  inspectionEquipment,
-  loadTesting,
-  partMarking,
-  prototypeQualityPolicy,
-} from '../content/quality'
+import { prototypeQualityPolicy } from '../content/quality'
 import { isPublishable } from '../content/types'
 
 interface Props { navigate: (page: Page) => void }
@@ -24,11 +18,7 @@ function AR() {
   return <svg viewBox="0 0 16 16" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
 }
 
-const publicLoadTesting = isPublishable(loadTesting.verificationStatus) ? loadTesting.methods : []
-const publicPartMarking = isPublishable(partMarking.verificationStatus) ? partMarking.methods : []
-const publicEquipment = inspectionEquipment.filter((item) => isPublishable(item.verificationStatus))
 const publicPolicy = isPublishable(prototypeQualityPolicy.verificationStatus) ? prototypeQualityPolicy : undefined
-const showGeP23tf3 = isPublishable(geP23tf3.verificationStatus)
 
 const certificationCards = [
   { title: 'AS9100 Rev D', description: 'Aerospace Quality Management System' },
@@ -66,13 +56,6 @@ const processSteps = [
   { step: '05', title: 'PRE-DISPATCH INSPECTION', desc: 'Final verification of quality and specifications.' },
   { step: '06', title: 'DEAD WEIGHT LOAD TESTING', desc: 'Load testing of tools, fixtures, and assemblies.' },
 ]
-
-const equipmentRows = publicEquipment.length > 0
-  ? publicEquipment.map((item) => [item.name, item.details[0] ?? ''] as const)
-  : [
-      ...publicLoadTesting.map((method) => [method, 'Load testing'] as const),
-      ...publicPartMarking.map((method) => [method, showGeP23tf3 ? 'Including GE P23TF3' : 'Part marking'] as const),
-    ]
 
 const policyText = publicPolicy?.statement
 
@@ -182,50 +165,6 @@ export default function Quality({ navigate }: Props) {
                 <p className="text-mid text-sm leading-relaxed">{p.desc}</p>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Equipment */}
-      <section className="bg-canvas py-24">
-        <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <SL text="Metrology Equipment" />
-              <h2 className="font-display font-bold text-white text-4xl uppercase leading-tight mb-6">
-                {publicEquipment.length > 0 ? (
-                  <>
-                    State-of-the-Art<br />Verification Lab
-                  </>
-                ) : (
-                  <>
-                    Load Testing &<br />Part Marking
-                  </>
-                )}
-              </h2>
-              <p className="text-steel leading-relaxed mb-8">
-                {publicEquipment.length > 0
-                  ? 'Named inspection equipment from the quality model.'
-                  : 'Load testing and part-marking methods. Named instruments are not presented as the current fleet.'}
-              </p>
-              {equipmentRows.length > 0 && (
-                <div className="space-y-3">
-                  {equipmentRows.map(([eq, spec]) => (
-                    <div key={eq} className="flex items-start gap-4 border-b border-border-dark pb-3">
-                      <div className="w-1.5 h-1.5 bg-cyan mt-2 shrink-0" />
-                      <div>
-                        <div className="text-sm font-medium text-white">{eq}</div>
-                        <div className="font-mono text-[10px] text-steel mt-0.5">{spec}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-            <div className="relative aspect-[16/10] overflow-hidden bg-navy">
-              <img src={images.qualityTeamImage} alt="Inspection team at Igniting Minds Aerospace" className={`w-full h-full ${photoObjectClass(images.qualityTeamImage)} opacity-75`} />
-              <div className="absolute inset-0 bg-gradient-to-tl from-navy/60 to-transparent" />
-            </div>
           </div>
         </div>
       </section>

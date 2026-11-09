@@ -1,4 +1,3 @@
-import { type ImageKey } from "./assets"
 import {
   LEGACY_INSPECTION,
   LEGACY_LEADERSHIP,
@@ -63,45 +62,6 @@ export const certifications: CertificationRecord[] = [
   },
 ]
 
-export interface InspectionEquipment extends SourceMeta {
-  name: string
-  details: string[]
-  image?: ImageKey
-}
-
-export const inspectionEquipment: InspectionEquipment[] = [
-  {
-    name: "MITUTOYO CMM CRYSTA-Apex S7106",
-    details: ["High accuracy in the 1.7 μm class", "Temperature compensation system", "SP25M (compact high-accuracy scanning probe)", "MCOSMOS"],
-    image: "qualityImage",
-    sourceType: "LEGACY_WEBSITE",
-    sourceRef: LEGACY_INSPECTION,
-    verificationStatus: "OWNER_VERIFICATION_REQUIRED",
-  },
-  {
-    name: "TRIMOS VT1000MA",
-    details: ["Measuring range : MM (IN) ;1016 (40)", "Measuring range with extension mm (in) ;1278 (50)", "Measuring in 2D mode"],
-    image: "qualityImage",
-    sourceType: "LEGACY_WEBSITE",
-    sourceRef: LEGACY_INSPECTION,
-    verificationStatus: "OWNER_VERIFICATION_REQUIRED",
-  },
-  {
-    name: "MITUTOYO Contracer CV-2100",
-    details: ["X-axis measuring range - 0-100mm", "Z1-axis measuring range - 0-50mm", "Z2-axis vertical travel – 350mm", "Stylus traceable angle - Ascent 77°, Descent 87°"],
-    sourceType: "LEGACY_WEBSITE",
-    sourceRef: LEGACY_INSPECTION,
-    verificationStatus: "OWNER_VERIFICATION_REQUIRED",
-  },
-  {
-    name: "ACCURATE Model VPP 2515 MAZ",
-    details: ["Motorized Tele centric Zoom Lens 20x-140x", "1/2\" Sony CCD Camera High Resolution"],
-    sourceType: "LEGACY_WEBSITE",
-    sourceRef: LEGACY_INSPECTION,
-    verificationStatus: "OWNER_VERIFICATION_REQUIRED",
-  },
-]
-
 export const loadTesting: SourceMeta & { methods: string[] } = {
   methods: ["Dead Weight Load Test", "Load Test with Digital Scale"],
   sourceType: "LEGACY_WEBSITE",
@@ -115,13 +75,6 @@ export const partMarking: SourceMeta & { methods: string[] } = {
   sourceRef: LEGACY_PART_MARKING,
   verificationStatus: "SOURCE_SUPPORTED",
   notes: "GE P23TF3 on etch/peen is HIGH_RISK and is not treated as current authorization.",
-}
-
-export const geP23tf3: SourceMeta = {
-  sourceType: "LEGACY_WEBSITE",
-  sourceRef: LEGACY_PART_MARKING,
-  verificationStatus: "HIGH_RISK",
-  notes: "Legacy part-marking page: chemical etching and dot peening “per GE P23TF3 standard”.",
 }
 
 export const qualityMetricsPrototype: SourceMeta & { items: string[] } = {
@@ -177,11 +130,3 @@ export const prototypeQualityProcesses: Array<SourceMeta & { step: string; title
   { step: "06", title: "Certificate of Conformance", desc: "Every shipment is accompanied by a CoC, material certifications, test reports, and full traceability to serial number or lot.", sourceType: "CURRENT_PROJECT", sourceRef: "src/pages/Quality.tsx", verificationStatus: "PROTOTYPE" },
 ]
 
-export const prototypeMetrologyEquipment: Array<SourceMeta & { name: string; spec: string }> = [
-  { name: "Zeiss Contura G2 RDS CMM", spec: "700 × 700 × 600mm, ±0.001mm accuracy", sourceType: "CURRENT_PROJECT", sourceRef: "src/pages/Quality.tsx", verificationStatus: "PROTOTYPE" },
-  { name: "Olympus OmniScan MX2", spec: "Phased array UT, eddy current", sourceType: "CURRENT_PROJECT", sourceRef: "src/pages/Quality.tsx", verificationStatus: "HIGH_RISK" },
-  { name: "GE Inspection X-Ray", spec: "320kV digital radiography", sourceType: "CURRENT_PROJECT", sourceRef: "src/pages/Quality.tsx", verificationStatus: "HIGH_RISK" },
-  { name: "Faro Quantum Arm", spec: "Portable CMM, 1.2m reach, ±0.025mm", sourceType: "CURRENT_PROJECT", sourceRef: "src/pages/Quality.tsx", verificationStatus: "PROTOTYPE" },
-  { name: "Vision Measuring System", spec: "Video metrology, 2D profiles", sourceType: "CURRENT_PROJECT", sourceRef: "src/pages/Quality.tsx", verificationStatus: "PROTOTYPE" },
-  { name: "Surface Roughness Tester", spec: "Mitutoyo SJ-210, Ra to 0.005μm", sourceType: "CURRENT_PROJECT", sourceRef: "src/pages/Quality.tsx", verificationStatus: "PROTOTYPE" },
-]
