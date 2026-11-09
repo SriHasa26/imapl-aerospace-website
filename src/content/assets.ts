@@ -19,7 +19,6 @@ export const images = {
   aboutHeroImage: '/images/capabilities/manufacturing.png',
   aboutHeritageImage: '/images/facilities/facility.png',
   qualityHeroImage: '/images/quality/quality-inspection.png',
-  qualityTeamImage: '/images/facilities/facility-2.jpg',
   facilityTeamImage: '/images/careers/careers.jpg',
   facilityGalleryImage: '/images/facilities/facility-3.jpg',
   cncMachineImage: '/images/capabilities/cnc-machine.png',
@@ -64,7 +63,6 @@ const photoPositionBySrc: Record<string, string> = {
   [images.manufacturingImage]: 'object-[50%_72%]',
   [images.careersImage]: 'object-[50%_38%]',
   [images.careersCultureImage]: 'object-top',
-  [images.qualityTeamImage]: 'object-[50%_40%]',
   [images.facilityGalleryImage]: 'object-[50%_32%]',
 }
 
