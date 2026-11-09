@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import type { Page } from '../App'
-import { images, videos } from '../content/assets'
 import {
   loadTesting,
   partMarking,
@@ -106,53 +105,30 @@ export default function Quality({ navigate }: Props) {
   return (
     <div className="quality-page">
       {/* Hero */}
-      <section
-        className={`quality-hero relative overflow-hidden flex flex-col min-h-[calc(100svh-4.5rem)] ${heroVisible ? 'is-visible' : ''}`}
-      >
-        <video
-          className="quality-hero-video absolute inset-0 h-full w-full object-cover"
-          src={videos.quality}
-          autoPlay
-          loop
-          muted
-          playsInline
-          disablePictureInPicture
-          disableRemotePlayback
-          aria-hidden="true"
-          ref={(node) => {
-            if (node) node.playbackRate = 0.5
-          }}
-          onLoadedMetadata={(e) => {
-            e.currentTarget.playbackRate = 0.5
-          }}
-          onPlay={(e) => {
-            e.currentTarget.playbackRate = 0.5
-          }}
-        />
-        <div className="absolute inset-0 bg-navy/70" aria-hidden="true" />
-        <div className="relative flex-1 flex flex-col justify-center max-w-[1440px] mx-auto w-full px-6 xl:px-12">
-          <SL text="QUALITY ASSURANCE" />
-          <h1 className="quality-heading font-display font-black text-white text-5xl lg:text-7xl uppercase leading-none tracking-tight mb-6">
-            <span className="block">PRECISION.</span>
-            <span className="block">QUALITY.</span>
-            <span className="block">TRACEABILITY.</span>
+      <section className={`bg-orange min-h-[calc(100svh-4.5rem)] flex items-center justify-center py-20 sm:py-24 ${heroVisible ? 'is-visible' : ''}`}>
+        <div className="w-full max-w-[1440px] mx-auto px-6 xl:px-12 text-center">
+          <h1 className="font-display font-bold text-white text-4xl lg:text-5xl uppercase mb-4 max-w-5xl mx-auto tracking-tight">
+            QUALITY DOCUMENTATION
           </h1>
-          <p className="quality-lede text-steel max-w-2xl text-lg leading-relaxed mb-8">
-            Quality controls built around aerospace requirements, from in-process inspection to final verification and dispatch.
+          <p className="text-white/80 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed mb-8 sm:mb-10">
+            Access IMA’s quality certifications and supporting documentation to support your supplier qualification and compliance requirements.
           </p>
-          <blockquote className="quality-lede border-l-2 border-orange pl-5 max-w-2xl">
-            <div className="font-mono text-xs text-orange uppercase tracking-widest mb-2">
-              INSPECTION PROCESS
-            </div>
-            <p className="text-white text-base sm:text-lg leading-relaxed">
-              In-process and final inspections verify dimensional accuracy, geometric tolerances, surface finish, and compliance with customer specifications.
-            </p>
-          </blockquote>
-        </div>
-        <div className="absolute bottom-0 left-0 right-0 pointer-events-none" aria-hidden="true">
-          <svg viewBox="0 0 1440 100" preserveAspectRatio="none" className="w-full h-[48px] sm:h-[68px] lg:h-[88px] block">
-            <path d="M0,52 C420,104 860,58 1440,40 L1440,100 L0,100 Z" fill="#163A66" />
-          </svg>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md sm:max-w-none mx-auto">
+            <button
+              type="button"
+              onClick={() => navigate('quote')}
+              className="btn-chamfer group inline-flex items-center justify-center gap-2 bg-white text-orange hover:bg-off font-bold text-sm tracking-wide px-8 py-4 transition-all duration-200 hover:-translate-y-0.5 w-full sm:w-auto"
+            >
+              Request Quality Documents <AR className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate('contact')}
+              className="btn-chamfer inline-flex items-center justify-center border border-white/30 text-white hover:bg-white/10 hover:border-white/60 font-medium text-sm tracking-wide px-8 py-4 transition-all duration-200 hover:-translate-y-0.5 w-full sm:w-auto"
+            >
+              Contact Quality Team
+            </button>
+          </div>
         </div>
       </section>
 
