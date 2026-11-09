@@ -25,20 +25,12 @@ const industrySections = (publicPrototypeCards.length > 0 ? publicPrototypeCards
       sub: item.sub,
       desc: item.desc,
       programs: publicEntities.length > 0 ? publicEntities.map((entity) => entity.name) : item.programs,
-      chips: item.stats.map(([label, val]) => ({ val, label })),
       img: undefined as string | undefined,
       alt: item.title,
     }
   }
 
   const workAreas = item.workAreas ?? []
-  const chips = workAreas.slice(0, 3).map((area) => {
-    const [first, ...rest] = area.split(' ')
-    return { val: first ?? area, label: rest.join(' ') || area }
-  })
-  while (chips.length < 3) {
-    chips.push({ val: item.industry, label: 'Industry' })
-  }
 
   return {
     id: String(index + 1).padStart(2, '0'),
@@ -47,7 +39,6 @@ const industrySections = (publicPrototypeCards.length > 0 ? publicPrototypeCards
     sub: item.subheading ?? workAreas[0] ?? 'Aerospace',
     desc: item.description,
     programs: workAreas,
-    chips,
     img: item.image ? images[item.image] : undefined,
     alt: item.industry,
   }
@@ -130,11 +121,11 @@ export default function Industries({ navigate }: Props) {
             <div className="industries-eyebrow-rule h-px bg-orange" />
             <span className="font-mono text-xs sm:text-sm text-orange uppercase tracking-[0.16em]">Industries Served</span>
           </div>
-          <h1 className="industries-heading font-display font-black text-white text-5xl lg:text-7xl uppercase leading-none tracking-tight mb-6 sm:whitespace-nowrap">
-            Aerospace Manufacturing
+          <h1 className="industries-heading font-display font-black text-white text-4xl sm:text-5xl lg:text-6xl xl:text-7xl uppercase leading-[0.95] tracking-tight mb-6">
+            ENGINEERING FOR AEROSPACE &amp; DEFENCE
           </h1>
-          <p className="industries-lede text-steel max-w-2xl text-lg leading-relaxed">
-            Aerospace manufacturing and MRO tooling — aero-engine tooling, precision aerospace components, and MRO tooling.
+          <p className="industries-lede text-steel max-w-2xl text-base sm:text-lg leading-relaxed">
+            Precision manufacturing, aerospace tooling, engine components, and specialised ground support solutions for aerospace and defence customers.
           </p>
         </div>
         <div className="absolute bottom-0 left-0 right-0 pointer-events-none" aria-hidden="true">
@@ -195,19 +186,9 @@ export default function Industries({ navigate }: Props) {
                   <div className="industries-figure-corner industries-figure-corner--tr" />
                   <div className="industries-figure-corner industries-figure-corner--bl" />
                   <div className="industries-figure-corner industries-figure-corner--br" />
-                  <div className="industries-figure-label font-mono text-[11px] text-cyan uppercase tracking-widest">
+                  <div className="industries-figure-label max-w-[calc(100%-1.7rem)] truncate font-mono text-[11px] text-cyan uppercase tracking-widest">
                     {ind.id} / {ind.sub}
                   </div>
-                  {ind.chips.length > 0 && (
-                    <div className="industries-chips">
-                      {ind.chips.map((chip, chipIndex) => (
-                        <div key={`${chip.val}-${chip.label}-${chipIndex}`} className="industries-chip">
-                          <div className="font-display font-bold text-cyan text-lg">{chip.val}</div>
-                          <div className="font-mono text-[11px] text-steel mt-0.5 tracking-wider">{chip.label}</div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
                 </div>
 
                 <div className="industries-copy">
