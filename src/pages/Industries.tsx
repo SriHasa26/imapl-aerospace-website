@@ -44,7 +44,7 @@ const industrySections = (publicPrototypeCards.length > 0 ? publicPrototypeCards
     id: String(index + 1).padStart(2, '0'),
     anchorId: `ind-${item.id}`,
     title: item.industry,
-    sub: workAreas[0] ?? 'Aerospace',
+    sub: item.subheading ?? workAreas[0] ?? 'Aerospace',
     desc: item.description,
     programs: workAreas,
     chips,
