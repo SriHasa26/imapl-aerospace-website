@@ -782,7 +782,7 @@ export default function Home({ navigate }: Props) {
                   <button
                     key={ind.id}
                     onClick={() => navigate('industries')}
-                    className={`home-industry-card group flex flex-col text-left reveal ${revealIndustries.visible ? 'visible' : ''} ${spanClass}`}
+                    className={`home-industry-card group flex flex-col text-left reveal ${revealIndustries.visible ? 'visible' : ''} ${featured ? 'home-industry-card--featured' : ''} ${spanClass}`}
                     style={{ transitionDelay: `${i * 80}ms` }}
                   >
                     <div className="home-industry-card-well relative shrink-0">

@@ -128,7 +128,7 @@ export const capabilities: CapabilityRecord[] = [
     technicalDetails: ["Assembly fixtures", "Functional and performance requirements"],
     equipment: [],
     materials: [],
-    image: "assemblyImage",
+    image: "assemblyLineImage",
     sourceType: "OWNER_DOCUMENT",
     sourceRef: COMPANY_PROFILE_2026,
     verificationStatus: "SOURCE_SUPPORTED",
@@ -234,42 +234,160 @@ export const prototypeCapabilities: Array<SourceMeta & { id: string; title: stri
 ]
 
 /**
- * Existing deep-link anchors. Footer and Navigation still point at these IDs.
- * Section copy is composed only from publishable CapabilityRecord rows.
+ * Capability page sections. `label` is the concise navigation label used by the
+ * on-page quick nav, mega menu, and footer; `title` is the full section heading.
+ * Hashes stay on the cap-01…cap-09 anchors.
  */
 export interface CapabilityPageSection {
-  id: "01" | "02" | "03" | "04" | "05" | "06"
-  anchorId: "cap-01" | "cap-02" | "cap-03" | "cap-04" | "cap-05" | "cap-06"
-  capabilityIds: string[]
+  id: "01" | "02" | "03" | "04" | "05" | "06" | "07" | "08" | "09"
+  anchorId: string
+  label: string
+  title: string
+  tagline: string
+  description: string
+  specs: Array<[string, string]>
+  image?: ImageKey
+  /** How the photograph fills the 4:3 figure. Defaults to cover. */
+  fit?: "cover" | "contain"
+  /** object-position for the photograph. Defaults to center. */
+  position?: string
+  /** Optional CSS filter to enhance the photograph. */
+  filter?: string
 }
 
 export const capabilityPageSections: CapabilityPageSection[] = [
-  { id: "01", anchorId: "cap-01", capabilityIds: ["5-axis-machining", "cnc-machining", "4-axis-machining", "3-axis-machining"] },
-  { id: "02", anchorId: "cap-02", capabilityIds: ["tooling"] },
-  { id: "03", anchorId: "cap-03", capabilityIds: ["jigs-fixtures"] },
-  { id: "04", anchorId: "cap-04", capabilityIds: ["assembly"] },
-  { id: "05", anchorId: "cap-05", capabilityIds: ["part-marking"] },
-  { id: "06", anchorId: "cap-06", capabilityIds: ["inspection", "load-testing"] },
+  {
+    id: "01",
+    anchorId: "cap-01",
+    label: "Engineering",
+    title: "Manufacturing Engineering",
+    tagline: "Engineering processes. Optimised for production.",
+    description: "Manufacturing engineering that translates customer designs into efficient, reliable, and repeatable manufacturing processes.",
+    specs: [
+      ["Process", "Process planning, CAD/CAM, inspection planning"],
+      ["Deliverables", "Manufacturing plans, CNC programmes, inspection plans"],
+    ],
+    image: "aboutHeroImage",
+  },
+  {
+    id: "02",
+    anchorId: "cap-02",
+    label: "Machining",
+    title: "Precision Machining",
+    tagline: "Precision in every cut.",
+    description: "CNC machining of complex aerospace components to demanding dimensional and quality requirements.",
+    specs: [
+      ["Processes", "3-axis, 4-axis, 5-axis machining"],
+      ["Materials", "Aluminium, titanium, alloy steels, stainless steel, nickel-based superalloys"],
+      ["Component range", "As per machine capacity"],
+    ],
+    image: "cncMachineImage",
+  },
+  {
+    id: "03",
+    anchorId: "cap-03",
+    label: "Fabrication",
+    title: "Fabrication",
+    tagline: "Built to specification.",
+    description: "Fabricated structures and assemblies for aerospace tooling and ground support applications.",
+    specs: [
+      ["Processes", "Cutting, forming, joining"],
+      ["Products", "Frames, structures, tooling bases, supports"],
+    ],
+    image: "tigWeldingImage",
+  },
+  {
+    id: "04",
+    anchorId: "cap-04",
+    label: "Assembly",
+    title: "Assembly",
+    tagline: "Precision assembly. Reliable performance.",
+    description: "Assembly of tooling, fixtures, mechanical systems, and aerospace subassemblies.",
+    specs: [
+      ["Processes", "Component integration, alignment, fitting"],
+      ["Verification", "Fit, function, dimensional checks"],
+    ],
+    image: "assemblyLineImage",
+  },
+  {
+    id: "05",
+    anchorId: "cap-05",
+    label: "Load Testing",
+    title: "Load Testing",
+    tagline: "Tested for performance.",
+    description: "Load testing of tooling, structures, and equipment against defined requirements.",
+    specs: [
+      ["Processes", "Load application, measurement, performance verification"],
+      ["Deliverables", "Test records and reports"],
+    ],
+    image: "qualityLoadTesting",
+    fit: "contain",
+  },
+  {
+    id: "06",
+    anchorId: "cap-06",
+    label: "Surface Treatments",
+    title: "Surface Treatments",
+    tagline: "Protection. Durability. Performance.",
+    description: "Surface finishing solutions to meet specified corrosion, wear, and functional requirements.",
+    specs: [
+      ["Processes", "Anodising, plating, painting, conversion coatings"],
+      ["Control", "Finish specifications and inspection records"],
+    ],
+    image: "productsImage",
+    fit: "contain",
+  },
+  {
+    id: "07",
+    anchorId: "cap-07",
+    label: "Special Processes",
+    title: "Special Processes",
+    tagline: "Controlled processes. Consistent quality.",
+    description: "Specialised processes managed to applicable customer specifications and quality requirements.",
+    specs: [
+      ["Processes", "Heat treatment, NDT, specified special coatings"],
+      ["Control", "Process certification and traceability"],
+    ],
+    image: "qualityNdtInspection",
+    fit: "contain",
+    filter: "saturate(1.15) contrast(1.08) brightness(1.03)",
+  },
+  {
+    id: "08",
+    anchorId: "cap-08",
+    label: "Marking",
+    title: "Part Marking",
+    tagline: "Permanent identification. Complete traceability.",
+    description: "Component and tooling marking in accordance with customer specifications.",
+    specs: [
+      ["Methods", "Laser marking, engraving, approved marking methods"],
+      ["Applications", "Part numbers, serial numbers, data matrix codes"],
+    ],
+    image: "partMarkingImage",
+    fit: "contain",
+  },
+  {
+    id: "09",
+    anchorId: "cap-09",
+    label: "Packing",
+    title: "Packing & Preservation",
+    tagline: "Protected from factory to customer.",
+    description: "Protective packing and preservation for safe storage, handling, and transportation.",
+    specs: [
+      ["Processes", "Cleaning, protective wrapping, corrosion prevention"],
+      ["Deliverables", "Customer-compliant packing and dispatch documentation"],
+    ],
+    image: "qualityPreDispatchInspection",
+  },
 ]
 
-/** Labels for Navigation and Footer. Hashes stay on the existing cap-01…cap-06 anchors. */
+/** Labels for Navigation and Footer. Hashes stay on the cap-01…cap-09 anchors. */
 export function publicCapabilityNavItems(): Array<{ label: string; sub: string; hash: string }> {
-  const unique = (values: string[]) => [...new Set(values.filter(Boolean))]
-  return capabilityPageSections.flatMap((section) => {
-    const records = section.capabilityIds
-      .map((id) => capabilities.find((capability) => capability.id === id))
-      .filter((capability): capability is CapabilityRecord =>
-        capability != null && isPublishable(capability.verificationStatus),
-      )
-    const primary = records[0]
-    if (!primary) return []
-    const details = unique(records.flatMap((record) => record.technicalDetails))
-    return [{
-      label: primary.title,
-      sub: details.slice(0, 3).join(" · ") || primary.title,
-      hash: `#${section.anchorId}`,
-    }]
-  })
+  return capabilityPageSections.map((section) => ({
+    label: section.title,
+    sub: section.specs[0]?.[1] ?? section.tagline,
+    hash: `#${section.anchorId}`,
+  }))
 }
 
 export const prototypeCapabilitySections: Array<SourceMeta & {

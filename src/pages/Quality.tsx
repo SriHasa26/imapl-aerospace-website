@@ -58,8 +58,8 @@ const processSteps = [
     step: '01',
     title: 'DIMENSIONAL INSPECTION',
     desc: 'Precision measurement of critical dimensions.',
-    image: images.qualityDimensionalInspection,
-    alt: 'Dimensional inspection using precision instruments in QA lab',
+    image: images.inspectionEquipment,
+    alt: 'Inspection equipment used for dimensional verification',
   },
   {
     step: '02',
@@ -202,12 +202,12 @@ export default function Quality({ navigate }: Props) {
           <h2 className="font-display font-bold text-navy text-4xl lg:text-5xl uppercase leading-tight mb-14">
             INSPECTION &amp; TESTING CAPABILITIES
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:gap-6">
             {capabilityCards.map((card) => (
-              <div key={card.number} className="quality-card quality-card--light p-7 sm:p-8 flex flex-col h-full">
-                <div className="font-mono text-[11px] text-blue font-semibold mb-4 tracking-wider">{card.number}</div>
-                <h3 className="font-display font-bold text-navy text-xl uppercase mb-3 min-h-[3.25rem] flex items-start leading-snug">{card.title}</h3>
-                <p className="text-mid text-sm leading-relaxed mt-auto">{card.desc}</p>
+              <div key={card.number} className="quality-card quality-card--light p-6 sm:p-7 lg:p-8 flex flex-col h-full">
+                <div className="font-mono text-xs text-blue font-semibold mb-3 tracking-wider">{card.number}</div>
+                <h3 className="font-display font-bold text-navy text-xl lg:text-2xl uppercase mb-2 min-h-[3rem] flex items-start leading-snug">{card.title}</h3>
+                <p className="text-mid text-sm lg:text-base leading-relaxed mt-auto">{card.desc}</p>
               </div>
             ))}
           </div>
@@ -226,13 +226,13 @@ export default function Quality({ navigate }: Props) {
           </h2>
           <div className="grid lg:grid-cols-2 gap-5">
             {certificationCards.map((cert) => (
-              <div key={cert.title} className="quality-card quality-card--dark p-7">
-                <div className="font-display font-bold text-cyan text-3xl uppercase">{cert.title}</div>
-                <div className="font-mono text-xs text-steel mt-2 tracking-wider">{cert.description}</div>
+              <div key={cert.title} className="quality-card quality-card--dark p-8 sm:p-10">
+                <div className="font-display font-bold text-cyan text-4xl lg:text-5xl uppercase leading-tight">{cert.title}</div>
+                <div className="font-mono text-sm lg:text-base text-steel mt-3 tracking-wider">{cert.description}</div>
               </div>
             ))}
           </div>
-          <p className="text-steel max-w-3xl text-base leading-relaxed mt-10">
+          <p className="text-steel max-w-3xl text-lg lg:text-xl leading-relaxed mt-10">
             Our quality systems support process consistency, product conformity, traceability, and continuous improvement across aerospace manufacturing operations.
           </p>
         </div>
