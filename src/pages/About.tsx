@@ -310,8 +310,8 @@ export default function About({ navigate }: Props) {
       <section className="about-work-section py-16 lg:py-20">
         <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
           <SectionLabel text="Our Work" />
-          <h2 className="font-display font-bold text-navy text-4xl lg:text-5xl uppercase leading-tight mb-8 lg:mb-10">
-            Engineering &<br />Manufacturing
+          <h2 className="font-display font-bold text-navy text-4xl lg:text-5xl uppercase leading-tight mb-8 lg:mb-10 sm:whitespace-nowrap">
+            Engineering & Manufacturing
           </h2>
           <div className="about-work-grid">
             {workCards.map((card) => {

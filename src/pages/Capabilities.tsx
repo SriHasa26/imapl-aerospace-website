@@ -1,13 +1,8 @@
 import { useEffect, useState } from 'react'
 import type { Page } from '../App'
 import { images, videos } from '../content/assets'
-import { catalogFillClass, imageFrame, isTechnicalPhoto, photoClass } from '../content/imagePresentation'
-import {
-  capabilities,
-  capabilityPageSections,
-  type CapabilityRecord,
-} from '../content/capabilities'
-import { isPublishable } from '../content/types'
+import { catalogFillClass, imageFrame } from '../content/imagePresentation'
+import { capabilityPageSections } from '../content/capabilities'
 
 interface Props { navigate: (page: Page) => void }
 
@@ -24,49 +19,23 @@ function AR({ className = 'w-3.5 h-3.5' }: { className?: string }) {
   return <svg viewBox="0 0 16 16" className={className} fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
 }
 
-function unique(values: string[]): string[] {
-  return [...new Set(values.filter(Boolean))]
-}
-
-function composeSection(capabilityIds: string[]) {
-  const records = capabilityIds
-    .map((id) => capabilities.find((capability) => capability.id === id))
-    .filter((capability): capability is CapabilityRecord => {
-      if (!capability) return false
-      return isPublishable(capability.verificationStatus)
-    })
-
-  const primary = records[0]
-  if (!primary) return undefined
-
-  const materials = unique(records.flatMap((record) => record.materials))
-  const details = unique(records.flatMap((record) => record.technicalDetails))
-  const specs: Array<[string, string]> = []
-
-  if (details.length > 0) {
-    specs.push(['Process', details.join(', ')])
-  }
-  if (materials.length > 0) {
-    specs.push(['Materials', materials.join(', ')])
-  }
-
+const caps = capabilityPageSections.map((section) => {
+  const img = section.image ? images[section.image] : undefined
   return {
-    title: primary.title,
-    tagline: details.slice(0, 3).join(' · ') || primary.title,
-    desc: primary.description,
-    img: primary.image ? images[primary.image] : undefined,
-    specs,
-    items: details,
+    id: section.id,
+    label: section.label,
+    anchorId: section.anchorId,
+    title: section.title,
+    tagline: section.tagline,
+    desc: section.description,
+    specs: section.specs,
+    img,
+    fit: section.fit ?? 'cover',
+    position: section.position ?? 'center',
+    filter: section.filter,
+    catalog: img ? catalogFillClass(img) : '',
   }
-}
-
-const caps = capabilityPageSections
-  .map((section) => {
-    const composed = composeSection(section.capabilityIds)
-    if (!composed) return undefined
-    return { id: section.id, anchorId: section.anchorId, ...composed }
-  })
-  .filter((section): section is NonNullable<typeof section> => Boolean(section))
+})
 
 export default function Capabilities({ navigate }: Props) {
   const [heroVisible, setHeroVisible] = useState(false)
@@ -178,7 +147,7 @@ export default function Capabilities({ navigate }: Props) {
                 href={`#${c.anchorId}`}
                 className={`caps-page-nav-link shrink-0 font-mono text-xs uppercase tracking-widest px-4 py-4 border-r border-border-dark focus-visible:outline-none focus-visible:text-cyan ${activeAnchor === c.anchorId ? 'is-active' : ''}`}
               >
-                {c.id} {c.title.split(' ').slice(0, 2).join(' ')}
+                {c.id} {c.label}
               </a>
             ))}
           </div>
@@ -194,7 +163,7 @@ export default function Capabilities({ navigate }: Props) {
         >
           <div className="max-w-[1440px] mx-auto px-6 xl:px-12">
             <div className={`caps-page-panel ${i % 2 === 0 ? 'caps-page-panel--dark' : 'caps-page-panel--light'}`}>
-              <div className={`grid lg:grid-cols-2 gap-12 lg:gap-16 ${cap.id === '06' ? 'caps-page-inspection-grid items-start lg:items-stretch' : 'items-start'} ${i % 2 !== 0 ? 'lg:[&>*:first-child]:order-2' : ''}`}>
+              <div className={`grid lg:grid-cols-2 gap-12 lg:gap-16 items-start ${i % 2 !== 0 ? 'lg:[&>*:first-child]:order-2' : ''}`}>
               <div>
                 <div className={`font-mono text-xs sm:text-sm uppercase tracking-widest mb-3 flex items-center gap-2 ${i % 2 === 0 ? 'text-cyan' : 'text-blue'}`}>
                   <span className={i % 2 === 0 ? 'text-steel' : 'text-mid'}>{cap.id}</span>
@@ -218,38 +187,25 @@ export default function Capabilities({ navigate }: Props) {
                   </div>
                 )}
 
-                {cap.items.length > 0 && (
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 mb-8">
-                    {cap.items.map(item => (
-                      <li key={item} className={`flex items-start gap-3 text-sm ${i % 2 === 0 ? 'text-steel' : 'text-mid'}`}>
-                        <div className="w-4 h-4 border border-cyan flex items-center justify-center shrink-0 mt-0.5">
-                          <svg viewBox="0 0 12 12" className="w-2.5 h-2.5 text-cyan" fill="none" stroke="currentColor" strokeWidth="2">
-                            <path d="M2 6l3 3 5-5" />
-                          </svg>
-                        </div>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                )}
                 <button onClick={() => navigate('quote')} className={`btn-chamfer group flex items-center gap-2 font-medium text-sm tracking-wide px-7 py-3.5 transition-all duration-200 hover:-translate-y-0.5 ${i % 2 === 0 ? 'bg-blue hover:bg-blue-light text-white' : 'bg-navy hover:bg-navy-light text-white'}`}>
                   Request Capability Quote <AR className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
                 </button>
               </div>
 
-              <div className={`caps-page-figure relative${cap.id === '06' ? ' caps-page-figure--inspection' : ''}`}>
-                <div className={`${cap.id === '06' ? 'caps-page-figure-frame--inspection im-catalog-fill' : `${imageFrame.card} ${cap.img && catalogFillClass(cap.img) ? catalogFillClass(cap.img) : 'bg-navy'}`}`}>
+              <div className="caps-page-figure relative">
+                <div className={`${imageFrame.card} ${cap.catalog || 'bg-navy'}`}>
                   {cap.img && (
                     <img
                       src={cap.img}
-                      alt={cap.id === '06' ? 'Inspection CMM and measurement equipment' : cap.title}
-                      className={`${photoClass(cap.img)} caps-page-figure-img`}
+                      alt={cap.title}
+                      className={`caps-page-figure-img${cap.fit === 'contain' ? ' caps-page-figure-img--contain' : ''}`}
+                      style={{ objectFit: cap.fit, objectPosition: cap.position, filter: cap.filter }}
                       loading="lazy"
                       decoding="async"
                     />
                   )}
                 </div>
-                {cap.id !== '06' && <div className="caps-page-figure-overlay" />}
+                <div className="caps-page-figure-overlay" />
                 <div className="caps-page-figure-corner caps-page-figure-corner--tl" />
                 <div className="caps-page-figure-corner caps-page-figure-corner--tr" />
                 <div className="caps-page-figure-corner caps-page-figure-corner--bl" />

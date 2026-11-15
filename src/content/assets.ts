@@ -60,6 +60,7 @@ export const images = {
   cncMachineImage: '/images/capabilities/cnc-machine.png',
   cncGantryBay: '/images/capabilities/cnc-gantry-bay.jpg',
   assemblyImage: '/images/manufacturing/capability-assembly-ring.jpg',
+  assemblyLineImage: '/images/products/product-aero-engine-line.jpg',
   partMarkingImage: '/images/capabilities/capability-part-marking.jpg',
   fixtureAssembly: '/images/tooling/fixture-assembly.jpg',
   fixtureHeatTreatment: '/images/tooling/fixture-heat-treatment.jpg',

@@ -56,6 +56,7 @@ const technicalPhotos = new Set<string>([
   images.aluminiumLongComponent,
   images.partMarkingImage,
   images.assemblyImage,
+  images.assemblyLineImage,
   images.cncTurningImage,
   images.tigWeldingImage,
   images.inspectionCmmCrysta,
